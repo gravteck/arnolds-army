@@ -21,7 +21,7 @@
 					<td th:text="${player.firstName}"></td>
 					<td th:text="${player.lastName}"></td>
 					<td><a th:href="'tel:' + ${player.phone}" th:text="${player.phone}"></a></td>
-					<td th:text="${player.email}"></td>
+					<td><a th:href="'tel:' + ${player.email}" th:text="${player.email}"></a></td>
 					<td><a class="btn btn-info" href="#" role="button" data-toggle="modal" th:attr="data-target='#modal' + ${player.id}">View</a></td>
 				</tr>
 			</tbody>
