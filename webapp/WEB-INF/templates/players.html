@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/header :: header-setup"></div>
+<body>
+	<div th:replace="fragments/header :: header"></div>
+	<div th:replace="fragments/header :: jumbotron"></div>
+	<div class="container-fluid">
+		<h2>Players</h2>
+		<table class="table table-striped table-hover" id="players-table">
+			<thead>
+				<tr>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Phone</th>
+					<th>Email</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="player : ${players}">
+					<td th:text="${player.firstName}"></td>
+					<td th:text="${player.lastName}"></td>
+					<td><a th:href="'tel:' + ${player.phone}" th:text="${player.phone}"></a></td>
+					<td th:text="${player.email}"></td>
+					<td><a class="btn btn-info" href="#" role="button" data-toggle="modal" th:attr="data-target='#modal' + ${player.id}">View</a></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="container-fluid" th:include="player-modal"></div>
+	</div>
+	<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
