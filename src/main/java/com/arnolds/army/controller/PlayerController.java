@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.arnolds.army.model.Player;
+import com.arnolds.army.model.Season;
 import com.arnolds.army.model.StatisticalYear;
 
 @Controller
@@ -53,9 +54,21 @@ public class PlayerController {
 		matt.setPhone("5134047250");
 		matt.setEmail("matthew.heineke@gmail.com");
 
+		Season s1 = new Season();
+		s1.setId(1);
+		s1.setYear(2015);
+
+		Season s2 = new Season();
+		s1.setId(2);
+		s1.setYear(2016);
+
+		Season s3 = new Season();
+		s1.setId(1);
+		s1.setYear(2017);
+
 		StatisticalYear year2015 = new StatisticalYear();
 		year2015.setId(1);
-		year2015.setYear(2015);
+		year2015.setSeason(s1);
 		year2015.setAtBats(84);
 		year2015.setRuns(11);
 		year2015.setHits(27);
@@ -68,7 +81,7 @@ public class PlayerController {
 
 		StatisticalYear year2016 = new StatisticalYear();
 		year2016.setId(2);
-		year2016.setYear(2016);
+		year2016.setSeason(s2);
 		year2016.setAtBats(526);
 		year2016.setRuns(69);
 		year2016.setHits(156);
@@ -83,7 +96,7 @@ public class PlayerController {
 
 		StatisticalYear year2017 = new StatisticalYear();
 		year2017.setId(3);
-		year2017.setYear(2017);
+		year2017.setSeason(s3);
 		year2017.setAtBats(469);
 		year2017.setRuns(82);
 		year2017.setHits(151);
@@ -119,7 +132,7 @@ public class PlayerController {
 
 		players.addAll(Arrays.asList(matt, ray, eric, brian));
 		return players;
-	}	
+	}
 
 	private Player getPlayer(Integer id) {
 		return getPlayers().stream().findFirst().filter(p -> id.equals(p.getId())).get();

@@ -62,7 +62,7 @@ public class Player {
 			e.printStackTrace();
 		}
 
-		return util.format(phoneNumber, PhoneNumberFormat.E164);
+		return util.format(phoneNumber, PhoneNumberFormat.NATIONAL);
 	}
 
 	public void setPhone(String phone) {

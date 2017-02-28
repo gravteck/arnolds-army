@@ -2,6 +2,8 @@ package com.arnolds.army.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Season {
 
@@ -33,6 +35,18 @@ public class Season {
 
 	public void setGames(List<Game> games) {
 		this.games = games;
+	}
+
+	public Integer getWins(Integer teamId) {
+
+		return getGames().stream()
+				.filter(g -> (teamId == g.getAwayTeam().getId() && g.getAwayScore() > g.getHomeScore())
+						|| (teamId == g.getHomeTeam().getId() && g.getHomeScore() > g.getAwayScore()))
+				.collect(Collectors.toList()).size();
+	}
+
+	public Integer getLosses(Integer teamId) {
+		return getGames().size() - getWins(teamId);
 	}
 
 }

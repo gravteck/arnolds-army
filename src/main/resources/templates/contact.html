@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/header :: header-setup"></div>
+<body>
+	<div th:replace="fragments/header :: header"></div>
+	<div th:replace="fragments/header :: jumbotron"></div>
+	<div class="container-fluid">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2>
+					<span th:text="#{contact.title}"></span>
+				</h2>
+			</div>
+			<div class="panel-body">
+				<div class="panel-group">
+					<div class="panel panel-default">
+						<h4 class="panel-heading">Coach</h4>
+						<div class="panel-body">
+							<label>Ray Piening</label> <br></br> <a href="tel:5138059969">(513) 805-9969</a> <br></br> <a href="mailto:ray.piening@gmail.com">ray.piening@gmail.com</a>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<h4 class="panel-heading">Webmaster</h4>
+						<div class="panel-body">
+							<label>Matt Heineke</label> <br></br> <a href="tel:5134047250">(513) 404-7250</a> <br></br> <a href="mailto:matthew.heineke@gmail.com">matthew.heineke@gmail.com</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

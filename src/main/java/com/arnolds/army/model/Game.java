@@ -16,6 +16,8 @@ public class Game {
 
 	private Integer awayScore;
 
+	private Season season;
+
 	public Integer getId() {
 		return id;
 	}
@@ -62,5 +64,13 @@ public class Game {
 
 	public void setAwayScore(Integer awayScore) {
 		this.awayScore = awayScore;
+	}
+
+	public Season getSeason() {
+		return season;
+	}
+
+	public void setSeason(Season season) {
+		this.season = season;
 	}
 }

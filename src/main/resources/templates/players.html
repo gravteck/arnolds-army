@@ -27,7 +27,7 @@
 							<td th:text="${player.lastName}"></td>
 							<td><a th:href="'tel:' + ${player.phone}" th:text="${player.phone}"></a></td>
 							<td><a th:href="'mailto:' + ${player.email}" th:text="${player.email}"></a></td>
-							<td><a href="#" th:href="'player/' + ${player.id}" role="button" title="View"> <span class="glyphicon glyphicon-user"></span></a></td>
+							<td><a href="#" th:href="@{'/player/' + ${player.id}}" role="button" title="View"> <span class="glyphicon glyphicon-user"></span></a></td>
 						</tr>
 					</tbody>
 				</table>

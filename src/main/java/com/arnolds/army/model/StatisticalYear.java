@@ -6,6 +6,10 @@ public class StatisticalYear {
 
 	private Integer id;
 
+	private Player player;
+
+	private Season season;
+
 	private Integer year;
 
 	private Integer atBats;
@@ -36,12 +40,24 @@ public class StatisticalYear {
 		this.id = id;
 	}
 
-	public Integer getYear() {
-		return year;
+	public Player getPlayer() {
+		return player;
 	}
 
-	public void setYear(Integer year) {
-		this.year = year;
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
+	public Season getSeason() {
+		return season;
+	}
+
+	public void setSeason(Season season) {
+		this.season = season;
+	}
+
+	public Integer getYear() {
+		return getSeason().getYear();
 	}
 
 	public Integer getAtBats() {
