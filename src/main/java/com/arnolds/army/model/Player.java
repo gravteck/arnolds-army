@@ -1,5 +1,8 @@
 package com.arnolds.army.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberFormat;
@@ -16,6 +19,8 @@ public class Player {
 	private String phone;
 
 	private String email;
+
+	private List<StatisticalYear> statisticalYears = new ArrayList<>();
 
 	public Integer getId() {
 		return id;
@@ -70,6 +75,14 @@ public class Player {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public List<StatisticalYear> getStatisticalYears() {
+		return statisticalYears;
+	}
+
+	public void setStatisticalYears(List<StatisticalYear> statisticalYears) {
+		this.statisticalYears = statisticalYears;
 	}
 
 	@Override

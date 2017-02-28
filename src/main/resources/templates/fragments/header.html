@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<head th:fragment="header-setup">
+<title>Arnold's Army</title>
+<meta charset="utf-8"></meta>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<style type="text/css">
+.jumbotron {
+	background-color: #f4511e;
+	color: #fff;
+	margin-top: 0px;
+	padding: 0.5em 0.6em;
+}
+
+.navbar {
+	margin-bottom: 0;
+	border-radius: 0;
+}
+
+html {
+	position: relative;
+	min-height: 100%;
+}
+
+body {
+	/* Margin bottom by footer height */
+	margin-bottom: 60px;
+}
+
+.footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	/* Set the fixed height of the footer here */
+	height: 60px;
+	color: #000;
+	background-color: #fff;
+	text-align: center;
+}
+
+.div-footer {
+	vertical-align: middle;
+}
+
+.form-horizontal .control-label {
+	text-align: left;
+}
+</style>
+
+<script th:inline="javascript">
+	var players = [[${players}]];
+	console.log(players);
+
+	var currentPlayer;
+
+	function viewPlayer(id) {
+		currentPlayer = null;
+		currentPlayer = players[id-1];
+		$('#playerStatTable')[0].style.visibility = 'hidden';
+		$('.nav-tabs a[href="#info"]').tab("show");
+		
+		$('#modalTitle').html('<h4 class="modal-title">' + currentPlayer.firstName + ' ' + currentPlayer.lastName + '<button type="button" class="close" data-dismiss="modal">&times;</button></h4>')		
+		$('#playerModalPhone').html(currentPlayer.phone);
+		$('#playerModalEmail').html(currentPlayer.email);
+		$("#playerModal").modal("toggle");
+	}
+	
+	/*
+	$("#seasonDropDown").change(function() {
+	    var selectedVal = $(this).find(':selected').val();
+	}​​​​);​
+	*/
+	
+	function showPlayerStats(year) {
+		alert(year);
+		var statisticalYear = currentPlayer.statisticalYears[this];
+		
+		var tableBodyHtml = '<tr><td>' + statisticalYear.atBats + '</td></tr>';
+		tableBodyHtml += '<td>' + statisticalYear.runs + '</td>';
+		tableBodyHtml += '<td>' + statisticalYear.hits + '</td>'
+		tableBodyHtml += '<td>' + statisticalYear.rbi + '</td>'
+		tableBodyHtml += '<td>' + statisticalYear.rbi + '</td>'
+		tableBodyHtml += '<td>' + statisticalYear.walks + '</td>'
+		tableBodyHtml += '<td>' + statisticalYear.strikeOuts + '</td>'
+		tableBodyHtml += '<td>' + statisticalYear.battingAverage + '</td>'
+		tableBodyHtml += '<td>' + statisticalYear.onBasePercentage + '</td>'
+		tableBodyHtml += '<td>' + statisticalYear.slugging + '</td>';
+		
+		$('#playerStatTableBody').html(tableBodyHtml);
+		$('#playerStatTable')[0].style.visibility = 'visible';
+		
+	}
+</script>
+
+</head>
+<nav class="navbar navbar-inverse" th:fragment="header">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+				<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" th:href="'/' + home" th:text="#{nav.home}"></a>
+		</div>
+		<div class="collapse navbar-collapse" id="myNavbar">
+			<ul class="nav navbar-nav">
+				<li><a class="active" th:href="'/' + players" th:text="#{nav.players}"></a></li>
+				<li><a href="#" th:text="#{nav.calendar}"></a></li>
+				<li><a href="#" th:text="#{nav.contact}"></a></li>
+				<li><a href="#" th:text="#{nav.about}">About</a></li>
+			</ul>
+		</div>
+	</div>
+</nav>
+<div class="jumbotron container-fluid text-center" th:fragment="jumbotron">
+	<h1 th:text="#{jumbotron.title}"></h1>
+</div>

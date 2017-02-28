@@ -1,0 +1,72 @@
+<div id="playerModal" class="modal" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div id="modalTitle" class="modal-header"></div>
+			<div class="modal-body container">
+				<ul class="nav nav-tabs">
+					<li><a class="tab-pane active" data-toggle="tab" href="#info" th:text="#{nav.info}"></a></li>
+					<li><a class="tab-pane" data-toggle="tab" href="#stats" th:text="#{nav.stats}"></a></li>
+				</ul>
+				<div class="tab-content">
+					<div id="info" class="tab-pane active" align="left">
+						<form class="form-horizontal">
+							<br></br>
+							<div class="form-group">
+								<label class="control-label col-sm-1" th:text="#{form.phone.label}"></label>
+								<div class="col-sm-1 control-label">
+									<a id="playerModalPhone" href="tel:#"></a>
+								</div>
+							</div>
+							<div class="form-group">
+								<br></br> <label class="control-label col-sm-1" th:text="#{form.email.label}"></label>
+								<div class="col-sm-1 control-label">
+									<a id="playerModalEmail" href="mailto:#"></a>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div id="stats" class="tab-pane">
+						<p></p>
+						<div id="seasonDropDown" class="dropdown">
+							<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" onchange="showPlayerStats(this)">
+								Select Season <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu">
+								<li><a href="#">2015</a></li>
+								<li><a href="#">2016</a></li>
+								<li><a href="#">2017</a></li>
+							</ul>
+						</div>
+						<div id="playerStatTable" class="container-fluid">
+							<table class="table table-striped">
+								<thead>
+									<tr>AB
+									</tr>
+									<tr>R
+									</tr>
+									<tr>H
+									</tr>
+									<tr>RBI
+									</tr>
+									<tr>BB
+									</tr>
+									<tr>SO
+									</tr>
+									<tr>AVG
+									</tr>
+									<tr>SLG
+									</tr>
+									<tr>OPS
+									</tr>
+								</thead>
+								<tbody id="playerStatTableBody">
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
