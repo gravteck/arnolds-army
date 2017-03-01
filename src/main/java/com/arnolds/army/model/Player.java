@@ -3,23 +3,43 @@ package com.arnolds.army.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberFormat;
 import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 
-public class Player {
+@Entity
+@Table(name = "player")
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+public class Player extends BaseEntity {
 
+	@Id
+	@Column(name = "id")
 	private Integer id;
 
+	@Column(name = "first_name")
 	private String firstName;
 
+	@Column(name = "last_name")
 	private String lastName;
 
+	@Column(name = "phone")
 	private String phone;
 
+	@Column(name = "email")
 	private String email;
 
+	@OneToMany(mappedBy = "player", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<StatisticalYear> statisticalYears = new ArrayList<>();
 
 	public Integer getId() {
@@ -118,7 +138,9 @@ public class Player {
 
 	@Override
 	public String toString() {
-		return "Player [firstName=" + firstName + ", lastName=" + lastName + "]";
+		// return "Player [firstName=" + firstName + ", lastName=" + lastName +
+		// "]";
+		return "something";
 	}
 
 }
