@@ -3,23 +3,38 @@ package com.arnolds.army.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberFormat;
 import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 
-public class Player {
+@Entity
+@Table(name = "player")
+public class Player extends BaseEntity {
 
+	@Id
+	@Column(name = "id")
 	private Integer id;
 
+	@Column(name = "first_name")
 	private String firstName;
 
+	@Column(name = "last_name")
 	private String lastName;
 
+	@Column(name = "phone")
 	private String phone;
 
+	@Column(name = "email")
 	private String email;
 
+	@Transient
 	private List<StatisticalYear> statisticalYears = new ArrayList<>();
 
 	public Integer getId() {

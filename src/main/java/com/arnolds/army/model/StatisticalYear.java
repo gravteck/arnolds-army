@@ -10,8 +10,6 @@ public class StatisticalYear {
 
 	private Season season;
 
-	private Integer year;
-
 	private Integer atBats;
 
 	private Integer runs;
