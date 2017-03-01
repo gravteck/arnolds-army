@@ -1,6 +1,7 @@
 package com.arnolds.army;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +14,16 @@ import com.arnolds.army.dao.TeamDao;
 @SpringBootTest
 public class ArnoldsArmyApplicationTests {
 
-	// @Autowired
+	@Autowired
 	TeamDao teamDao;
 
 	@Test
 	public void testFindAllTeams() {
-		Assert.assertEquals(2, teamDao.findAll().size());
+		Assert.assertEquals(4, teamDao.findAll().size());
 	}
 
+	@Test
+	public void testFindTeam() {
+		Assert.assertEquals(1, teamDao.find(1).getId().intValue());
+	}
 }
