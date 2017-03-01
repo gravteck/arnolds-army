@@ -2,32 +2,57 @@ package com.arnolds.army.model;
 
 import java.math.BigDecimal;
 
-public class StatisticalYear {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+@Entity
+@Table(name = "statistical_year")
+public class StatisticalYear extends BaseEntity {
+
+	@Id()
+	@Column(name = "id")
 	private Integer id;
 
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "player_id", insertable = false, updatable = false, nullable = false)
 	private Player player;
 
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "season_id", insertable = false, updatable = false, nullable = false)
 	private Season season;
 
+	@Column(name = "at_bats")
 	private Integer atBats;
 
+	@Column(name = "runs")
 	private Integer runs;
 
+	@Column(name = "hits")
 	private Integer hits;
 
-	private Integer singles;
-
+	@Column(name = "doubles")
 	private Integer doubles;
 
+	@Column(name = "triples")
 	private Integer triples;
 
+	@Column(name = "home_runs")
 	private Integer homeRuns;
 
+	@Column(name = "rbi")
 	private Integer rbi;
 
+	@Column(name = "bb")
 	private Integer walks;
 
+	@Column(name = "k")
 	private Integer strikeOuts;
 
 	public Integer getId() {
@@ -82,14 +107,6 @@ public class StatisticalYear {
 		this.hits = hits;
 	}
 
-	public Integer getSingles() {
-		return singles;
-	}
-
-	public void setSingles(Integer singles) {
-		this.singles = singles;
-	}
-
 	public Integer getDoubles() {
 		return doubles;
 	}
@@ -142,14 +159,15 @@ public class StatisticalYear {
 		return BigDecimal.valueOf(getHits()).divide(BigDecimal.valueOf(getAtBats()), 3, BigDecimal.ROUND_DOWN);
 	}
 
-	public BigDecimal getOnBasePercentage() {
+	public String getOnBasePercentage() {
 
 		Integer timesOnBase = getWalks() + getHits();
 
-		return BigDecimal.valueOf(timesOnBase).divide(BigDecimal.valueOf(getAtBats()), 3, BigDecimal.ROUND_DOWN);
+		return BigDecimal.valueOf(timesOnBase).divide(BigDecimal.valueOf(getAtBats()), 3, BigDecimal.ROUND_DOWN)
+				.toPlainString();
 	}
 
-	public BigDecimal getSlugging() {
+	public String getSlugging() {
 
 		Integer singlePoints = getHits() - getDoubles() - getTriples() - getHomeRuns();
 		Integer doublePoints = getDoubles() * 2;
@@ -160,11 +178,13 @@ public class StatisticalYear {
 
 		totalPoints = 50;
 
-		return BigDecimal.valueOf(totalPoints).divide(BigDecimal.valueOf(getAtBats()), 3, BigDecimal.ROUND_DOWN);
+		return BigDecimal.valueOf(totalPoints).divide(BigDecimal.valueOf(getAtBats()), 3, BigDecimal.ROUND_DOWN)
+				.toPlainString();
 	}
 
 	public BigDecimal getOnBasePlusSlugging() {
-		return getOnBasePercentage().add(getSlugging());
+		return BigDecimal.valueOf(Double.parseDouble(getOnBasePercentage()))
+				.add(BigDecimal.valueOf(Double.parseDouble(getSlugging())));
 	}
 
 }

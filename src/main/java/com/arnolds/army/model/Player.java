@@ -3,12 +3,16 @@ package com.arnolds.army.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberFormat;
@@ -16,6 +20,7 @@ import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 
 @Entity
 @Table(name = "player")
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class Player extends BaseEntity {
 
 	@Id
@@ -34,7 +39,7 @@ public class Player extends BaseEntity {
 	@Column(name = "email")
 	private String email;
 
-	@Transient
+	@OneToMany(mappedBy = "player", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<StatisticalYear> statisticalYears = new ArrayList<>();
 
 	public Integer getId() {
@@ -133,7 +138,9 @@ public class Player extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return "Player [firstName=" + firstName + ", lastName=" + lastName + "]";
+		// return "Player [firstName=" + firstName + ", lastName=" + lastName +
+		// "]";
+		return "something";
 	}
 
 }

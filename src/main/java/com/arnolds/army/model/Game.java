@@ -2,20 +2,40 @@ package com.arnolds.army.model;
 
 import java.time.LocalDateTime;
 
-public class Game {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "game")
+public class Game extends BaseEntity {
+
+	@Id
+	@Column(name = "id")
 	private Integer id;
 
+	@Column(name = "local_date_time")
 	private LocalDateTime localDateTime;
 
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "home_team_id")
 	private Team homeTeam;
 
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "away_team_id")
 	private Team awayTeam;
 
+	@Column(name = "home_score")
 	private Integer homeScore;
 
+	@Column(name = "away_score")
 	private Integer awayScore;
 
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "season_id")
 	private Season season;
 
 	public Integer getId() {
