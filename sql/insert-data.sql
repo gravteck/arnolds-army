@@ -46,6 +46,9 @@ insert into statistical_year values(
 	526,
 	69,
 	156,
+	32,
+	3,
+	24,
 	84,
 	59,
 	102
@@ -58,6 +61,9 @@ insert into statistical_year values(
 	469,
 	82,
 	151,
+	38,
+	1,
+	25,
 	84,
 	70,
 	106
