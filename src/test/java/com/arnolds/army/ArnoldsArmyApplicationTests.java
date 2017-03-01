@@ -13,7 +13,7 @@ import com.arnolds.army.dao.TeamDao;
 @SpringBootTest
 public class ArnoldsArmyApplicationTests {
 
-	@Autowired
+	// @Autowired
 	TeamDao teamDao;
 
 	@Test

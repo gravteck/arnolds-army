@@ -4,13 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.sql.DataSource;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +18,7 @@ import com.arnolds.army.model.StatisticalYear;
 
 @SpringBootApplication
 @Controller
-public class ArnoldsArmyApplication {
+public class ArnoldsArmyApplication extends SpringBootServletInitializer {
 
 	@RequestMapping(value = { "/", "home" })
 	public String loadHomePage(Model m) {
@@ -29,6 +26,11 @@ public class ArnoldsArmyApplication {
 		m.addAttribute("players", getPlayers());
 
 		return "home";
+	}
+
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(ArnoldsArmyApplication.class);
 	}
 
 	public static void main(String[] args) {
