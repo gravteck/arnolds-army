@@ -12,8 +12,9 @@
 	<!-- Enable annotation driven transaction demarcation -->
 	<!-- <tx:annotation-driven /> -->
 
-	<!-- <mvc:resources mapping="/css/**" location="classpath:/css/" /> -->
-	<!-- <mvc:resources mapping="/js/**" location="classpath:/js/" /> -->
+	<mvc:resources mapping="/css/**" location="classpath:/css/" />
+	<mvc:resources mapping="/js/**" location="classpath:/js/" />
+	<mvc:resources mapping="/html/**" location="classpath:/html/" />
 
 	<bean id="templateResolver"
 		class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
@@ -23,13 +24,26 @@
 	</bean>
 
 	<bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
-		<property name="templateResolver" ref="templateResolver" />
+		<property name="templateResolvers">
+			<set>
+				<ref bean="templateResolver" />
+			</set>
+		</property>
 	</bean>
 
-	<bean id="viewResolver" class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+	<bean id="thymeleafViewResolver2" class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
 		<property name="templateEngine" ref="templateEngine" />
-		<property name="order" value="1" />
+		<property name="order" value="2" />
 		<property name="viewNames" value="*.html" />
 	</bean>
+
+	<!-- <bean id="angularViewResolver" -->
+	<!-- class="org.springframework.web.servlet.view.InternalResourceViewResolver"> -->
+	<!-- <property name="prefix" value="/static/" /> -->
+	<!-- <property name="suffix" value=".html" /> -->
+	<!-- <property name="order" value="1" /> -->
+	<!-- <property name="viewNames" value="*.html" /> -->
+	<!-- </bean> -->
+
 
 </beans>
