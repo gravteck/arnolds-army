@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.arnolds.army.model.Player;
+import com.arnolds.army.model.Season;
 import com.arnolds.army.model.StatisticalYear;
 import com.arnolds.army.model.Team;
 import com.trg.dao.jpa.GenericDAO;
@@ -22,6 +23,9 @@ public class ApplicationServiceImpl implements ApplicationService {
 
 	@Autowired
 	private GenericDAO<Player, Serializable> playerDao;
+
+	@Autowired
+	private GenericDAO<Season, Serializable> seasonDao;
 
 	/*
 	 * (non-Javadoc)
@@ -57,6 +61,11 @@ public class ApplicationServiceImpl implements ApplicationService {
 	@Override
 	public List<StatisticalYear> findAllStatisticalYears(Integer playerId) {
 		return null;
+	}
+
+	@Override
+	public List<Season> findAllSeasons() {
+		return seasonDao.findAll();
 	}
 
 }
