@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<title>Arnold's Army</title>
+<meta charset="utf-8"></meta>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js"></script>
+<script src="/static/js/arnolds.js"></script>
+<script src="/static/js/arnoldsController.js"></script>
+<script src="/static/js/playersController.js"></script>
+
+<link rel="stylesheet" href="/static/css/arnolds.css" type="text/css"></link>
+
+</head>
+<body data-ng-app="arnoldsArmyApplication" data-ng-controller="playersController" ng-cloak>
+	<div>
+		<div data-ng-include="'/static/html/topNav.html'"></div>
+		<div data-ng-include="'/static/html/jumbotron.html'"></div>
+		<div class="container-fluid ng-cloak">
+			<div class="panel panel-default table-responsive">
+				<div class="panel-heading">
+					<h2>Players</h2>
+				</div>
+				<div class="panel-body" ng-cloak>
+					<table class="table table-striped table-hover" id="players-table">
+						<thead>
+							<tr>
+								<th>First Name</th>
+								<th>Last Name</th>
+								<th>Phone</th>
+								<th>Email</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr data-ng-repeat="player in players">
+								<td>{{player.firstName}}</td>
+								<td>{{player.lastName}}</td>
+								<td><a href="tel:{{player.phone}}">{{player.phone}}</a></td>
+								<td><a href="mailto:{{player.email}}">{{player.email}}</a></td>
+								<td><a href="/s/player/{{player.id}}" role="button" title="View"> <span class="glyphicon glyphicon-user"></span></a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div data-ng-include="'/static/html/footer.html'"></div>
+	</div>
+</body>
+
+</html>

@@ -13,53 +13,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js"></script>
 <script src="/static/js/arnolds.js"></script>
 <script src="/static/js/arnoldsController.js"></script>
-
-<style type="text/css">
-.jumbotron {
-	background-color: #f4511e;
-	color: #fff;
-	margin-top: 0px;
-	padding: 0.5em 0.6em;
-}
-
-.navbar {
-	margin-bottom: 0;
-	border-radius: 0;
-}
-
-html {
-	position: relative;
-	min-height: 100%;
-}
-
-body {
-	/* Margin bottom by footer height */
-	margin-bottom: 60px;
-}
-
-.footer {
-	position: absolute;
-	bottom: 0;
-	width: 100%;
-	/* Set the fixed height of the footer here */
-	height: 60px;
-	color: #000;
-	background-color: #fff;
-	text-align: center;
-}
-
-.div-footer {
-	vertical-align: middle;
-}
-
-.form-horizontal .control-label {
-	text-align: left;
-}
-</style>
-
 </head>
 <body>
-	<div data-ng-app="arnoldsArmyApplication" data-ng-controller="applicationController" class="ng-cloak">
+	<div data-ng-app="arnoldsArmyApplication" data-ng-controller="applicationController" data-ng-cloak>
 		<div data-ng-include="'/static/html/topNav.html'"></div>
 		<div data-ng-include="'/static/html/jumbotron.html'"></div>
 		<div class="container-fluid">
