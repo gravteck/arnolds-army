@@ -1,0 +1,46 @@
+<style type="text/css">
+.jumbotron {
+	background-color: #f4511e;
+	color: #fff;
+	margin-top: 0px;
+	padding: 0.5em 0.6em;
+}
+
+.navbar {
+	margin-bottom: 0;
+	border-radius: 0;
+}
+
+html {
+	position: relative;
+	min-height: 100%;
+}
+
+body {
+	/* Margin bottom by footer height */
+	margin-bottom: 60px;
+}
+
+.footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	/* Set the fixed height of the footer here */
+	height: 60px;
+	color: #000;
+	background-color: #fff;
+	text-align: center;
+}
+
+.div-footer {
+	vertical-align: middle;
+}
+
+.form-horizontal .control-label {
+	text-align: left;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+</style>

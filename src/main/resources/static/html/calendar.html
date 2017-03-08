@@ -1,0 +1,44 @@
+<div class="container-fluid" data-ng-controller="calendarController">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2>Seasons</h2>
+		</div>
+		<div class="panel-body">
+			<div class="panel-group">
+				<div data-ng-repeat="season in seasons" class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-target="#panel{{season.id}}" href="">{{season.year}}</a> <label class="pull-right">Record</label>
+						</h4>
+					</div>
+					<div id="panel{{season.id}}" class="panel-collapse collapse">
+						<div class="panel-body">
+							<div class="table-responsive">
+								<table class="table table-striped">
+									<thead>
+										<tr>
+											<th title="Date">Date</th>
+											<th title="Time">Time</th>
+											<th title="Description">Matchup</th>
+											<th title="Result">Result</th>
+											<th title="Score">Score</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr data-ng-repeat="game in season.games">
+											<td>{{game.localDateTime.monthValue}}/{{game.localDateTime.dayOfMonth}}/{{game.localDateTime.year}}</td>
+											<td>{{game.localDateTime.hour > 12 ? game.localDateTime.hour - 12 : game.localDateTime.hour}}:{{game.localDateTime.minute}} {{game.localDateTime.hour > 12 ? 'pm' : 'am'}}</td>
+											<td>{{arnoldsId == game.homeTeam.id ? 'vs. ' + game.awayTeam.name : '@ ' + game.homeTeam.name}}</td>
+											<td>{{arnoldsId == game.homeTeam.id ? (game.homeScore &gt; game.awayScore) ? 'W' : 'L' : (game.homeScore &lt; game.awayScore) ? 'W' : 'L'}}</td>
+											<td>{{arnoldsId == game.homeTeam.id ? game.homeScore + ' - ' + game.awayScore : game.awayScore + ' - ' + game.homeScore}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
