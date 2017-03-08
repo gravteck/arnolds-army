@@ -1,5 +1,6 @@
 package com.arnolds.army.service;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,9 +19,14 @@ public class ApplicationServiceTest {
 	public void testFindAllTeams() {
 		Assert.assertEquals(4, applicationService.findAllTeams().size());
 	}
-	
+
 	@Test
 	public void testFindAllPlayers() {
 		Assert.assertEquals(4, applicationService.findAllPlayers().size());
+	}
+
+	@Test
+	public void testFindAllSeasons() {
+		Assert.assertTrue(CollectionUtils.isNotEmpty(applicationService.findAllSeasons()));
 	}
 }
