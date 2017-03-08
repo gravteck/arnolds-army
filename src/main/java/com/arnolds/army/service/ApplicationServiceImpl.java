@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.arnolds.army.model.Player;
@@ -33,6 +34,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 	 * @see com.arnolds.army.service.ApplicationService#findAllPlayers()
 	 */
 	@Override
+	@Cacheable("teams")
 	public List<Team> findAllTeams() {
 		return teamDao.findAll();
 	}
@@ -43,6 +45,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 	 * @see com.arnolds.army.service.ApplicationService#findAllPlayers()
 	 */
 	@Override
+	@Cacheable("players")
 	public List<Player> findAllPlayers() {
 		return playerDao.findAll();
 	}
@@ -54,6 +57,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 	 * com.arnolds.army.service.ApplicationService#findPlayer(java.lang.Integer)
 	 */
 	@Override
+	@Cacheable("player")
 	public Player findPlayer(Integer playerId) {
 		return playerDao.find(playerId);
 	}
@@ -64,6 +68,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 	}
 
 	@Override
+	@Cacheable("seasons")
 	public List<Season> findAllSeasons() {
 		return seasonDao.findAll();
 	}

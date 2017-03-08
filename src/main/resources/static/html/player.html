@@ -1,73 +1,48 @@
-<!DOCTYPE html>
-<html lang="en-US">
-<head>
-<title>Arnold's Army</title>
-<meta charset="utf-8"></meta>
-<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js"></script>
-<script src="/static/js/arnolds.js"></script>
-<script src="/static/js/arnoldsController.js"></script>
-<script src="/static/js/playerController.js"></script>
-
-<script type="text/javascript"></script>
-
-</head>
-<body data-ng-app="arnoldsArmyApplication" data-ng-controller="playerController" ng-cloak>
-	<div>
-		<div data-ng-include="'/static/html/topNav.html'"></div>
-		<div data-ng-include="'/static/html/jumbotron.html'"></div>
-		<div class="container-fluid ng-cloak">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h2>{{player.firstName}} {{player.lastName}}</h2>
+<div data-ng-controller="playerController" data-ng-cloak>
+	<div class="container-fluid ng-cloak">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2>{{player.firstName}} {{player.lastName}}</h2>
+			</div>
+			<div class="panel-body table-responsive">
+				<div data-ng-show="player.statisticalYears.length > 0">
+					<table class="table table-striped table-responsive">
+						<thead>
+							<tr>
+								<th title="Year">Year</th>
+								<th title="At Bats">AB</th>
+								<th title="Runs">R</th>
+								<th title="Hits">H</th>
+								<th title="RBI">RBI</th>
+								<th title="Walks">BB</th>
+								<th title="Strike Outs">SO</th>
+								<th title="Batting Average">AVG</th>
+								<th title="Slugging %">SLG</th>
+								<th title="On Base Plus Slugging">OPS</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr data-ng-repeat="s in player.statisticalYears">
+								<td>{{s.year}}</td>
+								<td>{{s.atBats}}</td>
+								<td>{{s.runs}}</td>
+								<td>{{s.hits}}</td>
+								<td>{{s.rbi}}</td>
+								<td>{{s.walks}}</td>
+								<td>{{s.strikeOuts}}</td>
+								<td>{{s.battingAverage}}</td>
+								<td>{{s.slugging}}</td>
+								<td>{{s.onBasePercentage}}</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
-				<div class="panel-body table-responsive">
-					<div data-ng-show="player.statisticalYears.length > 0">
-						<table class="table table-striped table-responsive">
-							<thead>
-								<tr>
-									<th title="Year">Year</th>
-									<th title="At Bats">AB</th>
-									<th title="Runs">R</th>
-									<th title="Hits">H</th>
-									<th title="RBI">RBI</th>
-									<th title="Walks">BB</th>
-									<th title="Strike Outs">SO</th>
-									<th title="Batting Average">AVG</th>
-									<th title="Slugging %">SLG</th>
-									<th title="On Base Plus Slugging">OPS</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr data-ng-repeat="s in player.statisticalYears">
-									<td>{{s.year}}</td>
-									<td>{{s.atBats}}</td>
-									<td>{{s.runs}}</td>
-									<td>{{s.hits}}</td>
-									<td>{{s.rbi}}</td>
-									<td>{{s.walks}}</td>
-									<td>{{s.strikeOuts}}</td>
-									<td>{{s.battingAverage}}</td>
-									<td>{{s.slugging}}</td>
-									<td>{{s.onBasePercentage}}</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<div data-ng-show="player.statisticalYears.length == 0">
-						<h5>No Season Statistics</h5>
-					</div>
+				<div data-ng-show="player.statisticalYears.length == 0">
+					<h5>No Season Statistics</h5>
 				</div>
 			</div>
 		</div>
-		<div data-ng-include="'/static/html/footer.html'"></div>
 	</div>
-</body>
+</div>
 
 </html>
