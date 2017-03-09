@@ -2,7 +2,10 @@ package com.arnolds.army.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -14,6 +17,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 public class Team extends BaseEntity {
 
 	@Id
+	@SequenceGenerator(name = "team_id_seq", sequenceName = "team_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "team_id_seq")
 	@Column(name = "id")
 	private Integer id;
 
