@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 public class Game extends BaseEntity {
 
 	@Id
-	@SequenceGenerator(name = "game_id_seq", sequenceName = "game_id_seq")
+	@SequenceGenerator(name = "game_id_seq", sequenceName = "game_id_seq", allocationSize = 1, initialValue = 10)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "game_id_seq")
 	@Column(name = "id")
 	private Integer id;

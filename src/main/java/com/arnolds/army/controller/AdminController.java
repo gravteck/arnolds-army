@@ -86,6 +86,8 @@ public class AdminController {
 
 		applicationService.removePlayer(playerId);
 
+		redirectAttributes.addFlashAttribute("deleted", Boolean.TRUE);
+
 		return "redirect:/admin/players";
 	}
 }

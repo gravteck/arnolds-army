@@ -29,7 +29,7 @@ import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 public class Player extends BaseEntity {
 
 	@Id
-	@SequenceGenerator(name = "player_id_seq", sequenceName = "player_id_seq")
+	@SequenceGenerator(name = "player_id_seq", sequenceName = "player_id_seq", allocationSize = 1, initialValue = 10)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "player_id_seq")
 	@Column(name = "id")
 	private Integer id;

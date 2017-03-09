@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 public class StatisticalYear extends BaseEntity {
 
 	@Id()
-	@SequenceGenerator(name = "statistical_year_id_seq", sequenceName = "statistical_year_id_seq")
+	@SequenceGenerator(name = "statistical_year_id_seq", sequenceName = "statistical_year_id_seq", allocationSize = 1, initialValue = 10)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "statistical_year_id_seq")
 	@Column(name = "id")
 	private Integer id;

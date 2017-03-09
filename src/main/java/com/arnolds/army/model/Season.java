@@ -20,7 +20,7 @@ import javax.persistence.Table;
 public class Season extends BaseEntity {
 
 	@Id
-	@SequenceGenerator(name = "season_id_seq", sequenceName = "season_id_seq")
+	@SequenceGenerator(name = "season_id_seq", sequenceName = "season_id_seq", allocationSize = 1, initialValue = 10)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "season_id_seq")
 	@Column(name = "id")
 	private Integer id;

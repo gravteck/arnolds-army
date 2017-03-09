@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 public class Team extends BaseEntity {
 
 	@Id
-	@SequenceGenerator(name = "team_id_seq", sequenceName = "team_id_seq")
+	@SequenceGenerator(name = "team_id_seq", sequenceName = "team_id_seq", allocationSize = 1, initialValue = 10)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "team_id_seq")
 	@Column(name = "id")
 	private Integer id;
