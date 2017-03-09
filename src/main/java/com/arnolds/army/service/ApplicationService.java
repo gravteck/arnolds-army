@@ -15,7 +15,9 @@ public interface ApplicationService {
 
 	Player findPlayer(Integer playerId);
 
+	void savePlayer(Player player);
+
 	List<StatisticalYear> findAllStatisticalYears(Integer playerId);
-	
+
 	List<Season> findAllSeasons();
 }

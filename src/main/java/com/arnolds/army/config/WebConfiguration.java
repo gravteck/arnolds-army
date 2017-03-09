@@ -14,6 +14,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.InternalResourceView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
+import com.trg.search.jpa.JPAAnnotationMetadataUtil;
+import com.trg.search.jpa.JPASearchProcessor;
+
 @EnableWebMvc
 @Configuration
 @ComponentScan(basePackages = { "com.arnolds.army" })
@@ -21,6 +24,18 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 
 	@Autowired
 	ApplicationContext applicationContext;
+
+	@Bean
+	public JPASearchProcessor getSearchProcessor() {
+		JPASearchProcessor searchProcessor = new JPASearchProcessor(getMetaDataUtil());
+
+		return searchProcessor;
+	}
+
+	@Bean
+	public JPAAnnotationMetadataUtil getMetaDataUtil() {
+		return new JPAAnnotationMetadataUtil();
+	}
 
 	@Bean("viewResolver")
 	public UrlBasedViewResolver getAngularViewResolver() {
