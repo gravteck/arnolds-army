@@ -7,12 +7,14 @@
 	<div th:replace="fragments/header :: jumbotron"></div>
 	<div th:if="${saved}" class="container-fluid">
 		<div class="alert alert-success alert-dismissable fade in" align="center">
-			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong>Saved!</strong>
+			<h4 style="display: inline">Saved!</h4>
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 		</div>
 	</div>
 	<div th:if="${deleted}" class="container-fluid">
 		<div class="alert alert-success alert-dismissable fade in" align="center">
-			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong>Deleted!</strong>
+			<h4 style="display: inline">Deleted!</h4>
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 		</div>
 	</div>
 	<div class="container-fluid">
@@ -40,12 +42,30 @@
 							<td th:text="${player.lastName}"></td>
 							<td><a th:href="'tel:' + ${player.phone}" th:text="${player.phone}"></a></td>
 							<td><a th:href="'mailto:' + ${player.email}" th:text="${player.email}"></a></td>
-							<td><a href="#" th:href="@{'/player/' + ${player.id}}" role="button" title="View"> <span class="glyphicon glyphicon-user"></span></a></td>
-							<td><a href="#" th:href="@{'/admin/player/edit/' + ${player.id}}" role="button" title="Edit"> <span class="glyphicon glyphicon-edit"></span></a></td>
-							<td><a href="#" th:href="@{'/admin/player/delete/' + ${player.id}}" role="button" title="Delete" > <span class="glyphicon glyphicon-minus"></span></a></td>
+							<td><a th:href="@{'/player/' + ${player.id}}" role="button" title="View"> <span class="glyphicon glyphicon-user"></span></a></td>
+							<td><a th:href="@{'/admin/player/edit/' + ${player.id}}" role="button" title="Edit"> <span class="glyphicon glyphicon-edit"></span></a></td>
+							<td><a th:href="${'#confirmDelete_' + player.id}" data-toggle="modal" role="button" title="Delete"> <span class="glyphicon glyphicon-minus"></span></a></td>
 						</tr>
 					</tbody>
 				</table>
+				<div th:each="player : ${players}" th:id="'confirmDelete_' + ${player.id}" class="modal fade">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h3 style="display: inline" class="modal-title">Confirm Delete</h3>
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							</div>
+
+							<div class="modal-body">
+								<label th:text="'Are you sure you want to delete ' + ${player.firstName} + ' ' + ${player.lastName} + '?'"></label>
+							</div>
+							<div class="modal-footer" align="center">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								<a class="btn btn-danger" th:href="@{'/admin/player/delete/' + ${player.id}}" title="Delete"><i class="fa fa-trash-o"></i>Delete</a>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
