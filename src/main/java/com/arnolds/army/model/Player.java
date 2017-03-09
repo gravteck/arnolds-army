@@ -7,11 +7,15 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -26,6 +30,7 @@ import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 public class Player extends BaseEntity {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private Integer id;
 
@@ -76,7 +81,7 @@ public class Player extends BaseEntity {
 
 		PhoneNumberUtil util = PhoneNumberUtil.getInstance();
 
-		PhoneNumber phoneNumber = new PhoneNumber();
+		PhoneNumber phoneNumber = null;
 
 		if (StringUtils.isNotBlank(this.phone)) {
 			try {
@@ -86,7 +91,7 @@ public class Player extends BaseEntity {
 			}
 		}
 
-		return util.format(phoneNumber, PhoneNumberFormat.NATIONAL);
+		return phoneNumber != null ? util.format(phoneNumber, PhoneNumberFormat.NATIONAL) : "";
 	}
 
 	public void setPhone(String phone) {

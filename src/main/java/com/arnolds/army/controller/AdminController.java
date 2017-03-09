@@ -52,8 +52,28 @@ public class AdminController {
 		return "admin/player-edit";
 	}
 
+	@GetMapping("player/add")
+	public String loadAddPlayer(Model m) {
+
+		m.addAttribute("player", new Player());
+
+		return "admin/player-add";
+	}
+
 	@PostMapping("player/edit/submit")
 	public String playerEditSubmit(@ModelAttribute Player player, RedirectAttributes redirectAttributes) {
+
+		player.setPhone(StringUtils.replaceAll(player.getPhone(), "[^0-9]", ""));
+
+		applicationService.savePlayer(player);
+
+		redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
+
+		return "redirect:/admin/players";
+	}
+
+	@PostMapping("player/add/submit")
+	public String playerAddSubmit(@ModelAttribute Player player, RedirectAttributes redirectAttributes) {
 
 		player.setPhone(StringUtils.replaceAll(player.getPhone(), "[^0-9]", ""));
 
