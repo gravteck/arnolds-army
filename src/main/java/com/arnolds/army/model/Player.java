@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.apache.commons.lang3.StringUtils;
@@ -30,7 +31,8 @@ import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 public class Player extends BaseEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@SequenceGenerator(name = "player_id_seq", sequenceName = "player_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "player_id_seq")
 	@Column(name = "id")
 	private Integer id;
 
