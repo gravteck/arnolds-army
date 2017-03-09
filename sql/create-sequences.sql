@@ -1,1 +1,1 @@
-create sequence player_id_seq start 100 owned by player.player_id;
+create sequence player_id_seq start 100 owned by player.id;
