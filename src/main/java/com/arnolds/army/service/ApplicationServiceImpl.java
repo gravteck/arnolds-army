@@ -49,7 +49,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 	 * @see com.arnolds.army.service.ApplicationService#findAllPlayers()
 	 */
 	@Override
-	//@Cacheable("players")
+	// @Cacheable("players")
 	public List<Player> findAllPlayers() {
 		return playerDao.findAll();
 	}
@@ -61,16 +61,23 @@ public class ApplicationServiceImpl implements ApplicationService {
 	 * com.arnolds.army.service.ApplicationService#findPlayer(java.lang.Integer)
 	 */
 	@Override
-	//@Cacheable("player")
+	// @Cacheable("player")
 	public Player findPlayer(Integer playerId) {
 		return playerDao.find(playerId);
 	}
 
 	@Override
 	@Transactional
-	//@Caching(put = { @CachePut(cacheNames = "player") }, evict = { @CacheEvict(cacheNames = "players") })
+	// @Caching(put = { @CachePut(cacheNames = "player") }, evict = {
+	// @CacheEvict(cacheNames = "players") })
 	public void savePlayer(Player player) {
 		playerDao.save(player);
+	}
+
+	@Override
+	@Transactional
+	public void removePlayer(Integer playerId) {
+		playerDao.removeById(playerId);
 	}
 
 	@Override

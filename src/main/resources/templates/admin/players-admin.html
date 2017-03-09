@@ -10,6 +10,11 @@
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong>Saved!</strong>
 		</div>
 	</div>
+	<div th:if="${deleted}" class="container-fluid">
+		<div class="alert alert-success alert-dismissable fade in" align="center">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong>Deleted!</strong>
+		</div>
+	</div>
 	<div class="container-fluid">
 		<div class="panel panel-default table-responsive">
 			<div class="panel-heading">
@@ -37,7 +42,7 @@
 							<td><a th:href="'mailto:' + ${player.email}" th:text="${player.email}"></a></td>
 							<td><a href="#" th:href="@{'/player/' + ${player.id}}" role="button" title="View"> <span class="glyphicon glyphicon-user"></span></a></td>
 							<td><a href="#" th:href="@{'/admin/player/edit/' + ${player.id}}" role="button" title="Edit"> <span class="glyphicon glyphicon-edit"></span></a></td>
-							<td><a href="#" th:href="@{'/admin/player/delete/' + ${player.id}}" role="button" title="Delete"> <span class="glyphicon glyphicon-minus"></span></a></td>
+							<td><a href="#" th:href="@{'/admin/player/delete/' + ${player.id}}" role="button" title="Delete" > <span class="glyphicon glyphicon-minus"></span></a></td>
 						</tr>
 					</tbody>
 				</table>
