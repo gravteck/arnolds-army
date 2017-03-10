@@ -17,51 +17,48 @@
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 		</div>
 	</div>
+
 	<div class="container-fluid">
 		<div class="panel panel-default table-responsive">
 			<div class="panel-heading">
-				<h2 style="display: inline">Players</h2>
-				<a th:href="@{/admin/player/add}" class="btn btn-info pull-right" role="button">Add <span class="glyphicon glyphicon-plus"></span></a>
+				<h2 style="display: inline" th:text="${title}"></h2>
+				<a th:href="@{${addPath}}" class="btn btn-info pull-right" role="button">Add <span class="glyphicon glyphicon-plus"></span></a>
 			</div>
 			<div class="panel-body">
 				<table class="table table-striped table-hover" id="players-table">
 					<thead>
 						<tr>
-							<th>First Name</th>
-							<th>Last Name</th>
-							<th>Phone</th>
-							<th>Email</th>
-							<th></th>
-							<th></th>
-							<th></th>
+							<th th:each="header : ${headers}" th:text="${header}"></th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="player : ${players}">
-							<td th:text="${player.firstName}"></td>
-							<td th:text="${player.lastName}"></td>
-							<td><a th:href="'tel:' + ${player.phone}" th:text="${player.phone}"></a></td>
-							<td><a th:href="'mailto:' + ${player.email}" th:text="${player.email}"></a></td>
-							<td><a th:href="@{'/player/' + ${player.id}}" role="button" title="View"> <span class="glyphicon glyphicon-user"></span></a></td>
-							<td><a th:href="@{'/admin/player/edit/' + ${player.id}}" role="button" title="Edit"> <span class="glyphicon glyphicon-edit"></span></a></td>
-							<td><a th:href="${'#confirmDelete_' + player.id}" data-toggle="modal" role="button" title="Delete"> <span class="glyphicon glyphicon-minus"></span></a></td>
+						<tr th:each="record : ${records}">
+							<div th:each="r : ${record}" th:switch="${r.type}">
+								<td th:case="${T(com.arnolds.army.model.ReportingFieldType).DEFAULT}" th:text="${r.value}"></td>
+								<td th:case="${T(com.arnolds.army.model.ReportingFieldType).LINK}"><a th:href="@{${r.href}}" th:text="${r.value}"></a></td>
+								<td th:case="${T(com.arnolds.army.model.ReportingFieldType).VIEW}"><a th:href="@{${r.href}}" role="button" title="View"> <span class="glyphicon glyphicon-user"></span></a></td>
+								<td th:case="${T(com.arnolds.army.model.ReportingFieldType).EDIT}"><a th:href="@{${r.href}}" role="button" title="EDIT"> <span class="glyphicon glyphicon-edit"></span></a></td>
+								<td th:case="${T(com.arnolds.army.model.ReportingFieldType).DELETE}"><a th:href="${'#confirmDelete_' + r.href}" data-toggle="modal" role="button" title="Delete"> <span class="glyphicon glyphicon-minus"></span></a></td>
+							</div>
 						</tr>
 					</tbody>
 				</table>
-				<div th:each="player : ${players}" th:id="'confirmDelete_' + ${player.id}" class="modal fade">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h3 style="display: inline" class="modal-title">Confirm Delete</h3>
-								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							</div>
+				<div th:each="record : ${records}">
+					<div th:each="r : ${record}" th:switch="${r.type}" th:id="'confirmDelete_' + ${r.href}" class="modal fade">
+						<div th:case="${T(com.arnolds.army.model.ReportingFieldType).DELETE}" class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h3 style="display: inline" class="modal-title">Confirm Delete</h3>
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								</div>
 
-							<div class="modal-body">
-								<label th:text="'Are you sure you want to delete ' + ${player.firstName} + ' ' + ${player.lastName} + '?'"></label>
-							</div>
-							<div class="modal-footer" align="center">
-								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-								<a class="btn btn-danger" th:href="@{'/admin/player/delete/' + ${player.id}}" title="Delete"><i class="fa fa-trash-o"></i>Delete</a>
+								<div class="modal-body">
+									<label th:text="'Are you sure you want to delete?'"></label>
+								</div>
+								<div class="modal-footer" align="center">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									<a class="btn btn-danger" th:href="@{${deletePath} + ${r.href}}" title="Delete"><i class="fa fa-trash-o"></i>Delete</a>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -69,6 +66,61 @@
 			</div>
 		</div>
 	</div>
+
+
+	<!-- 	<div class="container-fluid"> -->
+	<!-- 		<div class="panel panel-default table-responsive"> -->
+	<!-- 			<div class="panel-heading"> -->
+	<!-- 				<h2 style="display: inline">Players</h2> -->
+	<!-- 				<a th:href="@{/admin/player/add}" class="btn btn-info pull-right" role="button">Add <span class="glyphicon glyphicon-plus"></span></a> -->
+	<!-- 			</div> -->
+	<!-- 			<div class="panel-body"> -->
+	<!-- 				<table class="table table-striped table-hover" id="players-table"> -->
+	<!-- 					<thead> -->
+	<!-- 						<tr> -->
+	<!-- 							<th>First Name</th> -->
+	<!-- 							<th>Last Name</th> -->
+	<!-- 							<th>Phone</th> -->
+	<!-- 							<th>Email</th> -->
+	<!-- 							<th></th> -->
+	<!-- 							<th></th> -->
+	<!-- 							<th></th> -->
+	<!-- 						</tr> -->
+	<!-- 					</thead> -->
+	<!-- 					<tbody> -->
+	<!-- 						<tr th:each="player : ${players}"> -->
+	<!-- 							<td th:text="${player.firstName}"></td> -->
+	<!-- 							<td th:text="${player.lastName}"></td> -->
+	<!-- 							<td><a th:href="'tel:' + ${player.phone}" th:text="${player.phone}"></a></td> -->
+	<!-- 							<td><a th:href="'mailto:' + ${player.email}" th:text="${player.email}"></a></td> -->
+	<!-- 							<td><a th:href="@{'/player/' + ${player.id}}" role="button" title="View"> <span class="glyphicon glyphicon-user"></span></a></td> -->
+	<!-- 							<td><a th:href="@{'/admin/player/edit/' + ${player.id}}" role="button" title="Edit"> <span class="glyphicon glyphicon-edit"></span></a></td> -->
+	<!-- 							<td><a th:href="${'#confirmDelete_' + player.id}" data-toggle="modal" role="button" title="Delete"> <span class="glyphicon glyphicon-minus"></span></a></td> -->
+	<!-- 						</tr> -->
+	<!-- 					</tbody> -->
+
+	<!-- 				</table> -->
+	<!-- 				<div th:each="player : ${players}" th:id="'confirmDelete_' + ${player.id}" class="modal fade"> -->
+	<!-- 					<div class="modal-dialog"> -->
+	<!-- 						<div class="modal-content"> -->
+	<!-- 							<div class="modal-header"> -->
+	<!-- 								<h3 style="display: inline" class="modal-title">Confirm Delete</h3> -->
+	<!-- 								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+	<!-- 							</div> -->
+
+	<!-- 							<div class="modal-body"> -->
+	<!-- 								<label th:text="'Are you sure you want to delete ' + ${player.firstName} + ' ' + ${player.lastName} + '?'"></label> -->
+	<!-- 							</div> -->
+	<!-- 							<div class="modal-footer" align="center"> -->
+	<!-- 								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+	<!-- 								<a class="btn btn-danger" th:href="@{'/admin/player/delete/' + ${player.id}}" title="Delete"><i class="fa fa-trash-o"></i>Delete</a> -->
+	<!-- 							</div> -->
+	<!-- 						</div> -->
+	<!-- 					</div> -->
+	<!-- 				</div> -->
+	<!-- 			</div> -->
+	<!-- 		</div> -->
+	<!-- 	</div> -->
 	<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>
