@@ -3,9 +3,10 @@ package com.arnolds.army;
 import java.util.Arrays;
 
 public enum FunctionalAreaType {
-	PLAYER("Player", "player"), PLAYERS("Players", "players"), TEAM("Team", "team"), TEAMS("Teams", "teams"), GAME(
-			"Game", "game"), GAMES("Games", "games"), STATISTICAL_YEAR("Statistical Year",
-					"statistical-year"), STATISTICAL_YEARS("Statistical Years", "statistical-years");
+	PLAYER("Player", "player"), PLAYERS("Players", "players"), TEAM("Team", "team"), TEAMS("Teams", "teams"), SEASON(
+			"Season", "season"), SEASONS("Seasons", "seasons"), GAME("Game", "game"), GAMES("Games",
+					"games"), STATISTICAL_YEAR("Statistical Year",
+							"statistical-year"), STATISTICAL_YEARS("Statistical Years", "statistical-years");
 
 	private String title;
 	private String value;

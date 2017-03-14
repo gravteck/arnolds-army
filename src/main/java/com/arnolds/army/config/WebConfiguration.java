@@ -1,24 +1,26 @@
 package com.arnolds.army.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.ResourceProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
+import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 
 import com.trg.search.jpa.JPAAnnotationMetadataUtil;
 import com.trg.search.jpa.JPASearchProcessor;
 
 @EnableWebMvc
 @Configuration
+@EnableWebSecurity
 @ComponentScan(basePackages = { "com.arnolds.army" })
 public class WebConfiguration extends WebMvcConfigurerAdapter {
 
@@ -65,6 +67,11 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 		registry.addResourceHandler("/static/css/**").addResourceLocations("classpath:/static/css/");
 
 		super.addResourceHandlers(registry);
+	}
+
+	@Bean
+	public SpringSecurityDialect securityDialect() {
+		return new SpringSecurityDialect();
 	}
 
 }

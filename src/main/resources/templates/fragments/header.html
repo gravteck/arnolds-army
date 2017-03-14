@@ -81,11 +81,13 @@ body {
 				<li><a class="active" th:href="@{/players}" th:text="#{nav.players}"></a></li>
 				<li><a th:href="@{/calendar}" th:text="#{nav.calendar}"></a></li>
 				<li><a th:href="@{/contact}" th:text="#{nav.contact}"></a></li>
-				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span th:text="#{nav.admin}"></span><span class="caret"></span></a>
+				<li sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span th:text="#{nav.admin}"></span><span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="/admin/players">Players</a></li>
-						<li><a href="#">Teams</a></li>
-						<li><a href="#">Seasons</a></li>
+						<li><a href="/admin/players/list">Players</a></li>
+						<li><a href="/admin/teams/list">Teams</a></li>
+						<li><a href="/admin/seasons/list">Seasons</a></li>
+						<li><a href="/admin/games/list">Games</a></li>
+						<li><a href="/admin/statistical-years/list">Statistical Years</a></li>
 					</ul></li>
 			</ul>
 		</div>

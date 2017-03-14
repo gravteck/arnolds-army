@@ -2,12 +2,12 @@ package com.arnolds.army.controller;
 
 import static com.arnolds.army.model.ReportingField.delete;
 import static com.arnolds.army.model.ReportingField.edit;
-import static com.arnolds.army.model.ReportingField.link;
-import static com.arnolds.army.model.ReportingField.text;
-import static com.arnolds.army.model.ReportingField.view;
 import static com.arnolds.army.model.ReportingField.group;
+import static com.arnolds.army.model.ReportingField.link;
 import static com.arnolds.army.model.ReportingField.reverseGroup;
 import static com.arnolds.army.model.ReportingField.spacer;
+import static com.arnolds.army.model.ReportingField.text;
+import static com.arnolds.army.model.ReportingField.view;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,8 +28,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.arnolds.army.FunctionalAreaType;
+import com.arnolds.army.model.Game;
 import com.arnolds.army.model.Player;
 import com.arnolds.army.model.ReportingField;
+import com.arnolds.army.model.Season;
+import com.arnolds.army.model.StatisticalYear;
 import com.arnolds.army.model.Team;
 import com.arnolds.army.service.ApplicationService;
 
@@ -52,17 +55,15 @@ public class AdminController {
 		switch (functionalAreaType) {
 		case PLAYERS:
 			loadPlayers(headers, records, title, itemFunctionalArea);
-		case GAME:
+			break;
+		case SEASONS:
+			loadSeasons(headers, records, title, itemFunctionalArea);
 			break;
 		case GAMES:
-			break;
-		case PLAYER:
-			break;
-		case STATISTICAL_YEAR:
+			loadGames(headers, records, title, itemFunctionalArea);
 			break;
 		case STATISTICAL_YEARS:
-			break;
-		case TEAM:
+			loadStatisticalYears(headers, records, title, itemFunctionalArea);
 			break;
 		case TEAMS:
 			loadTeams(headers, records, title, itemFunctionalArea);
@@ -164,6 +165,11 @@ public class AdminController {
 		return "redirect:/admin/players/list";
 	}
 
+	@RequestMapping("login")
+	public String login() {
+		return "admin/login";
+	}
+
 	private void loadPlayers(List<String> headers, List<List<ReportingField>> records, StringBuilder title,
 			StringBuilder itemFunctionalArea) {
 		List<Player> players = applicationService.findAllPlayers();
@@ -194,6 +200,60 @@ public class AdminController {
 						reverseGroup(view("/" + itemFunctionalArea + "/" + t.getId()),
 								edit("/admin/" + itemFunctionalArea + "/edit/" + t.getId()), delete(t.getId()))))
 						.collect(Collectors.toList()));
+	}
+
+	private void loadSeasons(List<String> headers, List<List<ReportingField>> records, StringBuilder title,
+			StringBuilder itemFunctionalArea) {
+		List<Season> seasons = applicationService.findAllSeasons();
+
+		title(title, FunctionalAreaType.SEASONS.title());
+		itemFunctionalArea(itemFunctionalArea, FunctionalAreaType.SEASON.value());
+		headers(headers, "Name", "", "");
+
+		records(records,
+				seasons.stream().map(t -> Arrays.asList(text("Name", t.getYear()), spacer(),
+						reverseGroup(view("/" + itemFunctionalArea + "/" + t.getId()),
+								edit("/admin/" + itemFunctionalArea + "/edit/" + t.getId()), delete(t.getId()))))
+						.collect(Collectors.toList()));
+	}
+
+	private void loadGames(List<String> headers, List<List<ReportingField>> records, StringBuilder title,
+			StringBuilder itemFunctionalArea) {
+		List<Game> games = applicationService.findAllGames();
+
+		title(title, FunctionalAreaType.GAMES.title());
+		itemFunctionalArea(itemFunctionalArea, FunctionalAreaType.GAMES.value());
+		headers(headers, "#", "Home Team", "Away Team", "Home Score", "Away Score", "");
+
+		records(records,
+				games.stream().map(g -> Arrays.asList(text("id", g.getId()),
+						text("homeTeam", g.getHomeTeam().getName()), text("awayTeam", g.getAwayTeam().getName()),
+						text("homeScore", g.getHomeScore()), text("homeScore", g.getHomeScore()), spacer(),
+						reverseGroup(view("/" + itemFunctionalArea + "/" + g.getId()),
+								edit("/admin/" + itemFunctionalArea + "/edit/" + g.getId()), delete(g.getId()))))
+						.collect(Collectors.toList()));
+	}
+
+	private void loadStatisticalYears(List<String> headers, List<List<ReportingField>> records, StringBuilder title,
+			StringBuilder itemFunctionalArea) {
+		List<StatisticalYear> statisticalYears = applicationService.findAllStatisticalYears();
+
+		title(title, FunctionalAreaType.STATISTICAL_YEARS.title());
+		itemFunctionalArea(itemFunctionalArea, FunctionalAreaType.STATISTICAL_YEAR.value());
+		headers(headers, "#", "Player", "Season", "AB", "R", "H", "2B", "3B", "HR", "RBI", "BB", "K", "AVG", "OBP",
+				"SLG", "OPS", "");
+
+		records(records, statisticalYears.stream()
+				.map(sy -> Arrays.asList(text("id", sy.getId()), text("player", sy.getPlayer().getFullName()),
+						text("season", sy.getSeason().getYear()), text("atBats", sy.getAtBats()),
+						text("runs", sy.getRuns()), text("hits", sy.getHits()), text("doubles", sy.getDoubles()),
+						text("triples", sy.getTriples()), text("homeRuns", sy.getHomeRuns()), text("rbi", sy.getRbi()),
+						text("bb", sy.getWalks()), text("k", sy.getStrikeOuts()),
+						text("avg", sy.getBattingAverage().toPlainString()), text("obp", sy.getOnBasePercentage()),
+						text("slg", sy.getSlugging()), text("ops", sy.getOnBasePlusSlugging().toPlainString()),
+						reverseGroup(view("/" + itemFunctionalArea + "/" + sy.getId()),
+								edit("/admin/" + itemFunctionalArea + "/edit/" + sy.getId()), delete(sy.getId()))))
+				.collect(Collectors.toList()));
 	}
 
 	protected void title(StringBuilder title, String s) {

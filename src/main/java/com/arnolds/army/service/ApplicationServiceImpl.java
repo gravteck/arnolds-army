@@ -14,6 +14,7 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.arnolds.army.model.Game;
 import com.arnolds.army.model.Player;
 import com.arnolds.army.model.Season;
 import com.arnolds.army.model.StatisticalYear;
@@ -31,6 +32,12 @@ public class ApplicationServiceImpl implements ApplicationService {
 
 	@Autowired
 	private GenericDAO<Season, Serializable> seasonDao;
+
+	@Autowired
+	private GenericDAO<Game, Serializable> gameDao;
+
+	@Autowired
+	private GenericDAO<StatisticalYear, Serializable> statisticalYearDao;
 
 	/*
 	 * (non-Javadoc)
@@ -89,6 +96,16 @@ public class ApplicationServiceImpl implements ApplicationService {
 	@Cacheable("seasons")
 	public List<Season> findAllSeasons() {
 		return seasonDao.findAll();
+	}
+
+	@Override
+	public List<Game> findAllGames() {
+		return gameDao.findAll();
+	}
+
+	@Override
+	public List<StatisticalYear> findAllStatisticalYears() {
+		return statisticalYearDao.findAll();
 	}
 
 }

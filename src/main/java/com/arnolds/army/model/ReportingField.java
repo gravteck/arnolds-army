@@ -24,6 +24,12 @@ public class ReportingField {
 		this.type = ReportingFieldType.DEFAULT;
 	}
 
+	public ReportingField(String label, Integer value) {
+		this.label = label;
+		this.value = value.toString();
+		this.type = ReportingFieldType.DEFAULT;
+	}
+
 	public ReportingField(String label, String value, String href, ReportingFieldType type) {
 		this.label = label;
 		this.value = value;
@@ -71,6 +77,10 @@ public class ReportingField {
 		return new ReportingField(key, value);
 	}
 
+	public static ReportingField text(String key, Integer value) {
+		return new ReportingField(key, value);
+	}
+
 	public static ReportingField link(String key, String value, String href) {
 		return new ReportingField(key, value, href, ReportingFieldType.LINK);
 	}
@@ -88,7 +98,7 @@ public class ReportingField {
 	}
 
 	public static ReportingField group(ReportingField... rf) {
-		ReportingField reportingField = new ReportingField(null, null);
+		ReportingField reportingField = new ReportingField("", "");
 		reportingField.setType(ReportingFieldType.GROUP);
 		reportingField.getGroup().addAll(Arrays.asList(rf));
 
@@ -101,7 +111,7 @@ public class ReportingField {
 	}
 
 	public static ReportingField spacer() {
-		ReportingField reportingField = new ReportingField(null, null);
+		ReportingField reportingField = new ReportingField("", "");
 		reportingField.setType(ReportingFieldType.SPACER);
 
 		return reportingField;

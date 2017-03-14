@@ -2,6 +2,7 @@ package com.arnolds.army.service;
 
 import java.util.List;
 
+import com.arnolds.army.model.Game;
 import com.arnolds.army.model.Player;
 import com.arnolds.army.model.Season;
 import com.arnolds.army.model.StatisticalYear;
@@ -22,4 +23,8 @@ public interface ApplicationService {
 	List<StatisticalYear> findAllStatisticalYears(Integer playerId);
 
 	List<Season> findAllSeasons();
+
+	List<Game> findAllGames();
+
+	List<StatisticalYear> findAllStatisticalYears();
 }
