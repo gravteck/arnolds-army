@@ -3,7 +3,9 @@ insert into player values(
 	'Matt',
 	'Heineke',
 	'5134047250',
-	'matthew.heineke@gmail.com'
+	'matthew.heineke@gmail.com',
+	current timestamp,
+	null
 );
 
 insert into player values(
@@ -11,7 +13,9 @@ insert into player values(
 	'Ray',
 	'Piening',
 	'5138059969',
-	'<need.email@email.com>'
+	'<need.email@email.com>',
+	current timestamp,
+	null
 );
 
 insert into player values(
@@ -19,7 +23,9 @@ insert into player values(
 	'Eric',
 	'Ihlendorf',
 	'5132314332',
-	'<need.email@email.com>'
+	'<need.email@email.com>',
+	current timestamp,
+	null
 );
 
 insert into player values(
@@ -27,17 +33,19 @@ insert into player values(
 	'Rob',
 	'WeidMarschen',
 	'5131314092',
-	'<need.email@email.com>'
+	'<need.email@email.com>',
+	current timestamp,
+	null
 );
 
-insert into season values(1, 1);
-insert into season values(2, 2);
-insert into season values(3, 3);
+insert into season values(1, 1, current timestamp, null);
+insert into season values(2, 2, current_timestamp, null);
+insert into season values(3, 3, current_timestamp, null);
 
-insert into team values(1, 'Arnolds Army');
-insert into team values(2, 'Team 2');
-insert into team values(3, 'Team 3');
-insert into team values(4, 'Team 4');
+insert into team values(1, 'Arnolds Army', current_timestamp, null);
+insert into team values(2, 'Team 2', current_timestamp, null);
+insert into team values(3, 'Team 3', current_timestamp, null);
+insert into team values(4, 'Team 4', current_timestamp, null);
 
 insert into statistical_year values(
 	1,
@@ -51,7 +59,9 @@ insert into statistical_year values(
 	24,
 	84,
 	59,
-	102
+	102,
+	current_timestamp,
+	null
 );
 
 insert into statistical_year values(
@@ -66,7 +76,9 @@ insert into statistical_year values(
 	25,
 	84,
 	70,
-	106
+	106,
+	current_timestamp,
+	null
 );
 
 insert into game values(
@@ -76,7 +88,9 @@ insert into game values(
 	2,
 	3,
 	4,
-	1
+	1,
+	current_timestamp,
+	null
 );
 
 insert into game values(
@@ -86,7 +100,9 @@ insert into game values(
 	3,
 	9,
 	2,
-	1
+	1,
+	current_timestamp,
+	null
 );
 
 insert into game values(
@@ -96,7 +112,9 @@ insert into game values(
 	1,
 	9,
 	4,
-	2
+	2,
+	current_timestamp,
+	null
 );
 
 insert into game values(
@@ -106,5 +124,7 @@ insert into game values(
 	1,
 	9,
 	12,
-	2
+	2,
+	current_timestamp,
+	null
 );
