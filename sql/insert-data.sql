@@ -5,7 +5,7 @@ insert into player values(
 	'5134047250',
 	'matthew.heineke@gmail.com',
 	current_timestamp,
-	null
+	null,
 	'admin',
 	null
 );

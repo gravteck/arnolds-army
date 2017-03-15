@@ -15,7 +15,6 @@
 	create table season(
 		id integer not null,
 		year integer,
-		last_name varchar(255),
 		insert_date TIMESTAMP,
 		update_date TIMESTAMP,
 		insert_user varchar(255) not null,
