@@ -5,7 +5,9 @@
 		phone varchar(255),
 		email varchar(255),
 		insert_date TIMESTAMP,
-		update_date TIMESTAMP
+		update_date TIMESTAMP,
+		insert_user varchar(255) not null,
+		update_user varchar(255)
 	);
 
 	alter table player add primary key(id);
@@ -15,7 +17,9 @@
 		year integer,
 		last_name varchar(255),
 		insert_date TIMESTAMP,
-		update_date TIMESTAMP
+		update_date TIMESTAMP,
+		insert_user varchar(255) not null,
+		update_user varchar(255)
 	);
 
 	alter table season add primary key(id);
@@ -34,7 +38,9 @@
 		bb integer,
 		k integer,
 		insert_date TIMESTAMP,
-		update_date TIMESTAMP
+		update_date TIMESTAMP,
+		insert_user varchar(255) not null,
+		update_user varchar(255)
 	);
 
 	alter table statistical_year add primary key(id);
@@ -45,7 +51,9 @@
 		id integer not null,
 		name varchar(255),
 		insert_date TIMESTAMP,
-		update_date TIMESTAMP
+		update_date TIMESTAMP,
+		insert_user varchar(255) not null,
+		update_user varchar(255)
 	);
 
 	alter table team add primary key(id);
@@ -59,7 +67,9 @@
 		away_score integer,
 		season_id integer not null,
 		insert_date TIMESTAMP,
-		update_date TIMESTAMP
+		update_date TIMESTAMP,
+		insert_user varchar(255) not null,
+		update_user varchar(255)
 	);
 
 	alter table game add primary key(id);

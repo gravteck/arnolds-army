@@ -6,6 +6,8 @@ insert into player values(
 	'matthew.heineke@gmail.com',
 	current_timestamp,
 	null
+	'admin',
+	null
 );
 
 insert into player values(
@@ -15,6 +17,8 @@ insert into player values(
 	'5138059969',
 	'<need.email@email.com>',
 	current_timestamp,
+	null,
+	'admin',
 	null
 );
 
@@ -25,6 +29,8 @@ insert into player values(
 	'5132314332',
 	'<need.email@email.com>',
 	current_timestamp,
+	null,
+	'admin',
 	null
 );
 
@@ -35,17 +41,19 @@ insert into player values(
 	'5131314092',
 	'<need.email@email.com>',
 	current_timestamp,
+	null,
+	'admin',
 	null
 );
 
-insert into season values(1, 1, current_timestamp, null);
-insert into season values(2, 2, current_timestamp, null);
-insert into season values(3, 3, current_timestamp, null);
+insert into season values(1, 1, current_timestamp, null, 'admin', null);
+insert into season values(2, 2, current_timestamp, null, 'admin', null);
+insert into season values(3, 3, current_timestamp, null, 'admin', null);
 
-insert into team values(1, 'Arnolds Army', current_timestamp, null);
-insert into team values(2, 'Team 2', current_timestamp, null);
-insert into team values(3, 'Team 3', current_timestamp, null);
-insert into team values(4, 'Team 4', current_timestamp, null);
+insert into team values(1, 'Arnolds Army', current_timestamp, null, 'admin', null);
+insert into team values(2, 'Team 2', current_timestamp, null, 'admin', null);
+insert into team values(3, 'Team 3', current_timestamp, null, 'admin', null);
+insert into team values(4, 'Team 4', current_timestamp, null, 'admin', null);
 
 insert into statistical_year values(
 	1,
@@ -61,6 +69,8 @@ insert into statistical_year values(
 	59,
 	102,
 	current_timestamp,
+	null,
+	'admin',
 	null
 );
 
@@ -78,6 +88,8 @@ insert into statistical_year values(
 	70,
 	106,
 	current_timestamp,
+	null,
+	'admin',
 	null
 );
 
@@ -90,6 +102,8 @@ insert into game values(
 	4,
 	1,
 	current_timestamp,
+	null,
+	'admin',
 	null
 );
 
@@ -102,6 +116,8 @@ insert into game values(
 	2,
 	1,
 	current_timestamp,
+	null,
+	'admin',
 	null
 );
 
@@ -114,6 +130,8 @@ insert into game values(
 	4,
 	2,
 	current_timestamp,
+	null,
+	'admin',
 	null
 );
 
@@ -126,5 +144,7 @@ insert into game values(
 	12,
 	2,
 	current_timestamp,
+	null,
+	'admin',
 	null
 );

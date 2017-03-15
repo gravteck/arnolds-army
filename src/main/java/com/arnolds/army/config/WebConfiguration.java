@@ -68,10 +68,4 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 
 		super.addResourceHandlers(registry);
 	}
-
-	@Bean
-	public SpringSecurityDialect securityDialect() {
-		return new SpringSecurityDialect();
-	}
-
 }

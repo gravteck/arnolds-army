@@ -12,6 +12,10 @@ public interface ApplicationService {
 
 	List<Team> findAllTeams();
 
+	Team findTeam(Integer teamId);
+
+	void saveTeam(Team team);
+
 	List<Player> findAllPlayers();
 
 	Player findPlayer(Integer playerId);

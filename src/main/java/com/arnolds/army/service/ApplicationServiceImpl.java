@@ -42,12 +42,36 @@ public class ApplicationServiceImpl implements ApplicationService {
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see
+	 * com.arnolds.army.service.ApplicationService#findTeam(java.lang.Integer)
+	 */
+	@Override
+	public Team findTeam(Integer teamId) {
+		return teamDao.find(teamId);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.arnolds.army.service.ApplicationService#findAllPlayers()
 	 */
 	@Override
-	@Cacheable("teams")
+	// @Cacheable("teams")
 	public List<Team> findAllTeams() {
 		return teamDao.findAll();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.arnolds.army.service.ApplicationService#saveTeam(com.arnolds.army.
+	 * model.Team)
+	 */
+	@Override
+	@Transactional
+	public void saveTeam(Team team) {
+		teamDao.save(team);
 	}
 
 	/*

@@ -123,6 +123,24 @@ public class AdminController {
 		return "admin/player-edit";
 	}
 
+	@GetMapping("team/edit/{teamId}")
+	public String loadEditTeam(Model m, @PathVariable Integer teamId) {
+
+		Team team = applicationService.findTeam(teamId);
+
+		m.addAttribute("team", team);
+
+		return "admin/team-edit";
+	}
+
+	@GetMapping("team/add")
+	public String loadAddTeam(Model m) {
+
+		m.addAttribute("team", new Team());
+
+		return "admin/team-edit";
+	}
+
 	@GetMapping("player/add")
 	public String loadAddPlayer(Model m) {
 
@@ -140,7 +158,17 @@ public class AdminController {
 
 		redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
 
-		return "redirect:/admin/players";
+		return "redirect:/admin/" + FunctionalAreaType.PLAYERS.value() + "/list";
+	}
+
+	@PostMapping("team/edit/submit")
+	public String teamEditSubmit(@ModelAttribute Team team, RedirectAttributes redirectAttributes) {
+
+		applicationService.saveTeam(team);
+
+		redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
+
+		return "redirect:/admin/" + FunctionalAreaType.TEAMS.value() + "/list";
 	}
 
 	@PostMapping("player/add/submit")
@@ -182,7 +210,7 @@ public class AdminController {
 				players.stream().map(p -> Arrays.asList(text("firstName", p.getFirstName()),
 						text("lastName", p.getLastName()), link("phone", p.getPhone(), "tel:" + p.getPhone()),
 						link("email", p.getEmail(), "mailto:" + p.getEmail()),
-						group(view("/" + itemFunctionalArea + "/" + p.getId()),
+						reverseGroup(view("/" + itemFunctionalArea + "/" + p.getId()),
 								edit("/admin/" + itemFunctionalArea + "/edit/" + p.getId()), delete(p.getId()))))
 						.collect(Collectors.toList()));
 	}
