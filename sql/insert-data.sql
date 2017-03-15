@@ -4,7 +4,7 @@ insert into player values(
 	'Heineke',
 	'5134047250',
 	'matthew.heineke@gmail.com',
-	current timestamp,
+	current_timestamp,
 	null
 );
 
@@ -14,7 +14,7 @@ insert into player values(
 	'Piening',
 	'5138059969',
 	'<need.email@email.com>',
-	current timestamp,
+	current_timestamp,
 	null
 );
 
@@ -24,7 +24,7 @@ insert into player values(
 	'Ihlendorf',
 	'5132314332',
 	'<need.email@email.com>',
-	current timestamp,
+	current_timestamp,
 	null
 );
 
@@ -34,11 +34,11 @@ insert into player values(
 	'WeidMarschen',
 	'5131314092',
 	'<need.email@email.com>',
-	current timestamp,
+	current_timestamp,
 	null
 );
 
-insert into season values(1, 1, current timestamp, null);
+insert into season values(1, 1, current_timestamp, null);
 insert into season values(2, 2, current_timestamp, null);
 insert into season values(3, 3, current_timestamp, null);
 
