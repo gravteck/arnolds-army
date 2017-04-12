@@ -77,6 +77,18 @@ public class ApplicationServiceImpl implements ApplicationService {
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see
+	 * com.arnolds.army.service.ApplicationService#removeTeam(java.lang.Integer)
+	 */
+	@Override
+	@Transactional
+	public void removeTeam(Integer teamId) {
+		teamDao.removeById(teamId);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.arnolds.army.service.ApplicationService#findAllPlayers()
 	 */
 	@Override

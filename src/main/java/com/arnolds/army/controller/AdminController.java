@@ -138,7 +138,7 @@ public class AdminController {
 
 		m.addAttribute("team", new Team());
 
-		return "admin/team-edit";
+		return "admin/team-add";
 	}
 
 	@GetMapping("player/add")
@@ -154,17 +154,38 @@ public class AdminController {
 
 		player.setPhone(StringUtils.replaceAll(player.getPhone(), "[^0-9]", ""));
 
-		applicationService.savePlayer(player);
+		Player persistedPlayer = applicationService.findPlayer(player.getId());
+
+		persistedPlayer.setFirstName(player.getFirstName());
+		persistedPlayer.setLastName(player.getLastName());
+		persistedPlayer.setEmail(player.getEmail());
+		persistedPlayer.setPhone(player.getPhone());
+
+		applicationService.savePlayer(persistedPlayer);
 
 		redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
 
 		return "redirect:/admin/" + FunctionalAreaType.PLAYERS.value() + "/list";
 	}
 
+	@PostMapping("team/add/submit")
+	public String teamAddSubmit(@ModelAttribute Team team, RedirectAttributes redirectAttributes) {
+
+		applicationService.saveTeam(team);
+
+		redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
+
+		return "redirect:/admin/" + FunctionalAreaType.TEAMS.value() + "/list";
+	}
+
 	@PostMapping("team/edit/submit")
 	public String teamEditSubmit(@ModelAttribute Team team, RedirectAttributes redirectAttributes) {
 
-		applicationService.saveTeam(team);
+		Team persistedTeam = applicationService.findTeam(team.getId());
+
+		persistedTeam.setName(team.getName());
+
+		applicationService.saveTeam(persistedTeam);
 
 		redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
 
@@ -180,7 +201,7 @@ public class AdminController {
 
 		redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
 
-		return "redirect:/admin/players/list";
+		return "redirect:/admin/" + FunctionalAreaType.PLAYERS.value() + "/list";
 	}
 
 	@RequestMapping("player/delete/{playerId}")
@@ -190,7 +211,17 @@ public class AdminController {
 
 		redirectAttributes.addFlashAttribute("deleted", Boolean.TRUE);
 
-		return "redirect:/admin/players/list";
+		return "redirect:/admin/" + FunctionalAreaType.PLAYERS.value() + "/list";
+	}
+
+	@RequestMapping("team/delete/{teamId}")
+	public String teamDeleteSubmit(@PathVariable Integer teamId, RedirectAttributes redirectAttributes) {
+
+		applicationService.removeTeam(teamId);
+
+		redirectAttributes.addFlashAttribute("deleted", Boolean.TRUE);
+
+		return "redirect:/admin/" + FunctionalAreaType.TEAMS.value() + "/list";
 	}
 
 	@RequestMapping("login")

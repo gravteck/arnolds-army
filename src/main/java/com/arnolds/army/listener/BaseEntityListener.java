@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.arnolds.army.model.BaseEntity;
