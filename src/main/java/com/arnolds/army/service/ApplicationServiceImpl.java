@@ -159,6 +159,42 @@ public class ApplicationServiceImpl implements ApplicationService {
 		seasonDao.removeById(seasonId);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.arnolds.army.service.ApplicationService#findGame(java.lang.Integer)
+	 */
+	@Override
+	public Game findGame(Integer gameId) {
+		return gameDao.find(gameId);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.arnolds.army.service.ApplicationService#saveGame(com.arnolds.army.
+	 * model.Game)
+	 */
+	@Override
+	@Transactional
+	public void saveGame(Game game) {
+		gameDao.save(game);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.arnolds.army.service.ApplicationService#removeGame(java.lang.Integer)
+	 */
+	@Override
+	@Transactional
+	public void removeGame(Integer gameId) {
+		gameDao.removeById(gameId);
+	}
+
 	@Override
 	public List<StatisticalYear> findAllStatisticalYears(Integer playerId) {
 		return null;

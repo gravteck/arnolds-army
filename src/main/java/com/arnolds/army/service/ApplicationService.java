@@ -32,6 +32,12 @@ public interface ApplicationService {
 
 	void removeSeason(Integer seasonId);
 
+	Game findGame(Integer gameId);
+
+	void saveGame(Game game);
+
+	void removeGame(Integer gameId);
+
 	List<StatisticalYear> findAllStatisticalYears(Integer playerId);
 
 	List<Season> findAllSeasons();

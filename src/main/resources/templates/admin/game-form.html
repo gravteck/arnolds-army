@@ -1,0 +1,41 @@
+<div class="form-group">
+	<label class="control-label col-sm-2" th:for="homeTeam"> Home Team:</label>
+	<div class="col-sm-5">
+		<select class="form-control" id="homeTeam" th:field="*{homeTeam.id}">
+			<option th:each="team : ${teams}" th:value="${team.id}" th:label="${team.name}"></option>
+		</select>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-sm-2" th:for="awayTeam">Away Team:</label>
+	<div class="col-sm-5">
+		<select class="form-control" id="awayTeam" th:field="*{awayTeam.id}">
+			<option th:each="team : ${teams}" th:value="${team.id}" th:label="${team.name}"></option>
+		</select>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-sm-2" for="homeScore">Home Score:</label>
+	<div class="col-sm-5">
+		<input class="form-control" th:field="*{homeScore}" placeholder="" th:errorclass="fieldError"></input>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-sm-2" for="awayScore">Away Score:</label>
+	<div class="col-sm-5">
+		<input class="form-control" th:field="*{awayScore}" placeholder="" th:errorclass="fieldError"></input>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-sm-2" th:for="season">Season:</label>
+	<div class="col-sm-5">
+		<select class="form-control" id="season" th:field="*{season.id}">
+			<option th:each="season : ${seasons}" th:value="${season.id}" th:label="${season.year}"></option>
+		</select>
+	</div>
+</div>
+<div class="form-group">
+	<div class="col-sm-offset-2 col-sm-10">
+		<button type="submit" class="btn btn-info">Save</button>
+	</div>
+</div>

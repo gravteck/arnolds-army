@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<div th:replace="fragments/header :: header-setup"></div>
+
+<body>
+	<div th:replace="fragments/header :: header"></div>
+	<div th:replace="fragments/header :: jumbotron"></div>
+	<div class="container-fluid">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2>Edit Game</h2>
+			</div>
+			<div class="panel-body">
+				<form class="form-horizontal" th:action="@{/admin/season/edit/submit}" th:object="${game}" method="post">
+					<input type="hidden" th:field="*{id}" th:value="${game.id}"></input>
+					<div th:include="admin/game-form"></div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

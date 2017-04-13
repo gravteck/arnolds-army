@@ -143,6 +143,20 @@ public class AdminController {
 		return "admin/season-edit";
 	}
 
+	@GetMapping("game/edit/{gameId}")
+	public String loadEditGame(Model m, @PathVariable Integer gameId) {
+
+		Game game = applicationService.findGame(gameId);
+		List<Team> teams = applicationService.findAllTeams();
+		List<Season> seasons = applicationService.findAllSeasons();
+
+		m.addAttribute("game", game);
+		m.addAttribute("teams", teams);
+		m.addAttribute("seasons", seasons);
+
+		return "admin/game-edit";
+	}
+
 	@GetMapping("team/add")
 	public String loadAddTeam(Model m) {
 
@@ -333,7 +347,7 @@ public class AdminController {
 		List<Game> games = applicationService.findAllGames();
 
 		title(title, FunctionalAreaType.GAMES.title());
-		itemFunctionalArea(itemFunctionalArea, FunctionalAreaType.GAMES.value());
+		itemFunctionalArea(itemFunctionalArea, FunctionalAreaType.GAME.value());
 		headers(headers, "#", "Home Team", "Away Team", "Home Score", "Away Score", "");
 
 		records(records,
