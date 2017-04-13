@@ -2,6 +2,8 @@ package com.arnolds.army.service;
 
 import java.util.List;
 
+import org.apache.commons.collections.KeyValue;
+
 import com.arnolds.army.model.Game;
 import com.arnolds.army.model.Player;
 import com.arnolds.army.model.Season;
@@ -45,4 +47,16 @@ public interface ApplicationService {
 	List<Game> findAllGames();
 
 	List<StatisticalYear> findAllStatisticalYears();
+
+	List<Integer> findAllYears();
+
+	List<KeyValue> findAllMonths();
+
+	List<Integer> findAllDays();
+
+	List<Integer> findAllHours();
+
+	List<String> findAllMinuteIntervals();
+
+	List<String> findAllPeriods();
 }

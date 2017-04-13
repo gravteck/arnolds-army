@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.collections.KeyValue;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -149,10 +150,22 @@ public class AdminController {
 		Game game = applicationService.findGame(gameId);
 		List<Team> teams = applicationService.findAllTeams();
 		List<Season> seasons = applicationService.findAllSeasons();
+		List<Integer> years = applicationService.findAllYears();
+		List<KeyValue> months = applicationService.findAllMonths();
+		List<Integer> days = applicationService.findAllDays();
+		List<Integer> hours = applicationService.findAllHours();
+		List<String> minuteIntervals = applicationService.findAllMinuteIntervals();
+		List<String> periods = applicationService.findAllPeriods();
 
 		m.addAttribute("game", game);
 		m.addAttribute("teams", teams);
 		m.addAttribute("seasons", seasons);
+		m.addAttribute("years", years);
+		m.addAttribute("months", months);
+		m.addAttribute("days", days);
+		m.addAttribute("hours", hours);
+		m.addAttribute("minuteIntervals", minuteIntervals);
+		m.addAttribute("periods", periods);
 
 		return "admin/game-edit";
 	}
@@ -179,6 +192,31 @@ public class AdminController {
 		m.addAttribute("season", new Season());
 
 		return "admin/season-add";
+	}
+
+	@GetMapping("game/add")
+	public String loadAddGame(Model m) {
+
+		List<Team> teams = applicationService.findAllTeams();
+		List<Season> seasons = applicationService.findAllSeasons();
+		List<Integer> years = applicationService.findAllYears();
+		List<KeyValue> months = applicationService.findAllMonths();
+		List<Integer> days = applicationService.findAllDays();
+		List<Integer> hours = applicationService.findAllHours();
+		List<String> minuteIntervals = applicationService.findAllMinuteIntervals();
+		List<String> periods = applicationService.findAllPeriods();
+
+		m.addAttribute("game", new Game());
+		m.addAttribute("teams", teams);
+		m.addAttribute("seasons", seasons);
+		m.addAttribute("years", years);
+		m.addAttribute("months", months);
+		m.addAttribute("days", days);
+		m.addAttribute("hours", hours);
+		m.addAttribute("minuteIntervals", minuteIntervals);
+		m.addAttribute("periods", periods);
+
+		return "admin/game-add";
 	}
 
 	@PostMapping("player/edit/submit")
@@ -220,6 +258,16 @@ public class AdminController {
 		return "redirect:/admin/" + FunctionalAreaType.SEASONS.value() + "/list";
 	}
 
+	@PostMapping("game/add/submit")
+	public String gameAddSubmit(@ModelAttribute Game game, RedirectAttributes redirectAttributes) {
+
+		applicationService.saveGame(game);
+
+		redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
+
+		return "redirect:/admin/" + FunctionalAreaType.GAMES.value() + "/list";
+	}
+
 	@PostMapping("season/edit/submit")
 	public String seasonEditSubmit(@ModelAttribute Season season, RedirectAttributes redirectAttributes) {
 
@@ -248,6 +296,28 @@ public class AdminController {
 		return "redirect:/admin/" + FunctionalAreaType.TEAMS.value() + "/list";
 	}
 
+	@PostMapping("game/edit/submit")
+	public String gameEditSubmit(@ModelAttribute Game game, RedirectAttributes redirectAttributes) {
+
+		Game persistedGame = applicationService.findGame(game.getId());
+
+		Team homeTeam = applicationService.findTeam(game.getHomeTeam().getId());
+		Team awayTeam = applicationService.findTeam(game.getAwayTeam().getId());
+		Season season = applicationService.findSeason(game.getSeason().getId());
+
+		persistedGame.setHomeTeam(homeTeam);
+		persistedGame.setAwayTeam(awayTeam);
+		persistedGame.setHomeScore(game.getHomeScore());
+		persistedGame.setAwayScore(game.getAwayScore());
+		persistedGame.setSeason(season);
+
+		applicationService.saveGame(persistedGame);
+
+		redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
+
+		return "redirect:/admin/" + FunctionalAreaType.GAMES.value() + "/list";
+	}
+
 	@RequestMapping("season/delete/{seasonId}")
 	public String seasonDeleteSubmit(@PathVariable Integer seasonId, RedirectAttributes redirectAttributes) {
 
@@ -256,6 +326,16 @@ public class AdminController {
 		redirectAttributes.addFlashAttribute("deleted", Boolean.TRUE);
 
 		return "redirect:/admin/" + FunctionalAreaType.SEASONS.value() + "/list";
+	}
+
+	@RequestMapping("game/delete/{gameId}")
+	public String gameDeleteSubmit(@PathVariable Integer gameId, RedirectAttributes redirectAttributes) {
+
+		applicationService.removeGame(gameId);
+
+		redirectAttributes.addFlashAttribute("deleted", Boolean.TRUE);
+
+		return "redirect:/admin/" + FunctionalAreaType.GAMES.value() + "/list";
 	}
 
 	@PostMapping("player/add/submit")
@@ -348,12 +428,12 @@ public class AdminController {
 
 		title(title, FunctionalAreaType.GAMES.title());
 		itemFunctionalArea(itemFunctionalArea, FunctionalAreaType.GAME.value());
-		headers(headers, "#", "Home Team", "Away Team", "Home Score", "Away Score", "");
+		headers(headers, "Season", "Home Team", "Away Team", "Home Score", "Away Score", "");
 
 		records(records,
-				games.stream().map(g -> Arrays.asList(text("id", g.getId()),
+				games.stream().map(g -> Arrays.asList(text("season", g.getSeason().getYear()),
 						text("homeTeam", g.getHomeTeam().getName()), text("awayTeam", g.getAwayTeam().getName()),
-						text("homeScore", g.getHomeScore()), text("homeScore", g.getHomeScore()), spacer(),
+						text("homeScore", g.getHomeScore()), text("awayScore", g.getAwayScore()), spacer(),
 						reverseGroup(view("/" + itemFunctionalArea + "/" + g.getId()),
 								edit("/admin/" + itemFunctionalArea + "/edit/" + g.getId()), delete(g.getId()))))
 						.collect(Collectors.toList()));

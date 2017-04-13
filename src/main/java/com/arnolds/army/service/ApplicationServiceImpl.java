@@ -4,13 +4,13 @@
 package com.arnolds.army.service;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.collections.KeyValue;
+import org.apache.commons.collections.keyvalue.DefaultMapEntry;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -213,6 +213,100 @@ public class ApplicationServiceImpl implements ApplicationService {
 	@Override
 	public List<StatisticalYear> findAllStatisticalYears() {
 		return statisticalYearDao.findAll();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.arnolds.army.service.ApplicationService#findAllYears()
+	 */
+	@Override
+	public List<Integer> findAllYears() {
+
+		List<Integer> years = new ArrayList<>();
+
+		for (int i = 2012; i < 2017; i++) {
+			years.add(i + 1);
+		}
+
+		return years;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.arnolds.army.service.ApplicationService#findAllMonths()
+	 */
+	@Override
+	public List<KeyValue> findAllMonths() {
+		List<KeyValue> month = new ArrayList<>();
+
+		month.add(new DefaultMapEntry("Jan", 1));
+		month.add(new DefaultMapEntry("Feb", 2));
+		month.add(new DefaultMapEntry("Mar", 3));
+		month.add(new DefaultMapEntry("Apr", 4));
+		month.add(new DefaultMapEntry("May", 5));
+		month.add(new DefaultMapEntry("Jun", 6));
+		month.add(new DefaultMapEntry("Jul", 7));
+		month.add(new DefaultMapEntry("Aug", 8));
+		month.add(new DefaultMapEntry("Sep", 9));
+		month.add(new DefaultMapEntry("Oct", 10));
+		month.add(new DefaultMapEntry("Nov", 11));
+		month.add(new DefaultMapEntry("Dec", 12));
+
+		return month;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.arnolds.army.service.ApplicationService#findAllDays()
+	 */
+	@Override
+	public List<Integer> findAllDays() {
+		List<Integer> days = new ArrayList<>();
+
+		for (int i = 0; i < 31; i++) {
+			days.add(i + 1);
+		}
+
+		return days;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.arnolds.army.service.ApplicationService#findAllHours()
+	 */
+	@Override
+	public List<Integer> findAllHours() {
+		List<Integer> hours = new ArrayList<>();
+
+		for (int i = 0; i < 12; i++) {
+			hours.add(i + 1);
+		}
+
+		return hours;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.arnolds.army.service.ApplicationService#findAllMinuteIntervals()
+	 */
+	@Override
+	public List<String> findAllMinuteIntervals() {
+		return Arrays.asList("00", "15", "30", "45");
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.arnolds.army.service.ApplicationService#findAllPeriods()
+	 */
+	@Override
+	public List<String> findAllPeriods() {
+		return Arrays.asList("pm", "am");
 	}
 
 }

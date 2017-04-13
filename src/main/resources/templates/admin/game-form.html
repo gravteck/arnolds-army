@@ -1,4 +1,28 @@
 <div class="form-group">
+	<label class="control-label col-sm-2"> Date (MM DD YYYY):</label>
+	<div class="form-inline col-sm-5">
+		<select class="form-control" style="display: inline" id="month" th:field="*{month}">
+			<option th:each="month : ${months}" th:value="${month.value}" th:label="${month.key}"></option>
+		</select> <select class="form-control" style="display: inline" id="day" th:field="*{day}">
+			<option th:each="day : ${days}" th:value="${day}" th:label="${day}"></option>
+		</select> <select class="form-control" style="display: inline" id="year" th:field="*{year}">
+			<option th:each="year : ${years}" th:value="${year}" th:label="${year}"></option>
+		</select>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-sm-2">Time (HH mm):</label>
+	<div class="form-inline col-sm-5">
+		<select class="form-control" style="display: inline" id="hour" th:field="*{hour}">
+			<option th:each="hour : ${hours}" th:value="${hour}" th:label="${hour}"></option>
+		</select> <select class="form-control" style="display: inline" id="minuteInterval" th:field="*{minuteInterval}">
+			<option th:each="minuteInterval : ${minuteIntervals}" th:value="${minuteInterval}" th:label="${minuteInterval}"></option>
+		</select> <select class="form-control" style="display: inline" id="period" th:filed="*{period}">
+			<option th:each="period : ${periods}" th:value="${period}" th:label="${period}"></option>
+		</select>
+	</div>
+</div>
+<div class="form-group">
 	<label class="control-label col-sm-2" th:for="homeTeam"> Home Team:</label>
 	<div class="col-sm-5">
 		<select class="form-control" id="homeTeam" th:field="*{homeTeam.id}">
