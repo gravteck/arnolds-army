@@ -133,6 +133,16 @@ public class AdminController {
 		return "admin/team-edit";
 	}
 
+	@GetMapping("season/edit/{seasonId}")
+	public String loadEditSeason(Model m, @PathVariable Integer seasonId) {
+
+		Season season = applicationService.findSeason(seasonId);
+
+		m.addAttribute("season", season);
+
+		return "admin/season-edit";
+	}
+
 	@GetMapping("team/add")
 	public String loadAddTeam(Model m) {
 
@@ -147,6 +157,14 @@ public class AdminController {
 		m.addAttribute("player", new Player());
 
 		return "admin/player-add";
+	}
+
+	@GetMapping("season/add")
+	public String loadAddSeason(Model m) {
+
+		m.addAttribute("season", new Season());
+
+		return "admin/season-add";
 	}
 
 	@PostMapping("player/edit/submit")
@@ -178,6 +196,30 @@ public class AdminController {
 		return "redirect:/admin/" + FunctionalAreaType.TEAMS.value() + "/list";
 	}
 
+	@PostMapping("season/add/submit")
+	public String teamSeasonSubmit(@ModelAttribute Season season, RedirectAttributes redirectAttributes) {
+
+		applicationService.saveSeason(season);
+
+		redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
+
+		return "redirect:/admin/" + FunctionalAreaType.SEASONS.value() + "/list";
+	}
+
+	@PostMapping("season/edit/submit")
+	public String seasonEditSubmit(@ModelAttribute Season season, RedirectAttributes redirectAttributes) {
+
+		Season persistedSeason = applicationService.findSeason(season.getId());
+
+		persistedSeason.setYear(season.getYear());
+
+		applicationService.saveSeason(persistedSeason);
+
+		redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
+
+		return "redirect:/admin/" + FunctionalAreaType.SEASONS.value() + "/list";
+	}
+
 	@PostMapping("team/edit/submit")
 	public String teamEditSubmit(@ModelAttribute Team team, RedirectAttributes redirectAttributes) {
 
@@ -190,6 +232,16 @@ public class AdminController {
 		redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
 
 		return "redirect:/admin/" + FunctionalAreaType.TEAMS.value() + "/list";
+	}
+
+	@RequestMapping("season/delete/{seasonId}")
+	public String seasonDeleteSubmit(@PathVariable Integer seasonId, RedirectAttributes redirectAttributes) {
+
+		applicationService.removeSeason(seasonId);
+
+		redirectAttributes.addFlashAttribute("deleted", Boolean.TRUE);
+
+		return "redirect:/admin/" + FunctionalAreaType.SEASONS.value() + "/list";
 	}
 
 	@PostMapping("player/add/submit")

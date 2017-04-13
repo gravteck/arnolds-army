@@ -15,7 +15,7 @@ public interface ApplicationService {
 	Team findTeam(Integer teamId);
 
 	void saveTeam(Team team);
-	
+
 	void removeTeam(Integer teamId);
 
 	List<Player> findAllPlayers();
@@ -25,6 +25,12 @@ public interface ApplicationService {
 	void savePlayer(Player player);
 
 	void removePlayer(Integer playerId);
+
+	Season findSeason(Integer seasonId);
+
+	void saveSeason(Season season);
+
+	void removeSeason(Integer seasonId);
 
 	List<StatisticalYear> findAllStatisticalYears(Integer playerId);
 

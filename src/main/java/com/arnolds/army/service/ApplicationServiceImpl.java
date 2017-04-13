@@ -123,13 +123,48 @@ public class ApplicationServiceImpl implements ApplicationService {
 		playerDao.removeById(playerId);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.arnolds.army.service.ApplicationService#findSeason(java.lang.Integer)
+	 */
+	@Override
+	public Season findSeason(Integer seasonId) {
+		return seasonDao.find(seasonId);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.arnolds.army.service.ApplicationService#saveSeason(com.arnolds.army.
+	 * model.Season)
+	 */
+	@Override
+	@Transactional
+	public void saveSeason(Season season) {
+		seasonDao.save(season);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.arnolds.army.service.ApplicationService#removeSeason(java.lang.
+	 * Integer)
+	 */
+	@Override
+	@Transactional
+	public void removeSeason(Integer seasonId) {
+		seasonDao.removeById(seasonId);
+	}
+
 	@Override
 	public List<StatisticalYear> findAllStatisticalYears(Integer playerId) {
 		return null;
 	}
 
 	@Override
-	@Cacheable("seasons")
 	public List<Season> findAllSeasons() {
 		return seasonDao.findAll();
 	}
