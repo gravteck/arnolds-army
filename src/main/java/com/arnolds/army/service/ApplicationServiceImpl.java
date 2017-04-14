@@ -6,7 +6,9 @@ package com.arnolds.army.service;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections.KeyValue;
 import org.apache.commons.collections.keyvalue.DefaultMapEntry;
@@ -58,7 +60,9 @@ public class ApplicationServiceImpl implements ApplicationService {
 	@Override
 	// @Cacheable("teams")
 	public List<Team> findAllTeams() {
-		return teamDao.findAll();
+		return teamDao.findAll().stream()
+				.sorted((a, b) -> a.getName().toUpperCase().compareTo(b.getName().toUpperCase()))
+				.collect(Collectors.toList());
 	}
 
 	/*
@@ -94,7 +98,8 @@ public class ApplicationServiceImpl implements ApplicationService {
 	@Override
 	// @Cacheable("players")
 	public List<Player> findAllPlayers() {
-		return playerDao.findAll();
+		return playerDao.findAll().stream().sorted((a, b) -> a.getFirstName().compareTo(b.getFirstName()))
+				.collect(Collectors.toList());
 	}
 
 	/*
@@ -195,6 +200,43 @@ public class ApplicationServiceImpl implements ApplicationService {
 		gameDao.removeById(gameId);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.arnolds.army.service.ApplicationService#findStatisticalYear(java.lang
+	 * .Integer)
+	 */
+	@Override
+	public StatisticalYear findStatisticalYear(Integer statisticalYearId) {
+		return statisticalYearDao.find(statisticalYearId);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.arnolds.army.service.ApplicationService#saveStatisticalYear(com.
+	 * arnolds.army.model.StatisticalYear)
+	 */
+	@Override
+	@Transactional
+	public void saveStatisticalYear(StatisticalYear statisticalYear) {
+		statisticalYearDao.save(statisticalYear);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.arnolds.army.service.ApplicationService#removeStatisticalYear(java.
+	 * lang.Integer)
+	 */
+	@Override
+	@Transactional
+	public void removeStatisticalYear(Integer statisticalYearId) {
+		statisticalYearDao.removeById(statisticalYearId);
+	}
+
 	@Override
 	public List<StatisticalYear> findAllStatisticalYears(Integer playerId) {
 		return null;
@@ -202,17 +244,23 @@ public class ApplicationServiceImpl implements ApplicationService {
 
 	@Override
 	public List<Season> findAllSeasons() {
-		return seasonDao.findAll();
+
+		return seasonDao.findAll().stream().sorted((a, b) -> a.getYear().compareTo(b.getYear()))
+				.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<Game> findAllGames() {
-		return gameDao.findAll();
+
+		return gameDao.findAll().stream().sorted((a, b) -> a.getLocalDateTime().compareTo(b.getLocalDateTime()))
+				.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<StatisticalYear> findAllStatisticalYears() {
-		return statisticalYearDao.findAll();
+
+		return statisticalYearDao.findAll().stream().sorted((a, b) -> a.getYear().compareTo(b.getYear()))
+				.collect(Collectors.toList());
 	}
 
 	/*

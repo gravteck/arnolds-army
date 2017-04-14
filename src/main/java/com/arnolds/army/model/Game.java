@@ -24,6 +24,10 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class Game extends BaseEntity {
 
+	public static final String PERIOD_AM = "am";
+
+	public static final String PERIOD_PM = "pm";
+
 	@Id
 	@SequenceGenerator(name = "game_id_seq", sequenceName = "game_id_seq", allocationSize = 1, initialValue = 10)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "game_id_seq")

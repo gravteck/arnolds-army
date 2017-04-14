@@ -22,6 +22,6 @@ public class GameEntityListener extends BaseEntityListener {
 
 		game.setHour(hour > 12 ? hour - 12 : hour);
 		game.setMinuteInterval(String.valueOf(game.getLocalDateTime().getMinute()));
-		game.setPeriod(hour > 12 ? "pm" : "am");
+		game.setPeriod(hour > 12 ? Game.PERIOD_PM : Game.PERIOD_AM);
 	}
 }

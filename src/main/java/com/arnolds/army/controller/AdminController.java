@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -171,6 +172,20 @@ public class AdminController {
 		return "admin/game-edit";
 	}
 
+	@GetMapping("statistical-year/edit/{statisticalYearId}")
+	public String loadEditStatisticalYear(Model m, @PathVariable Integer statisticalYearId) {
+
+		StatisticalYear statisticalYear = applicationService.findStatisticalYear(statisticalYearId);
+		List<Player> players = applicationService.findAllPlayers();
+		List<Season> seasons = applicationService.findAllSeasons();
+
+		m.addAttribute("statisticalYear", statisticalYear);
+		m.addAttribute("players", players);
+		m.addAttribute("seasons", seasons);
+
+		return "admin/statistical-year-edit";
+	}
+
 	@GetMapping("team/add")
 	public String loadAddTeam(Model m) {
 
@@ -220,6 +235,19 @@ public class AdminController {
 		return "admin/game-add";
 	}
 
+	@GetMapping("statistical-year/add")
+	public String loadAddStatisticalYear(Model m) {
+
+		List<Player> players = applicationService.findAllPlayers();
+		List<Season> seasons = applicationService.findAllSeasons();
+
+		m.addAttribute("statisticalYear", new StatisticalYear());
+		m.addAttribute("players", players);
+		m.addAttribute("seasons", seasons);
+
+		return "admin/statistical-year-add";
+	}
+
 	@PostMapping("player/edit/submit")
 	public String playerEditSubmit(@ModelAttribute Player player, RedirectAttributes redirectAttributes) {
 
@@ -262,11 +290,29 @@ public class AdminController {
 	@PostMapping("game/add/submit")
 	public String gameAddSubmit(@ModelAttribute Game game, RedirectAttributes redirectAttributes) {
 
+		Integer hour = Game.PERIOD_PM.equals(game.getPeriod()) ? game.getHour() + 12 : game.getHour();
+
+		LocalDateTime localDateTime = LocalDateTime.of(game.getYear(), game.getMonth(), game.getDay(), hour,
+				Integer.valueOf(game.getMinuteInterval()));
+
+		game.setLocalDateTime(localDateTime);
+
 		applicationService.saveGame(game);
 
 		redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
 
 		return "redirect:/admin/" + FunctionalAreaType.GAMES.value() + "/list";
+	}
+
+	@PostMapping("statistical-year/add/submit")
+	public String statisticalYearAddSubmit(@ModelAttribute StatisticalYear statisticalYear,
+			RedirectAttributes redirectAttributes) {
+
+		applicationService.saveStatisticalYear(statisticalYear);
+
+		redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
+
+		return "redirect:/admin/" + FunctionalAreaType.STATISTICAL_YEARS.value() + "/list";
 	}
 
 	@PostMapping("season/edit/submit")
@@ -312,7 +358,9 @@ public class AdminController {
 		persistedGame.setAwayScore(game.getAwayScore());
 		persistedGame.setSeason(season);
 
-		LocalDateTime localDateTime = LocalDateTime.of(game.getYear(), game.getMonth(), game.getDay(), game.getHour(),
+		Integer hour = Game.PERIOD_PM.equals(game.getPeriod()) ? game.getHour() + 12 : game.getHour();
+
+		LocalDateTime localDateTime = LocalDateTime.of(game.getYear(), game.getMonth(), game.getDay(), hour,
 				Integer.valueOf(game.getMinuteInterval()));
 
 		persistedGame.setLocalDateTime(localDateTime);
@@ -322,6 +370,31 @@ public class AdminController {
 		redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
 
 		return "redirect:/admin/" + FunctionalAreaType.GAMES.value() + "/list";
+	}
+
+	@PostMapping("statistical-year/edit/submit")
+	public String statisticalYearEditSubmit(@ModelAttribute StatisticalYear statisticalYear,
+			RedirectAttributes redirectAttributes) {
+
+		StatisticalYear persistedStatisticalYear = applicationService.findStatisticalYear(statisticalYear.getId());
+
+		persistedStatisticalYear.setPlayer(statisticalYear.getPlayer());
+		persistedStatisticalYear.setSeason(statisticalYear.getSeason());
+		persistedStatisticalYear.setAtBats(statisticalYear.getAtBats());
+		persistedStatisticalYear.setRuns(statisticalYear.getRuns());
+		persistedStatisticalYear.setHits(statisticalYear.getHits());
+		persistedStatisticalYear.setDoubles(statisticalYear.getDoubles());
+		persistedStatisticalYear.setTriples(statisticalYear.getTriples());
+		persistedStatisticalYear.setHomeRuns(statisticalYear.getHomeRuns());
+		persistedStatisticalYear.setRbi(statisticalYear.getRbi());
+		persistedStatisticalYear.setWalks(statisticalYear.getWalks());
+		persistedStatisticalYear.setStrikeOuts(statisticalYear.getStrikeOuts());
+
+		applicationService.saveStatisticalYear(persistedStatisticalYear);
+
+		redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
+
+		return "redirect:/admin/" + FunctionalAreaType.STATISTICAL_YEARS.value() + "/list";
 	}
 
 	@RequestMapping("season/delete/{seasonId}")
@@ -342,6 +415,17 @@ public class AdminController {
 		redirectAttributes.addFlashAttribute("deleted", Boolean.TRUE);
 
 		return "redirect:/admin/" + FunctionalAreaType.GAMES.value() + "/list";
+	}
+
+	@RequestMapping("statistical-year/delete/{gameId}")
+	public String statisticalYearDeleteSubmit(@PathVariable Integer statisticalYearId,
+			RedirectAttributes redirectAttributes) {
+
+		applicationService.removeSeason(statisticalYearId);
+
+		redirectAttributes.addFlashAttribute("deleted", Boolean.TRUE);
+
+		return "redirect:/admin/" + FunctionalAreaType.STATISTICAL_YEARS.value() + "/list";
 	}
 
 	@PostMapping("player/add/submit")
@@ -467,6 +551,7 @@ public class AdminController {
 						reverseGroup(view("/" + itemFunctionalArea + "/" + sy.getId()),
 								edit("/admin/" + itemFunctionalArea + "/edit/" + sy.getId()), delete(sy.getId()))))
 				.collect(Collectors.toList()));
+
 	}
 
 	protected void title(StringBuilder title, String s) {

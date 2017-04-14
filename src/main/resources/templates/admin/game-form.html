@@ -17,7 +17,7 @@
 			<option th:each="hour : ${hours}" th:value="${hour}" th:label="${hour}"></option>
 		</select> <select class="form-control" style="display: inline" id="minuteInterval" th:field="*{minuteInterval}">
 			<option th:each="minuteInterval : ${minuteIntervals}" th:value="${minuteInterval}" th:label="${minuteInterval}"></option>
-		</select> <select class="form-control" style="display: inline" id="period" th:filed="*{period}">
+		</select> <select class="form-control" style="display: inline" id="period" th:field="*{period}">
 			<option th:each="period : ${periods}" th:value="${period}" th:label="${period}"></option>
 		</select>
 	</div>
