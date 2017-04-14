@@ -9,6 +9,7 @@ import static com.arnolds.army.model.ReportingField.spacer;
 import static com.arnolds.army.model.ReportingField.text;
 import static com.arnolds.army.model.ReportingField.view;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -311,6 +312,11 @@ public class AdminController {
 		persistedGame.setAwayScore(game.getAwayScore());
 		persistedGame.setSeason(season);
 
+		LocalDateTime localDateTime = LocalDateTime.of(game.getYear(), game.getMonth(), game.getDay(), game.getHour(),
+				Integer.valueOf(game.getMinuteInterval()));
+
+		persistedGame.setLocalDateTime(localDateTime);
+
 		applicationService.saveGame(persistedGame);
 
 		redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
@@ -428,12 +434,14 @@ public class AdminController {
 
 		title(title, FunctionalAreaType.GAMES.title());
 		itemFunctionalArea(itemFunctionalArea, FunctionalAreaType.GAME.value());
-		headers(headers, "Season", "Home Team", "Away Team", "Home Score", "Away Score", "");
+		headers(headers, "Season", "Home Team", "Away Team", "Home Score", "Away Score", "Date", "Time");
 
 		records(records,
 				games.stream().map(g -> Arrays.asList(text("season", g.getSeason().getYear()),
 						text("homeTeam", g.getHomeTeam().getName()), text("awayTeam", g.getAwayTeam().getName()),
-						text("homeScore", g.getHomeScore()), text("awayScore", g.getAwayScore()), spacer(),
+						text("homeScore", g.getHomeScore()), text("awayScore", g.getAwayScore()),
+						text("date", g.getMonth() + "/" + g.getDay() + "/" + g.getYear()),
+						text("time", g.getHour() + ":" + g.getMinuteInterval() + " " + g.getPeriod()),
 						reverseGroup(view("/" + itemFunctionalArea + "/" + g.getId()),
 								edit("/admin/" + itemFunctionalArea + "/edit/" + g.getId()), delete(g.getId()))))
 						.collect(Collectors.toList()));

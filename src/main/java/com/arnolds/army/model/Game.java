@@ -197,7 +197,7 @@ public class Game extends BaseEntity {
 	 *            the minuteInterval to set
 	 */
 	public void setMinuteInterval(String minuteInterval) {
-		this.minuteInterval = minuteInterval;
+		this.minuteInterval = "0".equals(minuteInterval) ? "00" : minuteInterval;
 	}
 
 	/**
