@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <div th:replace="fragments/header :: header-setup"></div>
+
 <body>
 	<div th:replace="fragments/header :: header"></div>
 	<div th:replace="fragments/header :: jumbotron"></div>
 	<div class="container-fluid">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h2>
-					<span th:text="#{home.title}"></span>
-				</h2>
+				<h2 th:text="${team.name}"></h2>
 			</div>
-			<div class="panel-body" th:text="#{home.body}"></div>
+			<div class="panel-body">
+				<form class="form-horizontal" th:action="@{/admin/team/add/submit}" th:object="${team}" method="post">
+					<input type="hidden" th:field="*{id}" th:value="${team.id}"></input>
+					<div th:include="admin/team-form"></div>
+				</form>
+			</div>
 		</div>
 	</div>
 	<div th:replace="fragments/footer :: footer"></div>

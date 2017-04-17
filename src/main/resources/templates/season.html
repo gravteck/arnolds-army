@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <div th:replace="fragments/header :: header-setup"></div>
+
 <body>
 	<div th:replace="fragments/header :: header"></div>
 	<div th:replace="fragments/header :: jumbotron"></div>
 	<div class="container-fluid">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h2>
-					<span th:text="#{home.title}"></span>
-				</h2>
+				<h2 style="display: inline" th:text="${'Season ' + season.year}"></h2>
+				<label class="pull-right" th:text="${'(' + season.getWins(arnoldsId) + ' - ' + season.getLosses(arnoldsId) + ')'}"></label>
 			</div>
-			<div class="panel-body" th:text="#{home.body}"></div>
+			<div class="panel-body table-responsive">
+				<div th:include="season-table"></div>
+			</div>
 		</div>
 	</div>
 	<div th:replace="fragments/footer :: footer"></div>

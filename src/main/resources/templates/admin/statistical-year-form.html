@@ -1,0 +1,75 @@
+<div class="form-group">
+	<label class="control-label col-sm-2" th:for="player">Player:</label>
+	<div class="col-sm-5">
+		<select class="form-control" id="player" th:field="*{player.id}">
+			<option th:each="player : ${players}" th:value="${player.id}" th:label="${player.firstName + ' ' + player.lastName}"></option>
+		</select>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-sm-2" th:for="season">Season:</label>
+	<div class="col-sm-5">
+		<select class="form-control" id="season" th:field="*{season.id}">
+			<option th:each="season : ${seasons}" th:value="${season.id}" th:label="${season.year}"></option>
+		</select>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-sm-2" th:for="atBats">At Bats:</label>
+	<div class="col-sm-5">
+		<input class="form-control" th:field="*{atBats}" placeholder="" th:errorclass="fieldError"></input>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-sm-2" th:for="runs">Runs:</label>
+	<div class="col-sm-5">
+		<input class="form-control" th:field="*{runs}" placeholder="" th:errorclass="fieldError"></input>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-sm-2" th:for="hits">Hits:</label>
+	<div class="col-sm-5">
+		<input class="form-control" th:field="*{hits}" placeholder="" th:errorclass="fieldError"></input>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-sm-2" th:for="doubles">Doubles:</label>
+	<div class="col-sm-5">
+		<input class="form-control" th:field="*{doubles}" placeholder="" th:errorclass="fieldError"></input>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-sm-2" th:for="doubles">Triples:</label>
+	<div class="col-sm-5">
+		<input class="form-control" th:field="*{triples}" placeholder="" th:errorclass="fieldError"></input>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-sm-2" th:for="doubles">Home Runs:</label>
+	<div class="col-sm-5">
+		<input class="form-control" th:field="*{homeRuns}" placeholder="" th:errorclass="fieldError"></input>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-sm-2" th:for="doubles">RBI:</label>
+	<div class="col-sm-5">
+		<input class="form-control" th:field="*{rbi}" placeholder="" th:errorclass="fieldError"></input>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-sm-2" th:for="doubles">BB:</label>
+	<div class="col-sm-5">
+		<input class="form-control" th:field="*{walks}" placeholder="" th:errorclass="fieldError"></input>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-sm-2" th:for="doubles">K:</label>
+	<div class="col-sm-5">
+		<input class="form-control" th:field="*{strikeOuts}" placeholder="" th:errorclass="fieldError"></input>
+	</div>
+</div>
+<div class="form-group">
+	<div class="col-sm-offset-2 col-sm-10">
+		<button type="submit" class="btn btn-info">Save</button>
+	</div>
+</div>

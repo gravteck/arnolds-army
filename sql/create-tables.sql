@@ -3,7 +3,11 @@
 		first_name varchar(255),
 		last_name varchar(255),
 		phone varchar(255),
-		email varchar(255)
+		email varchar(255),
+		insert_date TIMESTAMP,
+		update_date TIMESTAMP,
+		insert_user varchar(255) not null,
+		update_user varchar(255)
 	);
 
 	alter table player add primary key(id);
@@ -11,7 +15,10 @@
 	create table season(
 		id integer not null,
 		year integer,
-		last_name varchar(255)
+		insert_date TIMESTAMP,
+		update_date TIMESTAMP,
+		insert_user varchar(255) not null,
+		update_user varchar(255)
 	);
 
 	alter table season add primary key(id);
@@ -28,7 +35,11 @@
 		home_runs integer,
 		rbi integer,
 		bb integer,
-		k integer
+		k integer,
+		insert_date TIMESTAMP,
+		update_date TIMESTAMP,
+		insert_user varchar(255) not null,
+		update_user varchar(255)
 	);
 
 	alter table statistical_year add primary key(id);
@@ -37,7 +48,11 @@
 	
 	create table team(
 		id integer not null,
-		name varchar(255)
+		name varchar(255),
+		insert_date TIMESTAMP,
+		update_date TIMESTAMP,
+		insert_user varchar(255) not null,
+		update_user varchar(255)
 	);
 
 	alter table team add primary key(id);
@@ -49,7 +64,11 @@
 		away_team_id integer not null,
 		home_score integer,
 		away_score integer,
-		season_id integer not null
+		season_id integer not null,
+		insert_date TIMESTAMP,
+		update_date TIMESTAMP,
+		insert_user varchar(255) not null,
+		update_user varchar(255)
 	);
 
 	alter table game add primary key(id);

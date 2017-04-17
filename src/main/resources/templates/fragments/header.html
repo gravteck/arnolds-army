@@ -12,7 +12,18 @@
 	background-color: #f4511e;
 	color: #fff;
 	margin-top: 0px;
+	margin-bottom: 15px;
 	padding: 0.5em 0.6em;
+}
+
+.modal-header {
+	background-color: #f4511e;
+	color: #fff;
+	border-radius: 0.3rem;
+}
+
+.modal-footer {
+	text-align: center;
 }
 
 .navbar {
@@ -48,52 +59,13 @@ body {
 .form-horizontal .control-label {
 	text-align: left;
 }
+
+.saved-panel {
+	text-align: center;
+	margin-top: 0;
+	martin-bottom: 0;
+}
 </style>
-
-<script th:inline="javascript">
-	var players = [[${players}]];
-	console.log(players);
-
-	var currentPlayer;
-
-	function viewPlayer(id) {
-		currentPlayer = null;
-		currentPlayer = players[id-1];
-		$('#playerStatTable')[0].style.visibility = 'hidden';
-		$('.nav-tabs a[href="#info"]').tab("show");
-		
-		$('#modalTitle').html('<h4 class="modal-title">' + currentPlayer.firstName + ' ' + currentPlayer.lastName + '<button type="button" class="close" data-dismiss="modal">&times;</button></h4>')		
-		$('#playerModalPhone').html(currentPlayer.phone);
-		$('#playerModalEmail').html(currentPlayer.email);
-		$("#playerModal").modal("toggle");
-	}
-	
-	/*
-	$("#seasonDropDown").change(function() {
-	    var selectedVal = $(this).find(':selected').val();
-	}​​​​);​
-	*/
-	
-	function showPlayerStats(year) {
-		alert(year);
-		var statisticalYear = currentPlayer.statisticalYears[this];
-		
-		var tableBodyHtml = '<tr><td>' + statisticalYear.atBats + '</td></tr>';
-		tableBodyHtml += '<td>' + statisticalYear.runs + '</td>';
-		tableBodyHtml += '<td>' + statisticalYear.hits + '</td>'
-		tableBodyHtml += '<td>' + statisticalYear.rbi + '</td>'
-		tableBodyHtml += '<td>' + statisticalYear.rbi + '</td>'
-		tableBodyHtml += '<td>' + statisticalYear.walks + '</td>'
-		tableBodyHtml += '<td>' + statisticalYear.strikeOuts + '</td>'
-		tableBodyHtml += '<td>' + statisticalYear.battingAverage + '</td>'
-		tableBodyHtml += '<td>' + statisticalYear.onBasePercentage + '</td>'
-		tableBodyHtml += '<td>' + statisticalYear.slugging + '</td>';
-		
-		$('#playerStatTableBody').html(tableBodyHtml);
-		$('#playerStatTable')[0].style.visibility = 'visible';
-		
-	}
-</script>
 
 </head>
 <nav class="navbar navbar-inverse" th:fragment="header">
@@ -109,6 +81,14 @@ body {
 				<li><a class="active" th:href="@{/players}" th:text="#{nav.players}"></a></li>
 				<li><a th:href="@{/calendar}" th:text="#{nav.calendar}"></a></li>
 				<li><a th:href="@{/contact}" th:text="#{nav.contact}"></a></li>
+				<li sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span th:text="#{nav.admin}"></span><span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="/admin/players/list">Players</a></li>
+						<li><a href="/admin/teams/list">Teams</a></li>
+						<li><a href="/admin/seasons/list">Seasons</a></li>
+						<li><a href="/admin/games/list">Games</a></li>
+						<li><a href="/admin/statistical-years/list">Statistical Years</a></li>
+					</ul></li>
 			</ul>
 		</div>
 	</div>

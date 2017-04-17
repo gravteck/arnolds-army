@@ -4,9 +4,12 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -18,15 +21,17 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 public class StatisticalYear extends BaseEntity {
 
 	@Id()
+	@SequenceGenerator(name = "statistical_year_id_seq", sequenceName = "statistical_year_id_seq", allocationSize = 1, initialValue = 10)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "statistical_year_id_seq")
 	@Column(name = "id")
 	private Integer id;
 
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "player_id", insertable = false, updatable = false, nullable = false)
+	@JoinColumn(name = "player_id")
 	private Player player;
 
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "season_id", insertable = false, updatable = false, nullable = false)
+	@JoinColumn(name = "season_id")
 	private Season season;
 
 	@Column(name = "at_bats")
