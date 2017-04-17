@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<div th:replace="fragments/header :: header-setup"></div>
+<body>
+	<div th:replace="fragments/header :: header"></div>
+	<div th:replace="fragments/header :: jumbotron"></div>
+	<div class="container-fluid">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2>
+					<span th:text="#{home.title}"></span>
+				</h2>
+			</div>
+			<div class="panel-body">
+				<span th:text="#{error.body}"></span><br></br> <span>Please contact </span><a href="mailto:matthew.heineke@gmail.com">matthew.heineke@gmail.com</a><span> if you believe your operation should have worked.</span><br></br>
+				<div sec:authorize="hasRole('ROLE_ADMIN')">
+					<br></br> <span th:each="line : ${stackTrace}" th:text="${line}"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
