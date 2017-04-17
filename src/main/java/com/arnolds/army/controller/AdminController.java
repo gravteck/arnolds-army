@@ -417,11 +417,11 @@ public class AdminController {
 		return "redirect:/admin/" + FunctionalAreaType.GAMES.value() + "/list";
 	}
 
-	@RequestMapping("statistical-year/delete/{gameId}")
+	@RequestMapping("statistical-year/delete/{statisticalYearId}")
 	public String statisticalYearDeleteSubmit(@PathVariable Integer statisticalYearId,
 			RedirectAttributes redirectAttributes) {
 
-		applicationService.removeSeason(statisticalYearId);
+		applicationService.removeStatisticalYear(statisticalYearId);
 
 		redirectAttributes.addFlashAttribute("deleted", Boolean.TRUE);
 

@@ -27,11 +27,11 @@ public class StatisticalYear extends BaseEntity {
 	private Integer id;
 
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "player_id", insertable = false, updatable = false, nullable = false)
+	@JoinColumn(name = "player_id")
 	private Player player;
 
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "season_id", insertable = false, updatable = false, nullable = false)
+	@JoinColumn(name = "season_id")
 	private Season season;
 
 	@Column(name = "at_bats")
