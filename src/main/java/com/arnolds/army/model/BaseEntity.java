@@ -8,11 +8,13 @@ import javax.persistence.MappedSuperclass;
 
 import com.arnolds.army.listener.BaseEntityListener;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @MappedSuperclass
 @EntityListeners(BaseEntityListener.class)
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@JsonIgnoreProperties(value = { "insertDate", "updateDate", "insertUser", "updateUser" })
 public class BaseEntity {
 
 	@Column(name = "insert_date")

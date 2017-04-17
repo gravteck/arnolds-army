@@ -3,12 +3,13 @@
 		<div class="panel-heading">
 			<h2>Seasons</h2>
 		</div>
-		<div class="panel-body">
+		<div data-ng-include="'/static/html/loading.html'"></div>
+		<div class="panel-body" data-ng-hide="loader.loading">
 			<div class="panel-group">
 				<div data-ng-repeat="season in seasons" class="panel panel-default">
 					<div class="panel-heading">
 						<h4 class="panel-title">
-							<a data-toggle="collapse" data-target="#panel{{season.id}}" href="">{{season.year}}</a> <label class="pull-right">Record</label>
+							<a data-toggle="collapse" data-target="#panel{{season.id}}" href="">{{season.year}}</a> <label class="pull-right">({{season.wins + '-' + season.losses}})</label>
 						</h4>
 					</div>
 					<div id="panel{{season.id}}" class="panel-collapse collapse">

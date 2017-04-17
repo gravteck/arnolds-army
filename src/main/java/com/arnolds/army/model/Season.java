@@ -2,11 +2,11 @@ package com.arnolds.army.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,12 +14,15 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import com.arnolds.army.listener.SeasonEntityListener;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "season")
+@EntityListeners(SeasonEntityListener.class)
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class Season extends BaseEntity {
 
@@ -34,6 +37,12 @@ public class Season extends BaseEntity {
 
 	@OneToMany(mappedBy = "season", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Game> games = new ArrayList<>();
+
+	@Transient
+	private Integer wins;
+
+	@Transient
+	private Integer losses;
 
 	public Integer getId() {
 		return id;
@@ -59,16 +68,33 @@ public class Season extends BaseEntity {
 		this.games = games;
 	}
 
-	public Integer getWins(Integer teamId) {
-
-		return getGames().stream()
-				.filter(g -> (teamId == g.getAwayTeam().getId() && g.getAwayScore() > g.getHomeScore())
-						|| (teamId == g.getHomeTeam().getId() && g.getHomeScore() > g.getAwayScore()))
-				.collect(Collectors.toList()).size();
+	/**
+	 * @return the wins
+	 */
+	public Integer getWins() {
+		return wins;
 	}
 
-	public Integer getLosses(Integer teamId) {
-		return getGames().size() - getWins(teamId);
+	/**
+	 * @param wins
+	 *            the wins to set
+	 */
+	public void setWins(Integer wins) {
+		this.wins = wins;
 	}
 
+	/**
+	 * @return the losses
+	 */
+	public Integer getLosses() {
+		return losses;
+	}
+
+	/**
+	 * @param losses
+	 *            the losses to set
+	 */
+	public void setLosses(Integer losses) {
+		this.losses = losses;
+	}
 }

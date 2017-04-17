@@ -1,5 +1,7 @@
 package com.arnolds.army.controller;
 
+import static org.assertj.core.api.Assertions.setLenientDateParsing;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -21,7 +23,7 @@ public class PlayerController {
 	@Autowired
 	private ApplicationService applicationService;
 
-	@GetMapping("players")
+	@GetMapping(value = { "players" })
 	public String loadPlayers(Model m) {
 
 		List<Player> players = applicationService.findAllPlayers();
@@ -45,9 +47,21 @@ public class PlayerController {
 		return "player";
 	}
 
+	@GetMapping("player/get/{playerId}")
+	@ResponseBody
+	public Player getPlayer(@PathVariable Integer playerId) {
+		return applicationService.findPlayer(playerId);
+	}
+
 	@GetMapping("players/list")
 	@ResponseBody
 	public List<Player> listPlayers() {
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return applicationService.findAllPlayers();
 	}
 

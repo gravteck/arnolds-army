@@ -1,12 +1,13 @@
 <script src="/static/js/playersController.js"></script>
 
-<div  data-ng-controller="playersController" ng-cloak>
+<div data-ng-controller="playersController" ng-cloak>
 	<div class="container-fluid ng-cloak">
 		<div class="panel panel-default table-responsive">
 			<div class="panel-heading">
 				<h2>Players</h2>
 			</div>
-			<div class="panel-body" ng-cloak>
+			<div data-ng-include="'/static/html/loading.html'"></div>
+			<div class="panel-body" ng-cloak ng-hide="loader.loading">
 				<table class="table table-striped table-hover" id="players-table">
 					<thead>
 						<tr>
@@ -18,7 +19,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr data-ng-repeat="player in players">
+						<tr data-ng-repeat="player in players track by $index">
 							<td>{{player.firstName}}</td>
 							<td>{{player.lastName}}</td>
 							<td><a href="tel:{{player.phone}}">{{player.phone}}</a></td>
