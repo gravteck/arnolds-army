@@ -19,5 +19,9 @@ app.config(function($routeProvider) {
 		templateUrl : "/static/html/calendar.html"
 	}).when("/contact", {
 		templateUrl : "/static/html/contact.html"
+	}).when("/admin", {
+		templateUrl : "/static/html/admin/admin.html"
+	}).when("/admin/login", {
+		templateUrl : "/static/html/admin/login.html"
 	});
 })

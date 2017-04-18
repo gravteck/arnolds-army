@@ -55,6 +55,19 @@ public class AdminController {
 		StringBuilder title = new StringBuilder();
 		StringBuilder itemFunctionalArea = new StringBuilder();
 
+		loadFunctionalArea(functionalAreaType, headers, records, title, itemFunctionalArea);
+
+		m.addAttribute("title", title);
+		m.addAttribute("addPath", "/admin/" + itemFunctionalArea + "/add/");
+		m.addAttribute("deletePath", "/admin/" + itemFunctionalArea + "/delete/");
+		m.addAttribute("headers", headers);
+		m.addAttribute("records", records);
+
+		return "admin/admin";
+	}
+
+	private void loadFunctionalArea(FunctionalAreaType functionalAreaType, List<String> headers,
+			List<List<ReportingField>> records, StringBuilder title, StringBuilder itemFunctionalArea) {
 		switch (functionalAreaType) {
 		case PLAYERS:
 			loadPlayers(headers, records, title, itemFunctionalArea);
@@ -74,14 +87,6 @@ public class AdminController {
 		default:
 			break;
 		}
-
-		m.addAttribute("title", title);
-		m.addAttribute("addPath", "/admin/" + itemFunctionalArea + "/add/");
-		m.addAttribute("deletePath", "/admin/" + itemFunctionalArea + "/delete/");
-		m.addAttribute("headers", headers);
-		m.addAttribute("records", records);
-
-		return "admin/admin";
 	}
 
 	@GetMapping("players")
