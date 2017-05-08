@@ -27,10 +27,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.arnolds.army.FunctionalAreaType;
+import com.arnolds.army.dto.AdminDto;
 import com.arnolds.army.model.Game;
 import com.arnolds.army.model.Player;
 import com.arnolds.army.model.ReportingField;
@@ -64,6 +68,22 @@ public class AdminController {
 		m.addAttribute("records", records);
 
 		return "admin/admin";
+	}
+
+	@GetMapping("{functionalArea}/get/list")
+	@ResponseBody
+	public AdminDto loadAdmin(@PathVariable String functionalArea) {
+
+		FunctionalAreaType functionalAreaType = FunctionalAreaType.find(functionalArea);
+		List<String> headers = new ArrayList<>();
+		List<List<ReportingField>> records = new ArrayList<>();
+		StringBuilder title = new StringBuilder();
+		StringBuilder itemFunctionalArea = new StringBuilder();
+
+		loadFunctionalArea(functionalAreaType, headers, records, title, itemFunctionalArea);
+
+		return new AdminDto(title.toString(), "/admin/" + itemFunctionalArea + "/add/",
+				"/admin/" + itemFunctionalArea + "/delete/", headers, records);
 	}
 
 	private void loadFunctionalArea(FunctionalAreaType functionalAreaType, List<String> headers,
@@ -434,13 +454,18 @@ public class AdminController {
 	}
 
 	@PostMapping("player/add/submit")
-	public String playerAddSubmit(@ModelAttribute Player player, RedirectAttributes redirectAttributes) {
+	public String playerAddSubmit(@ModelAttribute Player player, @RequestParam("ng") boolean angular,
+			RedirectAttributes redirectAttributes) {
 
 		player.setPhone(StringUtils.replaceAll(player.getPhone(), "[^0-9]", ""));
 
 		applicationService.savePlayer(player);
 
 		redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
+
+		if (angular) {
+			redirectAttributes.addFlashAttribute("ng", angular);
+		}
 
 		return "redirect:/admin/" + FunctionalAreaType.PLAYERS.value() + "/list";
 	}

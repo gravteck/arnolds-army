@@ -1,10 +1,10 @@
-var app = angular.module("arnoldsArmyApplication", [ "ngRoute" ], function(
-		$locationProvider) {
-	$locationProvider.html5Mode({
-		enabled : true,
-		requireBase : true
-	});
-});
+var app = angular.module("arnoldsArmyApplication",
+		[ "ngRoute", "ui.bootstrap" ], function($locationProvider) {
+			$locationProvider.html5Mode({
+				enabled : true,
+				requireBase : true
+			});
+		});
 
 app.config(function($routeProvider) {
 	$routeProvider.when("/", {
@@ -23,5 +23,7 @@ app.config(function($routeProvider) {
 		templateUrl : "/static/html/admin/admin.html"
 	}).when("/admin/login", {
 		templateUrl : "/static/html/admin/login.html"
+	}).when("/admin/player/add", {
+		templateUrl : "/static/html/admin/player-add.html"
 	});
 })
