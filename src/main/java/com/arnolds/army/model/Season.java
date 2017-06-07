@@ -36,8 +36,11 @@ public class Season extends BaseEntity {
 	@Column(name = "year")
 	private Integer year;
 
-	@OneToMany(mappedBy = "season", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "season", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Game> games = new ArrayList<>();
+
+	@OneToMany(mappedBy = "season", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<StatisticalYear> statisticalYears = new ArrayList<>();
 
 	@Transient
 	private Integer wins;
