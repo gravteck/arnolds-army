@@ -1,18 +1,18 @@
-<div data-ng-controller="adminController" data-ng-cloak>
-	<div data-ng-show="dto.saved" class="container-fluid">
+<div data-ng-controller="adminCtrl" data-ng-cloak>
+	<div data-ng-show="playerStatus.saved" class="container-fluid">
 		<div class="alert alert-success alert-dismissable fade in" align="center">
 			<h4 style="display: inline">Saved!</h4>
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 		</div>
 	</div>
-	<div data-ng-show="dto.deleted" class="container-fluid">
+	<div data-ng-show="playerStatus.deleted" class="container-fluid">
 		<div class="alert alert-success alert-dismissable fade in" align="center">
 			<h4 style="display: inline">Deleted!</h4>
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 		</div>
 	</div>
 
-	<div class="container-fluid">
+	<div class="container-fluid" data-ng-controller="adminListCtrl">
 		<div class="panel panel-default table-responsive">
 			<div class="panel-heading">
 				<h2 style="display: inline">{{dto.title}}</h2>

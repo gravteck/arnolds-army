@@ -1,10 +1,10 @@
-<div class="container-fluid">
+<div class="container-fluid" data-ng-controller="adminCtrl">
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h2>Add Player</h2>
 		</div>
 		<div class="panel-body">
-			<form class="form-horizontal" action="/admin/player/add/submit" method="post" name="player">
+			<form data-ng-controller="addPlayerCtrl" class="form-horizontal" name="player" ng-submit="save(editedPlayer)" novalidate)>
 				<div data-ng-include="'/static/html/admin/player-form.html'"></div>
 			</form>
 		</div>

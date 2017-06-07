@@ -13,27 +13,27 @@ import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 //@EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-	@Override
+	//@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
 		//@formatter:off
-		http
-			.authorizeRequests()
-				.antMatchers("/admin/**").hasRole("ADMIN")
-				.antMatchers("/**").permitAll()
-				.and()
-			.formLogin()
-				.loginPage("/admin/login")
-				.permitAll()
-				.and()
-			.logout().logoutUrl("/admin/logout")
-				.permitAll();
+//		http
+//			.authorizeRequests()
+//				.antMatchers("/admin/**").hasRole("ADMIN")
+//				.antMatchers("/**").permitAll()
+//				.and()
+//			.formLogin()
+//				.loginPage("/admin/login")
+//				.permitAll()
+//				.and()
+//			.logout().logoutUrl("/admin/logout")
+//				.permitAll();
 		//@formatter:on
 	}
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication().withUser("admin").password("password").roles("ADMIN");
+		//auth.inMemoryAuthentication().withUser("admin").password("password").roles("ADMIN");
 	}
 
 	@Bean

@@ -2,6 +2,7 @@ package com.arnolds.army.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -35,7 +36,7 @@ public class Season extends BaseEntity {
 	@Column(name = "year")
 	private Integer year;
 
-	@OneToMany(mappedBy = "season", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "season", fetch = FetchType.LAZY)
 	private List<Game> games = new ArrayList<>();
 
 	@Transient
@@ -96,5 +97,17 @@ public class Season extends BaseEntity {
 	 */
 	public void setLosses(Integer losses) {
 		this.losses = losses;
+	}
+
+	public Integer getWins(Integer teamId) {
+
+		return getGames().stream()
+				.filter(g -> (teamId == g.getAwayTeam().getId() && g.getAwayScore() > g.getHomeScore())
+						|| (teamId == g.getHomeTeam().getId() && g.getHomeScore() > g.getAwayScore()))
+				.collect(Collectors.toList()).size();
+	}
+
+	public Integer getLosses(Integer teamId) {
+		return getGames().size() - getWins(teamId);
 	}
 }

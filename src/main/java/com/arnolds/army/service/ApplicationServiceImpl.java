@@ -98,6 +98,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 	@Override
 	// @Cacheable("players")
 	public List<Player> findAllPlayers() {
+		
 		return playerDao.findAll().stream().sorted((a, b) -> a.getFirstName().compareTo(b.getFirstName()))
 				.collect(Collectors.toList());
 	}
