@@ -1,0 +1,30 @@
+<table class="table table-striped table-responsive">
+	<thead>
+		<tr>
+			<th title="Year">Year</th>
+			<th title="At Bats">AB</th>
+			<th title="Runs">R</th>
+			<th title="Hits">H</th>
+			<th title="RBI">RBI</th>
+			<th title="Walks">BB</th>
+			<th title="Strike Outs">SO</th>
+			<th title="Batting Average">AVG</th>
+			<th title="Slugging %">SLG</th>
+			<th title="On Base Plus Slugging">OPS</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td th:text="${statisticalYear.year}"></td>
+			<td th:text="${statisticalYear.atBats}"></td>
+			<td th:text="${statisticalYear.runs}"></td>
+			<td th:text="${statisticalYear.hits}"></td>
+			<td th:text="${statisticalYear.rbi}"></td>
+			<td th:text="${statisticalYear.walks}"></td>
+			<td th:text="${statisticalYear.strikeOuts}"></td>
+			<td th:text="${statisticalYear.battingAverage}"></td>
+			<td th:text="${statisticalYear.slugging}"></td>
+			<td th:text="${statisticalYear.onBasePercentage}"></td>
+		</tr>
+	</tbody>
+</table>

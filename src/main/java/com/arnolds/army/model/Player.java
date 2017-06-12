@@ -13,6 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -27,6 +31,8 @@ import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 @Entity
 @Table(name = "player")
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@XmlType
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Player extends BaseEntity {
 
 	@Id
@@ -47,6 +53,7 @@ public class Player extends BaseEntity {
 	@Column(name = "email")
 	private String email;
 
+	@XmlTransient
 	@OneToMany(mappedBy = "player", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<StatisticalYear> statisticalYears = new ArrayList<>();
 

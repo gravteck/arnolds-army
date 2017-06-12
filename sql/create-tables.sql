@@ -74,4 +74,5 @@
 	alter table game add primary key(id);
 	alter table game add constraint fk_game_home_team_to_team foreign key(home_team_id) references team(id);
 	alter table game add constraint fk_game_away_team_to_team foreign key(away_team_id) references team(id);
-	alter table game add constraint fk_game_season_to_season foreign key(home_team_id) references team(id);
+	alter table game add constraint fk_game_season_to_season foreign key(home_team_id) references season(id);
+	alter table game add constraint fk_game_season_to_season foreign key(away_team_id) references season(id);
