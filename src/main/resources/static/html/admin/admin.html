@@ -51,7 +51,7 @@
 					<div data-ng-repeat="r in record">
 						<div data-ng-show="r.type === 'GROUP'">
 							<div data-ng-repeat="rf in r.group" data-ng-show="rf.type === 'DELETE'" id="confirmDelete_{{rf.href}}" class="modal fade">
-								<div class="modal-dialog">
+								<div class="modal-dialog" data-ng-model="deleteModal">
 									<div class="modal-content">
 										<div class="modal-header">
 											<h3 style="display: inline" class="modal-title">Confirm Delete</h3>
@@ -63,7 +63,7 @@
 										</div>
 										<div class="modal-footer" align="center">
 											<button type="button" class="btn btn-default" data-dismiss="modal" data-ng-click="cancel()">Close</button>
-											<a class="btn btn-danger" href="#" title="Delete"><i class="fa fa-trash-o" data-ng-click="ok()"></i>Delete</a>
+											<button type="button" class="btn btn-danger" data-dismiss="modal" data-ng-click="confirmDelete(rf)">Delete</button>
 										</div>
 									</div>
 								</div>

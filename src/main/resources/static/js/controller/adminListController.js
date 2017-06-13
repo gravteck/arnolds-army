@@ -33,4 +33,13 @@ app.controller('adminListCtrl', function($scope, $http, playerService,
 		$scope.loadList();
 	});
 
+	$scope.confirmDelete = function(item) {
+		$http.post($scope.dto.deletePath + item.href).then(function() {
+			$scope.loadList();
+		}, function() {
+			// TODO - find a more graceful way of expressing the error.
+			alert("There was an error while deleting.")
+		});
+	}
+
 });
