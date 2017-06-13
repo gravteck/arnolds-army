@@ -16,4 +16,5 @@ app.controller('calendarController', function($scope, $http, $location) {
 	})
 
 	$scope.arnoldsId = 1;
+
 });

@@ -8,6 +8,47 @@ var app = angular.module("arnoldsArmyApplication", [ "ngRoute", "ui.bootstrap",
 
 app.constant("baseApiUrl", "http://localhost:5000/api/");
 app.constant("PLAYER_SAVED", "playerSaved");
+app.constant("arnoldsId", 1);
+
+app
+		.filter(
+				"gameItem",
+				[
+						"arnoldsId",
+						function(arnoldsId) {
+							return function(game, format) {
+
+								if (format === "time") {
+									var hour = game.localDateTime.hour > 12 ? game.localDateTime.hour - 12
+											: game.localDateTime.hour;
+
+									var minute = game.minuteInterval;
+
+									var period = game.localDateTime.hour > 12 ? "pm"
+											: "am";
+
+									return hour + ":" + minute + " " + period;
+								} else if (format === "date") {
+									return game.localDateTime.monthValue + "/"
+											+ game.localDateTime.dayOfMonth
+											+ "/" + game.localDateTime.year;
+								} else if (format === "matchup") {
+									return arnoldsId === game.homeTeam.id ? 'vs. '
+											+ game.awayTeam.name
+											: '@ ' + game.homeTeam.name;
+								} else if (format === "winLoss") {
+									return arnoldsId == game.homeTeam.id ? game.homeScore > game.awayScore ? 'W'
+											: 'L'
+											: game.homeScore < game.awayScore ? 'W'
+													: 'L';
+								} else if (format === "score") {
+									return arnoldsId == game.homeTeam.id ? game.homeScore
+											+ ' - ' + game.awayScore
+											: game.awayScore + ' - '
+													+ game.homeScore;
+								}
+							}
+						} ]);
 
 app.config(function($routeProvider) {
 	$routeProvider.when("/", {

@@ -15,7 +15,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "team")
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+// @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@JsonIdentityInfo(generator = ObjectIdGenerators.None.class)
 public class Team extends BaseEntity {
 
 	@Id
