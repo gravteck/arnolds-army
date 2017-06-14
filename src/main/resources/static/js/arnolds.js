@@ -17,6 +17,12 @@ app.value("adminEntityStatus", {
 	status : {}
 });
 
+app.value("functionalArea", {
+	data : {
+		area : ""
+	}
+})
+
 app
 		.filter(
 				"gameItem",
@@ -77,6 +83,14 @@ app.config(function($routeProvider) {
 	}).when("/admin/player/add", {
 		templateUrl : "/static/html/admin/player-add.html"
 	}).when("/admin/players", {
+		templateUrl : "/static/html/admin/admin.html"
+	}).when("/admin/teams", {
+		templateUrl : "/static/html/admin/admin.html"
+	}).when("/admin/games", {
+		templateUrl : "/static/html/admin/admin.html"
+	}).when("/admin/seasons", {
+		templateUrl : "/static/html/admin/admin.html"
+	}).when("/admin/statistical-years", {
 		templateUrl : "/static/html/admin/admin.html"
 	});
 });

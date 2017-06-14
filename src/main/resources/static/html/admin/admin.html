@@ -29,9 +29,7 @@
 					<tbody>
 						<tr data-ng-repeat="record in dto.records">
 							<td data-ng-repeat="r in record">
-								<div data-ng-show="r.type === 'DEFAULT'">
-									<a href="/s/{{r.href}}">{{r.value}}</a>
-								</div>
+								<div data-ng-show="r.type === 'DEFAULT'">{{r.value}}</div>
 								<div data-ng-show="r.type === 'LINK'">
 									<a href="/s/{{r.href}}">{{r.value}}</a>
 								</div>

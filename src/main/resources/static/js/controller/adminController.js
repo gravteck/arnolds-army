@@ -10,7 +10,7 @@ app.controller('adminCtrl', function($scope, $rootScope,
 	});
 
 	$rootScope.$on(EMIT_ADMIN_ENTITY_SAVED, function() {
-		$rootScope.$broadcast("BROADCAST_ADMIN_ENTITY_SAVED");
+		$scope.$broadcast("BROADCAST_ADMIN_ENTITY_SAVED");
 		$scope.adminEntityStatus.status.saved = true;
 	});
 
