@@ -1,32 +1,25 @@
-app.controller('adminCtrl', function($scope, PLAYER_SAVED) {
+app.controller('adminCtrl', function($scope, $rootScope,
+		EMIT_ADMIN_ENTITY_SAVED, BROADCAST_ADMIN_ENTITY_SAVED,
+		EMIT_ADMIN_ENTITY_DELETED, adminEntityStatus) {
 
-	$scope.resetPlayerStatus = function() {
-		$scope.playerStatus = {
-			saved : false,
-			deleted : false
-		}
-	}
+	$scope.adminEntityStatus = adminEntityStatus;
 
-	$scope.$on("$routeChangeSuccess", function() {
-		$scope.resetPlayerStatus();
+	$scope.$on("$routeChangeStart", function() {
+		$scope.adminEntityStatus.status.saved = false;
+		$scope.adminEntityStatus.status.deleted = false;
 	});
 
-	$scope.$on(PLAYER_SAVED, function() {
-		$scope.playerStatus.saved = true;
-		$scope.$broadcast(PLAYER_SAVED);
+	$rootScope.$on(EMIT_ADMIN_ENTITY_SAVED, function() {
+		$rootScope.$broadcast("BROADCAST_ADMIN_ENTITY_SAVED");
+		$scope.adminEntityStatus.status.saved = true;
 	});
 
-	var rootInitialized = false;
+	$scope.$on(EMIT_ADMIN_ENTITY_DELETED, function() {
+		$scope.adminEntityStatus.status.deleted = true;
+	})
 
 	angular.element(document).ready(function(playerId) {
 
-		if (!rootInitialized) {
-			// $scope.loadPlayers();
-			$scope.resetPlayerStatus();
-			rootInitialized = true;
-		}
-
-		// $scope.loadPlayers();
 	});
 
 });

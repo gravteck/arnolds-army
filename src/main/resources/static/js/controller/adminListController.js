@@ -1,11 +1,11 @@
 app.controller('adminListCtrl', function($scope, $http, playerService,
-		PLAYER_SAVED) {
+		BROADCAST_ADMIN_ENTITY_SAVED, EMIT_ADMIN_ENTITY_DELETED) {
 
 	$scope.loader = {
 		loading : false,
 	};
 
-	$scope.$on(PLAYER_SAVED, function() {
+	$scope.$on(BROADCAST_ADMIN_ENTITY_SAVED, function() {
 		$scope.loadList();
 	});
 
@@ -36,6 +36,7 @@ app.controller('adminListCtrl', function($scope, $http, playerService,
 	$scope.confirmDelete = function(item) {
 		$http.post($scope.dto.deletePath + item.href).then(function() {
 			$scope.loadList();
+			$scope.$emit(EMIT_ADMIN_ENTITY_DELETED);
 		}, function() {
 			// TODO - find a more graceful way of expressing the error.
 			alert("There was an error while deleting.")

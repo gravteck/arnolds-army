@@ -7,8 +7,15 @@ var app = angular.module("arnoldsArmyApplication", [ "ngRoute", "ui.bootstrap",
 });
 
 app.constant("baseApiUrl", "http://localhost:5000/api/");
-app.constant("PLAYER_SAVED", "playerSaved");
+app.constant("EMIT_ADMIN_ENTITY_SAVED", "emitAdminEntitySaved");
+app.constant("BROADCAST_ADMIN_ENTITY_SAVED", "broadcastAdminEntitySaved");
+app.constant("EMIT_ADMIN_ENTITY_DELETED", "emitAdminEntityDeleted");
+app.constant("BROADCAST_ADMIN_ENTITY_DELETED", "broadcastAdminEntityDeleted");
 app.constant("arnoldsId", 1);
+
+app.value("adminEntityStatus", {
+	status : {}
+});
 
 app
 		.filter(

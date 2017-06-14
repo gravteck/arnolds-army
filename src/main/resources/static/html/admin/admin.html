@@ -1,11 +1,11 @@
 <div data-ng-controller="adminCtrl" data-ng-cloak>
-	<div data-ng-show="playerStatus.saved" class="container-fluid">
+	<div data-ng-show="adminEntityStatus.status.saved" class="container-fluid">
 		<div class="alert alert-success alert-dismissable fade in" align="center">
 			<h4 style="display: inline">Saved!</h4>
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 		</div>
 	</div>
-	<div data-ng-show="playerStatus.deleted" class="container-fluid">
+	<div data-ng-show="adminEntityStatus.status.deleted" class="container-fluid">
 		<div class="alert alert-success alert-dismissable fade in" align="center">
 			<h4 style="display: inline">Deleted!</h4>
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
