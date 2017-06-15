@@ -72,6 +72,8 @@ app.config(function($routeProvider) {
 		templateUrl : "/static/html/players.html"
 	}).when("/player/:id", {
 		templateUrl : "/static/html/player.html"
+	}).when("/season/:id", {
+		templateUrl : "/static/html/season.html"
 	}).when("/calendar", {
 		templateUrl : "/static/html/calendar.html"
 	}).when("/contact", {
@@ -92,6 +94,8 @@ app.config(function($routeProvider) {
 		templateUrl : "/static/html/admin/admin.html"
 	}).when("/admin/seasons", {
 		templateUrl : "/static/html/admin/admin.html"
+	}).when("/admin/season/add", {
+		templateUrl : "/static/html/admin/season-add.html"
 	}).when("/admin/statistical-years", {
 		templateUrl : "/static/html/admin/admin.html"
 	});
@@ -101,6 +105,14 @@ app.factory('broadcastService', function($rootScope) {
 	return {
 		send : function(msg, args) {
 			var val = $rootScope.$broadcast(msg, args);
+		}
+	}
+});
+
+app.factory('urlService', function($location) {
+	return {
+		entityId : function() {
+			return $location.absUrl().split(/[\s/]+/).pop();
 		}
 	}
 });
@@ -140,7 +152,9 @@ app.factory("teamService", function($resource, baseApiUrl) {
 	// TODO implement all resource methods
 	return {
 		resource : Team,
-		fresh : function() { return new Team(); },
+		fresh : function() {
+			return new Team();
+		},
 		get : function(teamId, success, error) {
 			return Team.get({
 				id : teamId

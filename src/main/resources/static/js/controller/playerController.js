@@ -1,5 +1,5 @@
 app.controller("playerController", function($scope, $http, $location,
-		playerService, broadcastService) {
+		playerService, broadcastService, urlService) {
 
 	$scope.loader = {
 		loading : false,
@@ -18,12 +18,13 @@ app.controller("playerController", function($scope, $http, $location,
 		});
 	}
 
-	angular.element(document).ready(function(playerId) {
+	angular.element(document).ready(function() {
 
 		$scope.resetPlayer();
 		$scope.loader.loading = true;
 
-		var playerId = $location.absUrl().split(/[\s/]+/).pop();
+		//var playerId = $location.absUrl().split(/[\s/]+/).pop();
+		var playerId = urlService.entityId();
 
 		/*
 		 * $http.get("/player/get/" + playerId).then(function(response) {

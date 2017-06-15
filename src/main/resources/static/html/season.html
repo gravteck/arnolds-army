@@ -1,0 +1,13 @@
+<div data-ng-controller="seasonCtrl" data-ng-cloak>
+	<div class="container-fluid ng-cloak">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2>{{season.year}}</h2>
+			</div>
+			<div data-ng-include="'/static/html/loading.html'"></div>
+			<div data-ng-hide="loader.loading" class="panel-body table-responsive">
+				<div data-ng-include="'/static/html/season-panel.html'"></div>
+			</div>
+		</div>
+	</div>
+</div>

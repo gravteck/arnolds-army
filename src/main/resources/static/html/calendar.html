@@ -13,33 +13,7 @@
 						</h4>
 					</div>
 					<div id="panel{{season.id}}" class="panel-collapse collapse">
-						<div class="panel-body">
-							<div class="bs-callout bs-callout-danger" data-ng-show="season.games.length <= 0">
-								<h4>No games exist for this season</h4>
-							</div>
-							<div class="table-responsive" data-ng-show="season.games.length > 0">
-								<table class="table table-striped">
-									<thead>
-										<tr>
-											<th title="Date">Date</th>
-											<th title="Time">Time</th>
-											<th title="Description">Matchup</th>
-											<th title="Result">Result</th>
-											<th title="Score">Score</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr data-ng-repeat="game in season.games">
-											<td>{{game | gameItem : "date"}}</td>
-											<td>{{game | gameItem : "time"}}</td>
-											<td>{{game | gameItem : "matchup"}}</td>
-											<td>{{game | gameItem : "winLoss"}}</td>
-											<td>{{game | gameItem : "score"}}</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
+						<div data-ng-include="'/static/html/season-panel.html'"></div>
 					</div>
 				</div>
 			</div>
