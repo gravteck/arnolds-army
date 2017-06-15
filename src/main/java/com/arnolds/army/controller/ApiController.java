@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.arnolds.army.model.Player;
+import com.arnolds.army.model.Season;
+import com.arnolds.army.model.Team;
 import com.arnolds.army.service.ApplicationService;
 
 @RestController
@@ -38,9 +40,49 @@ public class ApiController {
 
 		applicationService.savePlayer(player);
 	}
-	
+
 	@DeleteMapping("players/{id}")
 	public void deletePlayer(@PathVariable Integer id) {
 		applicationService.removePlayer(id);
+	}
+
+	@GetMapping("teams/{id}")
+	public Team getTeam(@PathVariable Integer id) {
+		return applicationService.findTeam(id);
+	}
+
+	@GetMapping("teams")
+	public List<Team> findAllTeams() {
+		return applicationService.findAllTeams();
+	}
+
+	@PostMapping("teams")
+	public void saveTeam(@RequestBody Team team) {
+		applicationService.saveTeam(team);
+	}
+
+	@DeleteMapping("teams/{id}")
+	public void deleteTeam(@PathVariable Integer id) {
+		applicationService.removeTeam(id);
+	}
+
+	@GetMapping("seasons/{id}")
+	public Season getSeason(@PathVariable Integer id) {
+		return applicationService.findSeason(id);
+	}
+
+	@GetMapping("seasons")
+	public List<Season> findAllSeasons() {
+		return applicationService.findAllSeasons();
+	}
+
+	@PostMapping("seasons")
+	public void saveSeason(@RequestBody Season season) {
+		applicationService.saveSeason(season);
+	}
+
+	@DeleteMapping("seasons/{id}")
+	public void deleteSeasons(@PathVariable Integer id) {
+		applicationService.removeSeason(id);
 	}
 }

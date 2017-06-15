@@ -23,7 +23,7 @@
 				<table class="table table-striped table-hover" id="players-table">
 					<thead>
 						<tr>
-							<th data-ng-repeat="header in dto.headers">{{header}}</th>
+							<th data-ng-repeat="header in dto.headers track by $index">{{header}}</th>
 						</tr>
 					</thead>
 					<tbody>
