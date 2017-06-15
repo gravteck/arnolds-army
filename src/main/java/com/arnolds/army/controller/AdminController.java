@@ -533,10 +533,10 @@ public class AdminController {
 
 		title(title, FunctionalAreaType.SEASONS.title());
 		itemFunctionalArea(itemFunctionalArea, FunctionalAreaType.SEASON.value());
-		headers(headers, "Name", "", "");
+		headers(headers, "Year", "", "");
 
 		records(records,
-				seasons.stream().map(t -> Arrays.asList(text("Name", t.getYear()), spacer(),
+				seasons.stream().map(t -> Arrays.asList(text("Year", t.getYear()), spacer(),
 						reverseGroup(view("/" + itemFunctionalArea + "/" + t.getId()),
 								edit("/admin/" + itemFunctionalArea + "/edit/" + t.getId()), delete(t.getId()))))
 						.collect(Collectors.toList()));

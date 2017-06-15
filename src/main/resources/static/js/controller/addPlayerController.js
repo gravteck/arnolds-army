@@ -2,7 +2,7 @@ app.controller("addPlayerCtrl", function($scope, $rootScope, $http, $location,
 		playerService, EMIT_ADMIN_ENTITY_SAVED) {
 
 	$scope.resetPlayer = function() {
-		$scope.editedPlayer = playerService.resource;
+		$scope.editedPlayer = new playerService.resource;
 	}
 
 	$scope.save = function(editedPlayer) {
@@ -16,7 +16,7 @@ app.controller("addPlayerCtrl", function($scope, $rootScope, $http, $location,
 		});
 	}
 
-	angular.element(document).ready(function(playerId) {
+	angular.element(document).ready(function() {
 		$scope.resetPlayer();
 	});
 });

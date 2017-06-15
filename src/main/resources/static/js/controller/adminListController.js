@@ -19,7 +19,7 @@ app.controller('adminListCtrl',
 
 				if (angular.isString($scope.functionalArea)
 						&& $scope.functionalArea.length > 0) {
-					// TODO abstract the get URL
+
 					$http.get("/admin/" + $scope.functionalArea + "/get/list")
 							.then(function(response) {
 								$scope.dto = response.data;

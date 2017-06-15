@@ -86,6 +86,8 @@ app.config(function($routeProvider) {
 		templateUrl : "/static/html/admin/admin.html"
 	}).when("/admin/teams", {
 		templateUrl : "/static/html/admin/admin.html"
+	}).when("/admin/team/add", {
+		templateUrl : "/static/html/admin/team-add.html"
 	}).when("/admin/games", {
 		templateUrl : "/static/html/admin/admin.html"
 	}).when("/admin/seasons", {
@@ -108,15 +110,11 @@ app.factory("playerService", function($resource, baseApiUrl) {
 		id : "@id"
 	});
 
-	var playerStatus = {
-		saved : false,
-		deleted : false
-	};
-
+	// TODO implement all resource methods
 	return {
 		resource : Player,
 		get : function(playerId, success, error) {
-			return playersResource.get({
+			return Player.get({
 				id : playerId
 			}, success, error)
 		},
@@ -124,11 +122,65 @@ app.factory("playerService", function($resource, baseApiUrl) {
 			return new Player(player).$save({}, success, error)
 		},
 		query : function(success, error) {
-			return playersResource.query({}, success, error)
+			return Player.query({}, success, error)
 		},
 		remove : function(player, success, error) {
 			return player.$remove({
 				id : playerId
+			}, success, error)
+		}
+	}
+});
+
+app.factory("teamService", function($resource, baseApiUrl) {
+	var Team = $resource(baseApiUrl + "teams/:id", {
+		id : "@id"
+	});
+
+	// TODO implement all resource methods
+	return {
+		resource : Team,
+		fresh : function() { return new Team(); },
+		get : function(teamId, success, error) {
+			return Team.get({
+				id : teamId
+			}, success, error)
+		},
+		save : function(team, success, error) {
+			return new Team(team).$save({}, success, error)
+		},
+		query : function(success, error) {
+			return Team.query({}, success, error)
+		},
+		remove : function(team, success, error) {
+			return team.$remove({
+				id : teamId
+			}, success, error)
+		}
+	}
+});
+
+app.factory("seasonService", function($resource, baseApiUrl) {
+	var Season = $resource(baseApiUrl + "seasons/:id", {
+		id : "@id"
+	});
+
+	return {
+		resource : Season,
+		get : function(seasonId, success, error) {
+			return Season.get({
+				id : seasonId
+			}, success, error)
+		},
+		save : function(season, success, error) {
+			return new Season(season).$save({}, success, error)
+		},
+		query : function(success, error) {
+			return Season.query({}, success, error)
+		},
+		remove : function(season, success, error) {
+			return season.$remove({
+				id : seasonId
 			}, success, error)
 		}
 	}
