@@ -72,6 +72,8 @@ app.config(function($routeProvider) {
 		templateUrl : "/static/html/players.html"
 	}).when("/player/:id", {
 		templateUrl : "/static/html/player.html"
+	}).when("/team/:id", {
+		templateUrl : "/static/html/team.html"
 	}).when("/season/:id", {
 		templateUrl : "/static/html/season.html"
 	}).when("/calendar", {
@@ -152,9 +154,6 @@ app.factory("teamService", function($resource, baseApiUrl) {
 	// TODO implement all resource methods
 	return {
 		resource : Team,
-		fresh : function() {
-			return new Team();
-		},
 		get : function(teamId, success, error) {
 			return Team.get({
 				id : teamId
