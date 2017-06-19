@@ -3,6 +3,7 @@ package com.arnolds.army.controller;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import com.arnolds.army.model.Player;
 import com.arnolds.army.model.Season;
 import com.arnolds.army.model.Team;
 import com.arnolds.army.service.ApplicationService;
+import com.arnolds.army.util.ModelUtils;
 
 @RestController
 @RequestMapping("api")
@@ -56,9 +58,18 @@ public class ApiController {
 		return applicationService.findAllTeams();
 	}
 
-	@PostMapping("teams")
+	@PostMapping({ "teams", "teams/{id}" })
 	public void saveTeam(@RequestBody Team team) {
-		applicationService.saveTeam(team);
+
+		if (team.getId() != null) {
+			Team persistedTeam = applicationService.findTeam(team.getId());
+
+			ModelUtils.merge(team, persistedTeam);
+
+			applicationService.saveTeam(persistedTeam);
+		} else {
+			applicationService.saveTeam(team);
+		}
 	}
 
 	@DeleteMapping("teams/{id}")

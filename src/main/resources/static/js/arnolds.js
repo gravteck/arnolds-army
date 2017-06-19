@@ -86,12 +86,16 @@ app.config(function($routeProvider) {
 		templateUrl : "/static/html/admin/login.html"
 	}).when("/admin/player/add", {
 		templateUrl : "/static/html/admin/player-add.html"
+	}).when("/admin/player/edit/:id", {
+		templateUrl : "/static/html/admin/player-edit.html"
 	}).when("/admin/players", {
 		templateUrl : "/static/html/admin/admin.html"
 	}).when("/admin/teams", {
 		templateUrl : "/static/html/admin/admin.html"
 	}).when("/admin/team/add", {
 		templateUrl : "/static/html/admin/team-add.html"
+	}).when("/admin/team/edit/:id", {
+		templateUrl : "/static/html/admin/team-edit.html"
 	}).when("/admin/games", {
 		templateUrl : "/static/html/admin/admin.html"
 	}).when("/admin/seasons", {
@@ -115,6 +119,13 @@ app.factory('urlService', function($location) {
 	return {
 		entityId : function() {
 			return $location.absUrl().split(/[\s/]+/).pop();
+		},
+		edit : function() {
+
+			return angular.isNumber(parseInt(this.entityId()));
+		},
+		add : function() {
+			return !this.edit();
 		}
 	}
 });

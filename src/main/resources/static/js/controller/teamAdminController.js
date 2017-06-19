@@ -1,5 +1,5 @@
-app.controller("addTeamCtrl", function($scope, $rootScope, $http, $location,
-		teamService, EMIT_ADMIN_ENTITY_SAVED) {
+app.controller("teamAdminCtrl", function($scope, $rootScope, $http, $location,
+		teamService, urlService, EMIT_ADMIN_ENTITY_SAVED) {
 
 	$scope.resetTeam = function() {
 		$scope.editedTeam = new teamService.resource;
@@ -15,6 +15,11 @@ app.controller("addTeamCtrl", function($scope, $rootScope, $http, $location,
 	}
 
 	angular.element(document).ready(function() {
-		$scope.resetTeam();
+
+		if (urlService.add()) {
+			$scope.resetTeam();
+		} else if (urlService.edit()) {
+			$scope.editedTeam = teamService.get(urlService.entityId());
+		}
 	});
 });
