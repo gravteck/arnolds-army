@@ -128,10 +128,9 @@ app.factory("playerService", function($resource, baseApiUrl) {
 		id : "@id"
 	});
 
-	// TODO implement all resource methods
 	return {
 		resource : Player,
-		get : function(playerId, success, error) {
+		get : (playerId, success, error) => {
 			return Player.get({
 				id : playerId
 			}, success, error)
@@ -155,7 +154,6 @@ app.factory("teamService", function($resource, baseApiUrl) {
 		id : "@id"
 	});
 
-	// TODO implement all resource methods
 	return {
 		resource : Team,
 		get : (teamId, success, error) => {

@@ -1,8 +1,10 @@
-app.controller('playersController', function($scope, $http, playerService) {
+app.controller('playersController', ($scope, $http, playerService) => {
 
 	$scope.loader = {
 		loading : false
 	};
+	
+	var loading = (value) => $scope.loader.loading = value;
 
 	$scope.playerStatus = {
 		saved : false,
@@ -10,16 +12,16 @@ app.controller('playersController', function($scope, $http, playerService) {
 	}
 
 	$scope.loadPlayers = function() {
-		$scope.loader.loading = true;
 
-		$scope.players = playerService.resource.query(function(response) {
-			$scope.loader.loading = false;
-		});
+		playerService.query(loading(true))
+		  .$promise
+		    .then(players => {
+		      $scope.players = players
+		      loading(false)
+		    }, loading(false));
 	}
 
-	$scope.$on("playerSaved", function(event, args) {
-		$scope.playerStatus.saved = args.saved;
-	});
+	$scope.$on("playerSaved", (event, args) => { $scope.playerStatus.saved = args.saved });
 
 	angular.element(document).ready(function() {
 		$scope.loadPlayers();

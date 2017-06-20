@@ -1,5 +1,5 @@
-app.controller("playerAdminCtrl", function($scope, $rootScope, $http,
-		$location, playerService, urlService, EMIT_ADMIN_ENTITY_SAVED) {
+app.controller("playerAdminCtrl", ($scope, $rootScope, $http,
+		$location, playerService, urlService, EMIT_ADMIN_ENTITY_SAVED) => {
 
 	$scope.loader = {
 		loading : false

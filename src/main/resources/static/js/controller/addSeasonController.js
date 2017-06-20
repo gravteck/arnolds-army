@@ -1,11 +1,9 @@
-app.controller("addSeasonCtrl", function($scope, $rootScope, $http, $location,
-		seasonService, EMIT_ADMIN_ENTITY_SAVED) {
+app.controller("addSeasonCtrl", ($scope, $rootScope, $http, $location,
+		seasonService, EMIT_ADMIN_ENTITY_SAVED) => {
 
-	$scope.resetSeason = function() {
-		$scope.editedSeason = new seasonService.resource;
-	}
+	$scope.resetSeason = () => { $scope.editedSeason = new seasonService.resource; }
 
-	$scope.save = function(editedSeason) {
+	$scope.save = (editedSeason) => {
 		seasonService.save(editedSeason, function(response) {
 			$location.path("admin/seasons");
 			$scope.resetSeason();

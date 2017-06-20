@@ -8,7 +8,7 @@ app.controller("playerController", function($scope, $http, $location,
 	var loading = (value) => $scope.loader.loading = value;
 
 	$scope.resetPlayer = function() {
-		$scope.editedPlayer = playerService.resource;
+		$scope.editedPlayer = new playerService.resource;
 	}
 
 	angular.element(document).ready(function() {
@@ -17,7 +17,7 @@ app.controller("playerController", function($scope, $http, $location,
 
 		var playerId = urlService.entityId();
 
-		$scope.player = playerService.resource.get({id : playerId}, loading(true))
+		playerService.get(playerId, loading(true))
 		  .$promise
 		    .then(player => {
 		      $scope.player = player;

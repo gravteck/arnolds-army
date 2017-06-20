@@ -1,16 +1,13 @@
-app.controller('adminListCtrl',
-		function($scope, $http, $location, playerService,
-				BROADCAST_ADMIN_ENTITY_SAVED, EMIT_ADMIN_ENTITY_DELETED) {
+app.controller('adminListCtrl', ($scope, $http, $location, playerService,
+				BROADCAST_ADMIN_ENTITY_SAVED, EMIT_ADMIN_ENTITY_DELETED) => {
 
 			$scope.loader = {
 				loading : false
 			};
 
-			$scope.$on(BROADCAST_ADMIN_ENTITY_SAVED, function() {
-				$scope.loadList();
-			});
+			$scope.$on(BROADCAST_ADMIN_ENTITY_SAVED, () => { $scope.loadList() });
 
-			$scope.loadList = function() {
+			$scope.loadList = () => {
 
 				$scope.loader.loading = true;
 
@@ -21,7 +18,7 @@ app.controller('adminListCtrl',
 						&& $scope.functionalArea.length > 0) {
 
 					$http.get("/admin/" + $scope.functionalArea + "/get/list")
-							.then(function(response) {
+							.then(response => {
 								$scope.dto = response.data;
 
 								$scope.loader.loading = false;
@@ -31,7 +28,7 @@ app.controller('adminListCtrl',
 
 			var rootInitialized = false;
 
-			angular.element(document).ready(function(playerId) {
+			angular.element(document).ready(playerId => {
 
 				if (!rootInitialized) {
 					$scope.loadList();
@@ -41,11 +38,11 @@ app.controller('adminListCtrl',
 				$scope.loadList();
 			});
 
-			$scope.confirmDelete = function(item) {
-				$http.post($scope.dto.deletePath + item.href).then(function() {
+			$scope.confirmDelete = (item) => {
+				$http.post($scope.dto.deletePath + item.href).then(() => {
 					$scope.loadList();
 					$scope.$emit(EMIT_ADMIN_ENTITY_DELETED);
-				}, function() {
+				}, () => {
 					// TODO - find a more graceful way of expressing the error.
 					alert("There was an error while deleting.")
 				});

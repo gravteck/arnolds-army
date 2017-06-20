@@ -1,17 +1,18 @@
-app.controller('calendarController', function($scope, $http, $location) {
+app.controller('calendarController', ($scope, $http, $location) => {
 
 	$scope.loader = {
 		loading : false,
 	};
+	
+	var loading = (value) => $scope.loader.loading = value;
 
 	angular.element(document).ready(function() {
+	  
+	  loading(true);
 
-		$scope.loader.loading = true;
-
-		$http.get("/seasons/list").then(function(response) {
+		$http.get("/seasons/list").then(response => {
 			$scope.seasons = response.data;
-
-			$scope.loader.loading = false;
+			loading(false);
 		});
 	})
 
