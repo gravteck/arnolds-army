@@ -17,12 +17,6 @@ app.value("adminEntityStatus", {
 	status : {}
 });
 
-app.value("functionalArea", {
-	data : {
-		area : ""
-	}
-})
-
 app
 		.filter(
 				"gameItem",
@@ -121,11 +115,10 @@ app.factory('urlService', function($location) {
 			return $location.absUrl().split(/[\s/]+/).pop();
 		},
 		edit : function() {
-
-			return angular.isNumber(parseInt(this.entityId()));
+			return !this.add();
 		},
 		add : function() {
-			return !this.edit();
+			return isNaN(parseInt(this.entityId()));
 		}
 	}
 });
@@ -165,22 +158,14 @@ app.factory("teamService", function($resource, baseApiUrl) {
 	// TODO implement all resource methods
 	return {
 		resource : Team,
-		get : function(teamId, success, error) {
+		get : (teamId, success, error) => {
 			return Team.get({
 				id : teamId
 			}, success, error)
 		},
-		save : function(team, success, error) {
-			return new Team(team).$save({}, success, error)
-		},
-		query : function(success, error) {
-			return Team.query({}, success, error)
-		},
-		remove : function(team, success, error) {
-			return team.$remove({
-				id : teamId
-			}, success, error)
-		}
+		save : (team, success, error) => { return new Team(team).$save({}, success, error) },
+		query : (success, error) => { return Team.query({}, success, error) },
+		remove : (team, success, error) => { return team.$remove({id : teamId}, success, error) }
 	}
 });
 

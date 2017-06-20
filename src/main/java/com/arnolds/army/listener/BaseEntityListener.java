@@ -12,21 +12,21 @@ import com.arnolds.army.model.BaseEntity;
 
 public class BaseEntityListener {
 
-	@PrePersist
-	protected void onCreate(BaseEntity be) {
-		String name = SecurityContextHolder.getContext().getAuthentication() != null
-				? SecurityContextHolder.getContext().getAuthentication().getName() : "UNSECURED_USER";
+  @PrePersist
+  protected void onCreate(BaseEntity be) {
+    String name = SecurityContextHolder.getContext().getAuthentication() != null
+        ? SecurityContextHolder.getContext().getAuthentication().getName() : "UNSECURED_USER";
 
-		be.setInsertUser(name);
-		be.setInsertDate(LocalDateTime.now());
-	}
+    be.setInsertUser(name);
+    be.setInsertDate(LocalDateTime.now());
+  }
 
-	@PreUpdate
-	protected void onUpdate(BaseEntity be) {
-		//String name = SecurityContextHolder.getContext().getAuthentication().getName();
-		String name = "placeholder";
+  @PreUpdate
+  protected void onUpdate(BaseEntity be) {
+    // String name = SecurityContextHolder.getContext().getAuthentication().getName();
+    String name = "placeholder";
 
-		be.setUpdateUser(name);
-		be.setUpdateDate(LocalDateTime.now());
-	}
+    be.setUpdateUser(name);
+    be.setUpdateDate(LocalDateTime.now());
+  }
 }

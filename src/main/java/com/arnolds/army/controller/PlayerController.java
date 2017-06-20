@@ -20,54 +20,54 @@ import com.arnolds.army.service.ApplicationService;
 @CrossOrigin
 public class PlayerController {
 
-	@Autowired
-	private ApplicationService applicationService;
+  @Autowired
+  private ApplicationService applicationService;
 
-	@GetMapping(value = { "players" })
-	public String loadPlayers(Model m) {
+  @GetMapping(value = {"players"})
+  public String loadPlayers(Model m) {
 
-		List<Player> players = applicationService.findAllPlayers();
+    List<Player> players = applicationService.findAllPlayers();
 
-		// We don't need all the StatisticalYear instances when loading our list
-		// of players. There's also a bug in Thymeleaf when it's being inspected
-		// that ends in an infinite loop due to the bidirectional relationship
-		// between Player and StatisticalYear.
-		players.stream().forEach(p -> p.setStatisticalYears(Collections.emptyList()));
+    // We don't need all the StatisticalYear instances when loading our list
+    // of players. There's also a bug in Thymeleaf when it's being inspected
+    // that ends in an infinite loop due to the bidirectional relationship
+    // between Player and StatisticalYear.
+    players.stream().forEach(p -> p.setStatisticalYears(Collections.emptyList()));
 
-		m.addAttribute("players", players);
+    m.addAttribute("players", players);
 
-		return "players";
-	}
+    return "players";
+  }
 
-	@GetMapping("player/{playerId}")
-	public String loadPlayer(Model m, @PathVariable Integer playerId) {
+  @GetMapping("player/{playerId}")
+  public String loadPlayer(Model m, @PathVariable Integer playerId) {
 
-		m.addAttribute("player", applicationService.findPlayer(playerId));
+    m.addAttribute("player", applicationService.findPlayer(playerId));
 
-		return "player";
-	}
+    return "player";
+  }
 
-	@GetMapping("player/get/{playerId}")
-	@ResponseBody
-	public Player getPlayer(@PathVariable Integer playerId) {
-		return applicationService.findPlayer(playerId);
-	}
+  @GetMapping("player/get/{playerId}")
+  @ResponseBody
+  public Player getPlayer(@PathVariable Integer playerId) {
+    return applicationService.findPlayer(playerId);
+  }
 
-	@GetMapping("players/list")
-	@ResponseBody
-	public List<Player> listPlayers() {
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return applicationService.findAllPlayers();
-	}
+  @GetMapping("players/list")
+  @ResponseBody
+  public List<Player> listPlayers() {
+    try {
+      Thread.sleep(1000);
+    } catch (InterruptedException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    return applicationService.findAllPlayers();
+  }
 
-	@GetMapping("players/get/{playerId}")
-	@ResponseBody
-	public Player get(@PathVariable Integer playerId) {
-		return applicationService.findPlayer(playerId);
-	}
+  @GetMapping("players/get/{playerId}")
+  @ResponseBody
+  public Player get(@PathVariable Integer playerId) {
+    return applicationService.findPlayer(playerId);
+  }
 }

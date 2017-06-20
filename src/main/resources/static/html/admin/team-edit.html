@@ -1,10 +1,11 @@
-<div class="container-fluid">
+<div class="container-fluid" data-ng-controller="teamAdminCtrl">
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h2>Edit Team</h2>
 		</div>
-		<div class="panel-body">
-			<form data-ng-controller="teamAdminCtrl" class="form-horizontal" name="team" ng-submit="save(editedTeam)" novalidate)>
+		<div data-ng-include="'/static/html/loading.html'"></div>
+		<div class="panel-body" data-ng-hide="loader.loading">
+			<form class="form-horizontal" name="team" ng-submit="save(editedTeam)" novalidate)>
 				<div data-ng-include="'/static/html/admin/team-form.html'"></div>
 			</form>
 		</div>

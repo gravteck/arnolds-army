@@ -27,90 +27,89 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class Season extends BaseEntity {
 
-	@Id
-	@SequenceGenerator(name = "season_id_seq", sequenceName = "season_id_seq", allocationSize = 1, initialValue = 10)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "season_id_seq")
-	@Column(name = "id")
-	private Integer id;
+  @Id
+  @SequenceGenerator(name = "season_id_seq", sequenceName = "season_id_seq", allocationSize = 1,
+      initialValue = 10)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "season_id_seq")
+  @Column(name = "id")
+  private Integer id;
 
-	@Column(name = "year")
-	private Integer year;
+  @Column(name = "year")
+  private Integer year;
 
-	@OneToMany(mappedBy = "season", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<Game> games = new ArrayList<>();
+  @OneToMany(mappedBy = "season", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  private List<Game> games = new ArrayList<>();
 
-	@OneToMany(mappedBy = "season", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<StatisticalYear> statisticalYears = new ArrayList<>();
+  @OneToMany(mappedBy = "season", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private List<StatisticalYear> statisticalYears = new ArrayList<>();
 
-	@Transient
-	private Integer wins;
+  @Transient
+  private Integer wins;
 
-	@Transient
-	private Integer losses;
+  @Transient
+  private Integer losses;
 
-	public Integer getId() {
-		return id;
-	}
+  public Integer getId() {
+    return id;
+  }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-	public Integer getYear() {
-		return year;
-	}
+  public Integer getYear() {
+    return year;
+  }
 
-	public void setYear(Integer year) {
-		this.year = year;
-	}
+  public void setYear(Integer year) {
+    this.year = year;
+  }
 
-	public List<Game> getGames() {
-		return games;
-	}
+  public List<Game> getGames() {
+    return games;
+  }
 
-	public void setGames(List<Game> games) {
-		this.games = games;
-	}
+  public void setGames(List<Game> games) {
+    this.games = games;
+  }
 
-	/**
-	 * @return the wins
-	 */
-	public Integer getWins() {
-		return wins;
-	}
+  /**
+   * @return the wins
+   */
+  public Integer getWins() {
+    return wins;
+  }
 
-	/**
-	 * @param wins
-	 *            the wins to set
-	 */
-	public void setWins(Integer wins) {
-		this.wins = wins;
-	}
+  /**
+   * @param wins the wins to set
+   */
+  public void setWins(Integer wins) {
+    this.wins = wins;
+  }
 
-	/**
-	 * @return the losses
-	 */
-	public Integer getLosses() {
-		return losses;
-	}
+  /**
+   * @return the losses
+   */
+  public Integer getLosses() {
+    return losses;
+  }
 
-	/**
-	 * @param losses
-	 *            the losses to set
-	 */
-	public void setLosses(Integer losses) {
-		this.losses = losses;
-	}
+  /**
+   * @param losses the losses to set
+   */
+  public void setLosses(Integer losses) {
+    this.losses = losses;
+  }
 
-	public Integer getWins(Integer teamId) {
+  public Integer getWins(Integer teamId) {
 
-		return getGames().stream()
-				.filter(g -> (teamId == g.getAwayTeam().getId() && g.getAwayScore() > g.getHomeScore())
-						|| (teamId == g.getHomeTeam().getId() && g.getHomeScore() > g.getAwayScore()))
-				.collect(Collectors.toList()).size();
-	}
+    return getGames().stream()
+        .filter(g -> (teamId == g.getAwayTeam().getId() && g.getAwayScore() > g.getHomeScore())
+            || (teamId == g.getHomeTeam().getId() && g.getHomeScore() > g.getAwayScore()))
+        .collect(Collectors.toList()).size();
+  }
 
-	public Integer getLosses(Integer teamId) {
-		return getGames().size() - getWins(teamId);
-	}
+  public Integer getLosses(Integer teamId) {
+    return getGames().size() - getWins(teamId);
+  }
 }

@@ -16,16 +16,16 @@ import com.trg.dao.jpa.GenericDAO;
 @SpringBootTest
 public class ArnoldsArmyApplicationTests {
 
-	@Autowired
-	private GenericDAO<Team, Serializable> teamDao;
+  @Autowired
+  private GenericDAO<Team, Serializable> teamDao;
 
-	@Test
-	public void testFindAllTeams() {
-		Assert.assertEquals(4, teamDao.findAll().size());
-	}
+  @Test
+  public void testFindAllTeams() {
+    Assert.assertEquals(4, teamDao.findAll().size());
+  }
 
-	@Test
-	public void testFindTeam() {
-		Assert.assertEquals(1, teamDao.find(1).getId().intValue());
-	}
+  @Test
+  public void testFindTeam() {
+    Assert.assertEquals(1, teamDao.find(1).getId().intValue());
+  }
 }

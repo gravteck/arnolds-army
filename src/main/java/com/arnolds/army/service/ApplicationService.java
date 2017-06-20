@@ -12,57 +12,57 @@ import com.arnolds.army.model.Team;
 
 public interface ApplicationService {
 
-	List<Team> findAllTeams();
+  List<Team> findAllTeams();
 
-	Team findTeam(Integer teamId);
+  Team findTeam(Integer teamId);
 
-	void saveTeam(Team team);
+  void saveTeam(Team team);
 
-	void removeTeam(Integer teamId);
+  void removeTeam(Integer teamId);
 
-	List<Player> findAllPlayers();
+  List<Player> findAllPlayers();
 
-	Player findPlayer(Integer playerId);
+  Player findPlayer(Integer playerId);
 
-	void savePlayer(Player player);
+  void savePlayer(Player player);
 
-	void removePlayer(Integer playerId);
+  void removePlayer(Integer playerId);
 
-	Season findSeason(Integer seasonId);
+  Season findSeason(Integer seasonId);
 
-	void saveSeason(Season season);
+  void saveSeason(Season season);
 
-	void removeSeason(Integer seasonId);
+  void removeSeason(Integer seasonId);
 
-	Game findGame(Integer gameId);
+  Game findGame(Integer gameId);
 
-	void saveGame(Game game);
+  void saveGame(Game game);
 
-	void removeGame(Integer gameId);
+  void removeGame(Integer gameId);
 
-	StatisticalYear findStatisticalYear(Integer statisticalYearId);
+  StatisticalYear findStatisticalYear(Integer statisticalYearId);
 
-	void saveStatisticalYear(StatisticalYear statisticalYear);
+  void saveStatisticalYear(StatisticalYear statisticalYear);
 
-	void removeStatisticalYear(Integer statisticalYearId);
+  void removeStatisticalYear(Integer statisticalYearId);
 
-	List<StatisticalYear> findAllStatisticalYears(Integer playerId);
+  List<StatisticalYear> findAllStatisticalYears(Integer playerId);
 
-	List<Season> findAllSeasons();
+  List<Season> findAllSeasons();
 
-	List<Game> findAllGames();
+  List<Game> findAllGames();
 
-	List<StatisticalYear> findAllStatisticalYears();
+  List<StatisticalYear> findAllStatisticalYears();
 
-	List<Integer> findAllYears();
+  List<Integer> findAllYears();
 
-	List<KeyValue> findAllMonths();
+  List<KeyValue> findAllMonths();
 
-	List<Integer> findAllDays();
+  List<Integer> findAllDays();
 
-	List<Integer> findAllHours();
+  List<Integer> findAllHours();
 
-	List<String> findAllMinuteIntervals();
+  List<String> findAllMinuteIntervals();
 
-	List<String> findAllPeriods();
+  List<String> findAllPeriods();
 }

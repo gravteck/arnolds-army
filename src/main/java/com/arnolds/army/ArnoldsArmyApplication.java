@@ -14,18 +14,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @EnableCaching
 public class ArnoldsArmyApplication extends SpringBootServletInitializer {
 
-	@RequestMapping(value = { "/", "home" })
-	public String loadHomePage(Model m) {
+  @RequestMapping(value = {"/", "home"})
+  public String loadHomePage(Model m) {
 
-		return "home";
-	}
+    return "home";
+  }
 
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(ArnoldsArmyApplication.class);
-	}
+  @Override
+  protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+    return application.sources(ArnoldsArmyApplication.class);
+  }
 
-	public static void main(String[] args) {
-		SpringApplication.run(ArnoldsArmyApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(ArnoldsArmyApplication.class, args);
+  }
 }

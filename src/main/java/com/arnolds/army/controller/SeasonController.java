@@ -18,33 +18,33 @@ import com.arnolds.army.service.ApplicationService;
 @CrossOrigin
 public class SeasonController {
 
-	@Autowired
-	private ApplicationService applicationService;
+  @Autowired
+  private ApplicationService applicationService;
 
-	@RequestMapping("calendar")
-	public String loadCalendar(Model m) {
+  @RequestMapping("calendar")
+  public String loadCalendar(Model m) {
 
-		m.addAttribute("arnoldsId", Team.ID_ARNOLDS);
-		m.addAttribute("seasons", applicationService.findAllSeasons());
+    m.addAttribute("arnoldsId", Team.ID_ARNOLDS);
+    m.addAttribute("seasons", applicationService.findAllSeasons());
 
-		return "calendar";
-	}
+    return "calendar";
+  }
 
-	@RequestMapping("season/{seasonId}")
-	public String loadSeason(Model m, @PathVariable Integer seasonId) {
+  @RequestMapping("season/{seasonId}")
+  public String loadSeason(Model m, @PathVariable Integer seasonId) {
 
-		Season season = applicationService.findSeason(seasonId);
+    Season season = applicationService.findSeason(seasonId);
 
-		m.addAttribute("arnoldsId", Team.ID_ARNOLDS);
-		m.addAttribute("season", season);
+    m.addAttribute("arnoldsId", Team.ID_ARNOLDS);
+    m.addAttribute("season", season);
 
-		return "season";
-	}
+    return "season";
+  }
 
-	@RequestMapping("seasons/list")
-	@ResponseBody
-	public List<Season> listSeasons(Model m) {
-		return applicationService.findAllSeasons();
-	}
+  @RequestMapping("seasons/list")
+  @ResponseBody
+  public List<Season> listSeasons(Model m) {
+    return applicationService.findAllSeasons();
+  }
 
 }

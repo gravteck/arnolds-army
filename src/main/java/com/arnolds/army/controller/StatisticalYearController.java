@@ -13,16 +13,16 @@ import com.arnolds.army.service.ApplicationService;
 @RequestMapping("statistical-year")
 public class StatisticalYearController {
 
-	@Autowired
-	ApplicationService applicationService;
+  @Autowired
+  ApplicationService applicationService;
 
-	@RequestMapping("{statisticalYearId}")
-	public String loadStatisticalYear(Model m, @PathVariable Integer statisticalYearId) {
+  @RequestMapping("{statisticalYearId}")
+  public String loadStatisticalYear(Model m, @PathVariable Integer statisticalYearId) {
 
-		StatisticalYear statisticalYear = applicationService.findStatisticalYear(statisticalYearId);
+    StatisticalYear statisticalYear = applicationService.findStatisticalYear(statisticalYearId);
 
-		m.addAttribute("statisticalYear", statisticalYear);
+    m.addAttribute("statisticalYear", statisticalYear);
 
-		return "statistical-year";
-	}
+    return "statistical-year";
+  }
 }

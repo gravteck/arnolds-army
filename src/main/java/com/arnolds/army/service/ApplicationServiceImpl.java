@@ -26,336 +26,321 @@ import com.trg.dao.jpa.GenericDAO;
 @Service
 public class ApplicationServiceImpl implements ApplicationService {
 
-	@Autowired
-	private GenericDAO<Team, Serializable> teamDao;
+  @Autowired
+  private GenericDAO<Team, Serializable> teamDao;
 
-	@Autowired
-	private GenericDAO<Player, Serializable> playerDao;
+  @Autowired
+  private GenericDAO<Player, Serializable> playerDao;
 
-	@Autowired
-	private GenericDAO<Season, Serializable> seasonDao;
+  @Autowired
+  private GenericDAO<Season, Serializable> seasonDao;
 
-	@Autowired
-	private GenericDAO<Game, Serializable> gameDao;
+  @Autowired
+  private GenericDAO<Game, Serializable> gameDao;
 
-	@Autowired
-	private GenericDAO<StatisticalYear, Serializable> statisticalYearDao;
+  @Autowired
+  private GenericDAO<StatisticalYear, Serializable> statisticalYearDao;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arnolds.army.service.ApplicationService#findTeam(java.lang.Integer)
-	 */
-	@Override
-	public Team findTeam(Integer teamId) {
-		return teamDao.find(teamId);
-	}
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.arnolds.army.service.ApplicationService#findTeam(java.lang.Integer)
+   */
+  @Override
+  public Team findTeam(Integer teamId) {
+    return teamDao.find(teamId);
+  }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.arnolds.army.service.ApplicationService#findAllPlayers()
-	 */
-	@Override
-	// @Cacheable("teams")
-	public List<Team> findAllTeams() {
-		return teamDao.findAll().stream()
-				.sorted((a, b) -> a.getName().toUpperCase().compareTo(b.getName().toUpperCase()))
-				.collect(Collectors.toList());
-	}
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.arnolds.army.service.ApplicationService#findAllPlayers()
+   */
+  @Override
+  // @Cacheable("teams")
+  public List<Team> findAllTeams() {
+    return teamDao.findAll().stream()
+        .sorted((a, b) -> a.getName().toUpperCase().compareTo(b.getName().toUpperCase()))
+        .collect(Collectors.toList());
+  }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arnolds.army.service.ApplicationService#saveTeam(com.arnolds.army.
-	 * model.Team)
-	 */
-	@Override
-	@Transactional
-	public void saveTeam(Team team) {
-		teamDao.save(team);
-	}
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.arnolds.army.service.ApplicationService#saveTeam(com.arnolds.army. model.Team)
+   */
+  @Override
+  @Transactional
+  public void saveTeam(Team team) {
+    teamDao.save(team);
+  }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arnolds.army.service.ApplicationService#removeTeam(java.lang.Integer)
-	 */
-	@Override
-	@Transactional
-	public void removeTeam(Integer teamId) {
-		teamDao.removeById(teamId);
-	}
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.arnolds.army.service.ApplicationService#removeTeam(java.lang.Integer)
+   */
+  @Override
+  @Transactional
+  public void removeTeam(Integer teamId) {
+    teamDao.removeById(teamId);
+  }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.arnolds.army.service.ApplicationService#findAllPlayers()
-	 */
-	@Override
-	// @Cacheable("players")
-	public List<Player> findAllPlayers() {
-		
-		return playerDao.findAll().stream().sorted((a, b) -> a.getFirstName().compareTo(b.getFirstName()))
-				.collect(Collectors.toList());
-	}
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.arnolds.army.service.ApplicationService#findAllPlayers()
+   */
+  @Override
+  // @Cacheable("players")
+  public List<Player> findAllPlayers() {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arnolds.army.service.ApplicationService#findPlayer(java.lang.Integer)
-	 */
-	@Override
-	// @Cacheable("player")
-	public Player findPlayer(Integer playerId) {
-		return playerDao.find(playerId);
-	}
+    return playerDao.findAll().stream()
+        .sorted((a, b) -> a.getFirstName().compareTo(b.getFirstName()))
+        .collect(Collectors.toList());
+  }
 
-	@Override
-	@Transactional
-	// @Caching(put = { @CachePut(cacheNames = "player") }, evict = {
-	// @CacheEvict(cacheNames = "players") })
-	public void savePlayer(Player player) {
-		playerDao.save(player);
-	}
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.arnolds.army.service.ApplicationService#findPlayer(java.lang.Integer)
+   */
+  @Override
+  // @Cacheable("player")
+  public Player findPlayer(Integer playerId) {
+    return playerDao.find(playerId);
+  }
 
-	@Override
-	@Transactional
-	public void removePlayer(Integer playerId) {
-		playerDao.removeById(playerId);
-	}
+  @Override
+  @Transactional
+  // @Caching(put = { @CachePut(cacheNames = "player") }, evict = {
+  // @CacheEvict(cacheNames = "players") })
+  public void savePlayer(Player player) {
+    playerDao.save(player);
+  }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arnolds.army.service.ApplicationService#findSeason(java.lang.Integer)
-	 */
-	@Override
-	public Season findSeason(Integer seasonId) {
-		return seasonDao.find(seasonId);
-	}
+  @Override
+  @Transactional
+  public void removePlayer(Integer playerId) {
+    playerDao.removeById(playerId);
+  }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arnolds.army.service.ApplicationService#saveSeason(com.arnolds.army.
-	 * model.Season)
-	 */
-	@Override
-	@Transactional
-	public void saveSeason(Season season) {
-		seasonDao.save(season);
-	}
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.arnolds.army.service.ApplicationService#findSeason(java.lang.Integer)
+   */
+  @Override
+  public Season findSeason(Integer seasonId) {
+    return seasonDao.find(seasonId);
+  }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.arnolds.army.service.ApplicationService#removeSeason(java.lang.
-	 * Integer)
-	 */
-	@Override
-	@Transactional
-	public void removeSeason(Integer seasonId) {
-		seasonDao.removeById(seasonId);
-	}
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.arnolds.army.service.ApplicationService#saveSeason(com.arnolds.army. model.Season)
+   */
+  @Override
+  @Transactional
+  public void saveSeason(Season season) {
+    seasonDao.save(season);
+  }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arnolds.army.service.ApplicationService#findGame(java.lang.Integer)
-	 */
-	@Override
-	public Game findGame(Integer gameId) {
-		return gameDao.find(gameId);
-	}
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.arnolds.army.service.ApplicationService#removeSeason(java.lang. Integer)
+   */
+  @Override
+  @Transactional
+  public void removeSeason(Integer seasonId) {
+    seasonDao.removeById(seasonId);
+  }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arnolds.army.service.ApplicationService#saveGame(com.arnolds.army.
-	 * model.Game)
-	 */
-	@Override
-	@Transactional
-	public void saveGame(Game game) {
-		gameDao.save(game);
-	}
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.arnolds.army.service.ApplicationService#findGame(java.lang.Integer)
+   */
+  @Override
+  public Game findGame(Integer gameId) {
+    return gameDao.find(gameId);
+  }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arnolds.army.service.ApplicationService#removeGame(java.lang.Integer)
-	 */
-	@Override
-	@Transactional
-	public void removeGame(Integer gameId) {
-		gameDao.removeById(gameId);
-	}
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.arnolds.army.service.ApplicationService#saveGame(com.arnolds.army. model.Game)
+   */
+  @Override
+  @Transactional
+  public void saveGame(Game game) {
+    gameDao.save(game);
+  }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arnolds.army.service.ApplicationService#findStatisticalYear(java.lang
-	 * .Integer)
-	 */
-	@Override
-	public StatisticalYear findStatisticalYear(Integer statisticalYearId) {
-		return statisticalYearDao.find(statisticalYearId);
-	}
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.arnolds.army.service.ApplicationService#removeGame(java.lang.Integer)
+   */
+  @Override
+  @Transactional
+  public void removeGame(Integer gameId) {
+    gameDao.removeById(gameId);
+  }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.arnolds.army.service.ApplicationService#saveStatisticalYear(com.
-	 * arnolds.army.model.StatisticalYear)
-	 */
-	@Override
-	@Transactional
-	public void saveStatisticalYear(StatisticalYear statisticalYear) {
-		statisticalYearDao.save(statisticalYear);
-	}
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.arnolds.army.service.ApplicationService#findStatisticalYear(java.lang .Integer)
+   */
+  @Override
+  public StatisticalYear findStatisticalYear(Integer statisticalYearId) {
+    return statisticalYearDao.find(statisticalYearId);
+  }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arnolds.army.service.ApplicationService#removeStatisticalYear(java.
-	 * lang.Integer)
-	 */
-	@Override
-	@Transactional
-	public void removeStatisticalYear(Integer statisticalYearId) {
-		statisticalYearDao.removeById(statisticalYearId);
-	}
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.arnolds.army.service.ApplicationService#saveStatisticalYear(com.
+   * arnolds.army.model.StatisticalYear)
+   */
+  @Override
+  @Transactional
+  public void saveStatisticalYear(StatisticalYear statisticalYear) {
+    statisticalYearDao.save(statisticalYear);
+  }
 
-	@Override
-	public List<StatisticalYear> findAllStatisticalYears(Integer playerId) {
-		return null;
-	}
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.arnolds.army.service.ApplicationService#removeStatisticalYear(java. lang.Integer)
+   */
+  @Override
+  @Transactional
+  public void removeStatisticalYear(Integer statisticalYearId) {
+    statisticalYearDao.removeById(statisticalYearId);
+  }
 
-	@Override
-	public List<Season> findAllSeasons() {
+  @Override
+  public List<StatisticalYear> findAllStatisticalYears(Integer playerId) {
+    return null;
+  }
 
-		return seasonDao.findAll().stream().sorted((a, b) -> a.getYear().compareTo(b.getYear()))
-				.collect(Collectors.toList());
-	}
+  @Override
+  public List<Season> findAllSeasons() {
 
-	@Override
-	public List<Game> findAllGames() {
+    return seasonDao.findAll().stream().sorted((a, b) -> a.getYear().compareTo(b.getYear()))
+        .collect(Collectors.toList());
+  }
 
-		return gameDao.findAll().stream().sorted((a, b) -> a.getLocalDateTime().compareTo(b.getLocalDateTime()))
-				.collect(Collectors.toList());
-	}
+  @Override
+  public List<Game> findAllGames() {
 
-	@Override
-	public List<StatisticalYear> findAllStatisticalYears() {
+    return gameDao.findAll().stream()
+        .sorted((a, b) -> a.getLocalDateTime().compareTo(b.getLocalDateTime()))
+        .collect(Collectors.toList());
+  }
 
-		return statisticalYearDao.findAll().stream().sorted((a, b) -> a.getYear().compareTo(b.getYear()))
-				.collect(Collectors.toList());
-	}
+  @Override
+  public List<StatisticalYear> findAllStatisticalYears() {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.arnolds.army.service.ApplicationService#findAllYears()
-	 */
-	@Override
-	public List<Integer> findAllYears() {
+    return statisticalYearDao.findAll().stream()
+        .sorted((a, b) -> a.getYear().compareTo(b.getYear())).collect(Collectors.toList());
+  }
 
-		List<Integer> years = new ArrayList<>();
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.arnolds.army.service.ApplicationService#findAllYears()
+   */
+  @Override
+  public List<Integer> findAllYears() {
 
-		for (int i = 2012; i < 2017; i++) {
-			years.add(i + 1);
-		}
+    List<Integer> years = new ArrayList<>();
 
-		return years;
-	}
+    for (int i = 2012; i < 2017; i++) {
+      years.add(i + 1);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.arnolds.army.service.ApplicationService#findAllMonths()
-	 */
-	@Override
-	public List<KeyValue> findAllMonths() {
-		List<KeyValue> month = new ArrayList<>();
+    return years;
+  }
 
-		month.add(new DefaultMapEntry("Jan", 1));
-		month.add(new DefaultMapEntry("Feb", 2));
-		month.add(new DefaultMapEntry("Mar", 3));
-		month.add(new DefaultMapEntry("Apr", 4));
-		month.add(new DefaultMapEntry("May", 5));
-		month.add(new DefaultMapEntry("Jun", 6));
-		month.add(new DefaultMapEntry("Jul", 7));
-		month.add(new DefaultMapEntry("Aug", 8));
-		month.add(new DefaultMapEntry("Sep", 9));
-		month.add(new DefaultMapEntry("Oct", 10));
-		month.add(new DefaultMapEntry("Nov", 11));
-		month.add(new DefaultMapEntry("Dec", 12));
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.arnolds.army.service.ApplicationService#findAllMonths()
+   */
+  @Override
+  public List<KeyValue> findAllMonths() {
+    List<KeyValue> month = new ArrayList<>();
 
-		return month;
-	}
+    month.add(new DefaultMapEntry("Jan", 1));
+    month.add(new DefaultMapEntry("Feb", 2));
+    month.add(new DefaultMapEntry("Mar", 3));
+    month.add(new DefaultMapEntry("Apr", 4));
+    month.add(new DefaultMapEntry("May", 5));
+    month.add(new DefaultMapEntry("Jun", 6));
+    month.add(new DefaultMapEntry("Jul", 7));
+    month.add(new DefaultMapEntry("Aug", 8));
+    month.add(new DefaultMapEntry("Sep", 9));
+    month.add(new DefaultMapEntry("Oct", 10));
+    month.add(new DefaultMapEntry("Nov", 11));
+    month.add(new DefaultMapEntry("Dec", 12));
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.arnolds.army.service.ApplicationService#findAllDays()
-	 */
-	@Override
-	public List<Integer> findAllDays() {
-		List<Integer> days = new ArrayList<>();
+    return month;
+  }
 
-		for (int i = 0; i < 31; i++) {
-			days.add(i + 1);
-		}
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.arnolds.army.service.ApplicationService#findAllDays()
+   */
+  @Override
+  public List<Integer> findAllDays() {
+    List<Integer> days = new ArrayList<>();
 
-		return days;
-	}
+    for (int i = 0; i < 31; i++) {
+      days.add(i + 1);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.arnolds.army.service.ApplicationService#findAllHours()
-	 */
-	@Override
-	public List<Integer> findAllHours() {
-		List<Integer> hours = new ArrayList<>();
+    return days;
+  }
 
-		for (int i = 0; i < 12; i++) {
-			hours.add(i + 1);
-		}
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.arnolds.army.service.ApplicationService#findAllHours()
+   */
+  @Override
+  public List<Integer> findAllHours() {
+    List<Integer> hours = new ArrayList<>();
 
-		return hours;
-	}
+    for (int i = 0; i < 12; i++) {
+      hours.add(i + 1);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.arnolds.army.service.ApplicationService#findAllMinuteIntervals()
-	 */
-	@Override
-	public List<String> findAllMinuteIntervals() {
-		return Arrays.asList("00", "15", "30", "45");
-	}
+    return hours;
+  }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.arnolds.army.service.ApplicationService#findAllPeriods()
-	 */
-	@Override
-	public List<String> findAllPeriods() {
-		return Arrays.asList("pm", "am");
-	}
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.arnolds.army.service.ApplicationService#findAllMinuteIntervals()
+   */
+  @Override
+  public List<String> findAllMinuteIntervals() {
+    return Arrays.asList("00", "15", "30", "45");
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.arnolds.army.service.ApplicationService#findAllPeriods()
+   */
+  @Override
+  public List<String> findAllPeriods() {
+    return Arrays.asList("pm", "am");
+  }
 
 }

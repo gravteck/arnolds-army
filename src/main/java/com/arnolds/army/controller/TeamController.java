@@ -13,16 +13,16 @@ import com.arnolds.army.service.ApplicationService;
 @RequestMapping("team")
 public class TeamController {
 
-	@Autowired
-	ApplicationService applicationService;
+  @Autowired
+  ApplicationService applicationService;
 
-	@RequestMapping("{teamId}")
-	public String loadTeam(Model m, @PathVariable Integer teamId) {
+  @RequestMapping("{teamId}")
+  public String loadTeam(Model m, @PathVariable Integer teamId) {
 
-		Team team = applicationService.findTeam(teamId);
+    Team team = applicationService.findTeam(teamId);
 
-		m.addAttribute("team", team);
+    m.addAttribute("team", team);
 
-		return "team";
-	}
+    return "team";
+  }
 }

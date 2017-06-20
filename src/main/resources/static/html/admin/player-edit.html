@@ -1,0 +1,13 @@
+<div class="container-fluid" data-ng-controller="playerAdminCtrl">
+	<div class="panel panel-default>
+		<div class="panel-heading">
+		<h2>Edit Player</h2>
+	</div>
+	<div data-ng-include="'/static/html/loading.html'"></div>
+	<div class="panel-body" data-ng-hide="loader.loading">
+		<form class="form-horizontal" name="player" ng-submit="save(editedPlayer)" novalidate)>
+			<div data-ng-include="'/static/html/admin/player-form.html'"></div>
+		</form>
+	</div>
+</div>
+</div>

@@ -12,21 +12,21 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class ApplicationServiceTest {
 
-	@Autowired
-	private ApplicationService applicationService;
+  @Autowired
+  private ApplicationService applicationService;
 
-	@Test
-	public void testFindAllTeams() {
-		Assert.assertEquals(4, applicationService.findAllTeams().size());
-	}
+  @Test
+  public void testFindAllTeams() {
+    Assert.assertEquals(4, applicationService.findAllTeams().size());
+  }
 
-	@Test
-	public void testFindAllPlayers() {
-		Assert.assertEquals(4, applicationService.findAllPlayers().size());
-	}
+  @Test
+  public void testFindAllPlayers() {
+    Assert.assertEquals(4, applicationService.findAllPlayers().size());
+  }
 
-	@Test
-	public void testFindAllSeasons() {
-		Assert.assertTrue(CollectionUtils.isNotEmpty(applicationService.findAllSeasons()));
-	}
+  @Test
+  public void testFindAllSeasons() {
+    Assert.assertTrue(CollectionUtils.isNotEmpty(applicationService.findAllSeasons()));
+  }
 }

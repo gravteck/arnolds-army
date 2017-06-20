@@ -1,7 +1,7 @@
 app.controller('playersController', function($scope, $http, playerService) {
 
 	$scope.loader = {
-		loading : false,
+		loading : false
 	};
 
 	$scope.playerStatus = {

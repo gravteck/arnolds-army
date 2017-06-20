@@ -14,18 +14,18 @@ import com.trg.search.jpa.JPASearchProcessor;
 
 @Repository("baseDao")
 public class BaseDaoHibernateImpl<T extends BaseEntity, ID extends Serializable>
-		extends GenericDAOImpl<T, Serializable> {
+    extends GenericDAOImpl<T, Serializable> {
 
-	@Override
-	@Autowired
-	public void setSearchProcessor(JPASearchProcessor searchProcessor) {
-		super.setSearchProcessor(searchProcessor);
-	}
+  @Override
+  @Autowired
+  public void setSearchProcessor(JPASearchProcessor searchProcessor) {
+    super.setSearchProcessor(searchProcessor);
+  }
 
-	@Override
-	@Autowired
-	public void setEntityManager(EntityManager entityManager) {
-		super.setEntityManager(entityManager);
-	}
+  @Override
+  @Autowired
+  public void setEntityManager(EntityManager entityManager) {
+    super.setEntityManager(entityManager);
+  }
 
 }

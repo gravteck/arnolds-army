@@ -8,6 +8,7 @@ import com.arnolds.army.model.Game;
 import com.arnolds.army.model.StatisticalYear;
 
 @Repository("statisticalYearDao")
-public class StatisticalYearDaoHibernateImpl extends BaseDaoHibernateImpl<StatisticalYear, Serializable> {
+public class StatisticalYearDaoHibernateImpl
+    extends BaseDaoHibernateImpl<StatisticalYear, Serializable> {
 
 }

@@ -47,558 +47,569 @@ import com.arnolds.army.service.ApplicationService;
 @RequestMapping("admin")
 public class AdminController {
 
-	@Autowired
-	private ApplicationService applicationService;
-
-	@GetMapping("{functionalArea}/list")
-	public String loadAdmin(Model m, @PathVariable String functionalArea) {
-
-		FunctionalAreaType functionalAreaType = FunctionalAreaType.find(functionalArea);
-		List<String> headers = new ArrayList<>();
-		List<List<ReportingField>> records = new ArrayList<>();
-		StringBuilder title = new StringBuilder();
-		StringBuilder itemFunctionalArea = new StringBuilder();
-
-		loadFunctionalArea(functionalAreaType, headers, records, title, itemFunctionalArea);
-
-		m.addAttribute("title", title);
-		m.addAttribute("addPath", "/admin/" + itemFunctionalArea + "/add/");
-		m.addAttribute("deletePath", "/admin/" + itemFunctionalArea + "/delete/");
-		m.addAttribute("headers", headers);
-		m.addAttribute("records", records);
-
-		return "admin/admin";
-	}
-
-	@GetMapping("{functionalArea}/get/list")
-	@ResponseBody
-	public AdminDto loadAdmin(@PathVariable String functionalArea) {
-
-		FunctionalAreaType functionalAreaType = FunctionalAreaType.find(functionalArea);
-		List<String> headers = new ArrayList<>();
-		List<List<ReportingField>> records = new ArrayList<>();
-		StringBuilder title = new StringBuilder();
-		StringBuilder itemFunctionalArea = new StringBuilder();
-
-		loadFunctionalArea(functionalAreaType, headers, records, title, itemFunctionalArea);
-
-		return new AdminDto(title.toString(), "/admin/" + itemFunctionalArea + "/add/",
-				"/admin/" + itemFunctionalArea + "/delete/", headers, records);
-	}
-
-	private void loadFunctionalArea(FunctionalAreaType functionalAreaType, List<String> headers,
-			List<List<ReportingField>> records, StringBuilder title, StringBuilder itemFunctionalArea) {
-		switch (functionalAreaType) {
-		case PLAYERS:
-			loadPlayers(headers, records, title, itemFunctionalArea);
-			break;
-		case SEASONS:
-			loadSeasons(headers, records, title, itemFunctionalArea);
-			break;
-		case GAMES:
-			loadGames(headers, records, title, itemFunctionalArea);
-			break;
-		case STATISTICAL_YEARS:
-			loadStatisticalYears(headers, records, title, itemFunctionalArea);
-			break;
-		case TEAMS:
-			loadTeams(headers, records, title, itemFunctionalArea);
-			break;
-		default:
-			break;
-		}
-	}
-
-	@GetMapping("players")
-	public String loadAdminPlayers(Model m) {
-		List<Player> players = applicationService.findAllPlayers();
-
-		// We don't need all the StatisticalYear instances when loading our list
-		// of players. There's also a bug in Thymeleaf when it's being inspected
-		// that ends in an infinite loop due to the bidirectional relationship
-		// between Player and StatisticalYear.
-		players.stream().forEach(p -> p.setStatisticalYears(Collections.emptyList()));
-
-		m.addAttribute("players", players);
-
-		List<String> headers = new ArrayList<>(Arrays.asList("First Name", "Last Name", "Phone", "Email", "", "", ""));
-		// List<KeyValue> reportingFields = new
-		// ArrayList<>(ImmutableMap.of("firstName", ))
-
-		List<List<ReportingField>> records = players.stream()
-				.map(p -> Arrays.asList(text("firstName", p.getFirstName()), text("lastName", p.getLastName()),
-						link("phone", p.getPhone(), "tel:" + p.getPhone()),
-						link("email", p.getEmail(), "mailto:" + p.getEmail()), view("/player/" + p.getId()),
-						edit("/admin/player/edit/" + p.getId()), delete(p.getId())))
-				.collect(Collectors.toList());
-
-		m.addAttribute("title", "Players");
-		m.addAttribute("addPath", "/admin/player/add/");
-		m.addAttribute("deletePath", "/admin/player/delete/");
-		m.addAttribute("headers", headers);
-		m.addAttribute("records", records);
-
-		return "admin/players";
-	}
-
-	@GetMapping("player/edit/{playerId}")
-	public String loadEditPlayer(Model m, @PathVariable Integer playerId) {
-
-		Player player = applicationService.findPlayer(playerId);
-
-		m.addAttribute("player", player);
-
-		return "admin/player-edit";
-	}
+  @Autowired
+  private ApplicationService applicationService;
+
+  @GetMapping("{functionalArea}/list")
+  public String loadAdmin(Model m, @PathVariable String functionalArea) {
+
+    FunctionalAreaType functionalAreaType = FunctionalAreaType.find(functionalArea);
+    List<String> headers = new ArrayList<>();
+    List<List<ReportingField>> records = new ArrayList<>();
+    StringBuilder title = new StringBuilder();
+    StringBuilder itemFunctionalArea = new StringBuilder();
+
+    loadFunctionalArea(functionalAreaType, headers, records, title, itemFunctionalArea);
+
+    m.addAttribute("title", title);
+    m.addAttribute("addPath", "/admin/" + itemFunctionalArea + "/add/");
+    m.addAttribute("deletePath", "/admin/" + itemFunctionalArea + "/delete/");
+    m.addAttribute("headers", headers);
+    m.addAttribute("records", records);
+
+    return "admin/admin";
+  }
+
+  @GetMapping("{functionalArea}/get/list")
+  @ResponseBody
+  public AdminDto loadAdmin(@PathVariable String functionalArea) {
+
+    FunctionalAreaType functionalAreaType = FunctionalAreaType.find(functionalArea);
+    List<String> headers = new ArrayList<>();
+    List<List<ReportingField>> records = new ArrayList<>();
+    StringBuilder title = new StringBuilder();
+    StringBuilder itemFunctionalArea = new StringBuilder();
+
+    loadFunctionalArea(functionalAreaType, headers, records, title, itemFunctionalArea);
+
+    return new AdminDto(title.toString(), "/admin/" + itemFunctionalArea + "/add/",
+        "/admin/" + itemFunctionalArea + "/delete/", headers, records);
+  }
+
+  private void loadFunctionalArea(FunctionalAreaType functionalAreaType, List<String> headers,
+      List<List<ReportingField>> records, StringBuilder title, StringBuilder itemFunctionalArea) {
+    switch (functionalAreaType) {
+      case PLAYERS:
+        loadPlayers(headers, records, title, itemFunctionalArea);
+        break;
+      case SEASONS:
+        loadSeasons(headers, records, title, itemFunctionalArea);
+        break;
+      case GAMES:
+        loadGames(headers, records, title, itemFunctionalArea);
+        break;
+      case STATISTICAL_YEARS:
+        loadStatisticalYears(headers, records, title, itemFunctionalArea);
+        break;
+      case TEAMS:
+        loadTeams(headers, records, title, itemFunctionalArea);
+        break;
+      default:
+        break;
+    }
+  }
+
+  @GetMapping("players")
+  public String loadAdminPlayers(Model m) {
+    List<Player> players = applicationService.findAllPlayers();
+
+    // We don't need all the StatisticalYear instances when loading our list
+    // of players. There's also a bug in Thymeleaf when it's being inspected
+    // that ends in an infinite loop due to the bidirectional relationship
+    // between Player and StatisticalYear.
+    players.stream().forEach(p -> p.setStatisticalYears(Collections.emptyList()));
+
+    m.addAttribute("players", players);
+
+    List<String> headers =
+        new ArrayList<>(Arrays.asList("First Name", "Last Name", "Phone", "Email", "", "", ""));
+    // List<KeyValue> reportingFields = new
+    // ArrayList<>(ImmutableMap.of("firstName", ))
+
+    List<List<ReportingField>> records = players.stream()
+        .map(p -> Arrays.asList(text("firstName", p.getFirstName()),
+            text("lastName", p.getLastName()), link("phone", p.getPhone(), "tel:" + p.getPhone()),
+            link("email", p.getEmail(), "mailto:" + p.getEmail()), view("/player/" + p.getId()),
+            edit("/admin/player/edit/" + p.getId()), delete(p.getId())))
+        .collect(Collectors.toList());
+
+    m.addAttribute("title", "Players");
+    m.addAttribute("addPath", "/admin/player/add/");
+    m.addAttribute("deletePath", "/admin/player/delete/");
+    m.addAttribute("headers", headers);
+    m.addAttribute("records", records);
+
+    return "admin/players";
+  }
+
+  @GetMapping("player/edit/{playerId}")
+  public String loadEditPlayer(Model m, @PathVariable Integer playerId) {
+
+    Player player = applicationService.findPlayer(playerId);
+
+    m.addAttribute("player", player);
 
-	@GetMapping("team/edit/{teamId}")
-	public String loadEditTeam(Model m, @PathVariable Integer teamId) {
+    return "admin/player-edit";
+  }
 
-		Team team = applicationService.findTeam(teamId);
+  @GetMapping("team/edit/{teamId}")
+  public String loadEditTeam(Model m, @PathVariable Integer teamId) {
 
-		m.addAttribute("team", team);
+    Team team = applicationService.findTeam(teamId);
 
-		return "admin/team-edit";
-	}
+    m.addAttribute("team", team);
 
-	@GetMapping("season/edit/{seasonId}")
-	public String loadEditSeason(Model m, @PathVariable Integer seasonId) {
+    return "admin/team-edit";
+  }
 
-		Season season = applicationService.findSeason(seasonId);
+  @GetMapping("season/edit/{seasonId}")
+  public String loadEditSeason(Model m, @PathVariable Integer seasonId) {
 
-		m.addAttribute("season", season);
+    Season season = applicationService.findSeason(seasonId);
 
-		return "admin/season-edit";
-	}
+    m.addAttribute("season", season);
 
-	@GetMapping("game/edit/{gameId}")
-	public String loadEditGame(Model m, @PathVariable Integer gameId) {
+    return "admin/season-edit";
+  }
 
-		Game game = applicationService.findGame(gameId);
-		List<Team> teams = applicationService.findAllTeams();
-		List<Season> seasons = applicationService.findAllSeasons();
-		List<Integer> years = applicationService.findAllYears();
-		List<KeyValue> months = applicationService.findAllMonths();
-		List<Integer> days = applicationService.findAllDays();
-		List<Integer> hours = applicationService.findAllHours();
-		List<String> minuteIntervals = applicationService.findAllMinuteIntervals();
-		List<String> periods = applicationService.findAllPeriods();
+  @GetMapping("game/edit/{gameId}")
+  public String loadEditGame(Model m, @PathVariable Integer gameId) {
 
-		m.addAttribute("game", game);
-		m.addAttribute("teams", teams);
-		m.addAttribute("seasons", seasons);
-		m.addAttribute("years", years);
-		m.addAttribute("months", months);
-		m.addAttribute("days", days);
-		m.addAttribute("hours", hours);
-		m.addAttribute("minuteIntervals", minuteIntervals);
-		m.addAttribute("periods", periods);
+    Game game = applicationService.findGame(gameId);
+    List<Team> teams = applicationService.findAllTeams();
+    List<Season> seasons = applicationService.findAllSeasons();
+    List<Integer> years = applicationService.findAllYears();
+    List<KeyValue> months = applicationService.findAllMonths();
+    List<Integer> days = applicationService.findAllDays();
+    List<Integer> hours = applicationService.findAllHours();
+    List<String> minuteIntervals = applicationService.findAllMinuteIntervals();
+    List<String> periods = applicationService.findAllPeriods();
 
-		return "admin/game-edit";
-	}
+    m.addAttribute("game", game);
+    m.addAttribute("teams", teams);
+    m.addAttribute("seasons", seasons);
+    m.addAttribute("years", years);
+    m.addAttribute("months", months);
+    m.addAttribute("days", days);
+    m.addAttribute("hours", hours);
+    m.addAttribute("minuteIntervals", minuteIntervals);
+    m.addAttribute("periods", periods);
 
-	@GetMapping("statistical-year/edit/{statisticalYearId}")
-	public String loadEditStatisticalYear(Model m, @PathVariable Integer statisticalYearId) {
+    return "admin/game-edit";
+  }
 
-		StatisticalYear statisticalYear = applicationService.findStatisticalYear(statisticalYearId);
-		List<Player> players = applicationService.findAllPlayers();
-		List<Season> seasons = applicationService.findAllSeasons();
+  @GetMapping("statistical-year/edit/{statisticalYearId}")
+  public String loadEditStatisticalYear(Model m, @PathVariable Integer statisticalYearId) {
 
-		m.addAttribute("statisticalYear", statisticalYear);
-		m.addAttribute("players", players);
-		m.addAttribute("seasons", seasons);
+    StatisticalYear statisticalYear = applicationService.findStatisticalYear(statisticalYearId);
+    List<Player> players = applicationService.findAllPlayers();
+    List<Season> seasons = applicationService.findAllSeasons();
 
-		return "admin/statistical-year-edit";
-	}
+    m.addAttribute("statisticalYear", statisticalYear);
+    m.addAttribute("players", players);
+    m.addAttribute("seasons", seasons);
 
-	@GetMapping("team/add")
-	public String loadAddTeam(Model m) {
+    return "admin/statistical-year-edit";
+  }
 
-		m.addAttribute("team", new Team());
+  @GetMapping("team/add")
+  public String loadAddTeam(Model m) {
 
-		return "admin/team-add";
-	}
+    m.addAttribute("team", new Team());
 
-	@GetMapping("player/add")
-	public String loadAddPlayer(Model m) {
+    return "admin/team-add";
+  }
 
-		m.addAttribute("player", new Player());
+  @GetMapping("player/add")
+  public String loadAddPlayer(Model m) {
 
-		return "admin/player-add";
-	}
+    m.addAttribute("player", new Player());
 
-	@GetMapping("season/add")
-	public String loadAddSeason(Model m) {
+    return "admin/player-add";
+  }
 
-		m.addAttribute("season", new Season());
+  @GetMapping("season/add")
+  public String loadAddSeason(Model m) {
 
-		return "admin/season-add";
-	}
+    m.addAttribute("season", new Season());
 
-	@GetMapping("game/add")
-	public String loadAddGame(Model m) {
+    return "admin/season-add";
+  }
 
-		List<Team> teams = applicationService.findAllTeams();
-		List<Season> seasons = applicationService.findAllSeasons();
-		List<Integer> years = applicationService.findAllYears();
-		List<KeyValue> months = applicationService.findAllMonths();
-		List<Integer> days = applicationService.findAllDays();
-		List<Integer> hours = applicationService.findAllHours();
-		List<String> minuteIntervals = applicationService.findAllMinuteIntervals();
-		List<String> periods = applicationService.findAllPeriods();
+  @GetMapping("game/add")
+  public String loadAddGame(Model m) {
 
-		m.addAttribute("game", new Game());
-		m.addAttribute("teams", teams);
-		m.addAttribute("seasons", seasons);
-		m.addAttribute("years", years);
-		m.addAttribute("months", months);
-		m.addAttribute("days", days);
-		m.addAttribute("hours", hours);
-		m.addAttribute("minuteIntervals", minuteIntervals);
-		m.addAttribute("periods", periods);
+    List<Team> teams = applicationService.findAllTeams();
+    List<Season> seasons = applicationService.findAllSeasons();
+    List<Integer> years = applicationService.findAllYears();
+    List<KeyValue> months = applicationService.findAllMonths();
+    List<Integer> days = applicationService.findAllDays();
+    List<Integer> hours = applicationService.findAllHours();
+    List<String> minuteIntervals = applicationService.findAllMinuteIntervals();
+    List<String> periods = applicationService.findAllPeriods();
 
-		return "admin/game-add";
-	}
+    m.addAttribute("game", new Game());
+    m.addAttribute("teams", teams);
+    m.addAttribute("seasons", seasons);
+    m.addAttribute("years", years);
+    m.addAttribute("months", months);
+    m.addAttribute("days", days);
+    m.addAttribute("hours", hours);
+    m.addAttribute("minuteIntervals", minuteIntervals);
+    m.addAttribute("periods", periods);
 
-	@GetMapping("statistical-year/add")
-	public String loadAddStatisticalYear(Model m) {
+    return "admin/game-add";
+  }
 
-		List<Player> players = applicationService.findAllPlayers();
-		List<Season> seasons = applicationService.findAllSeasons();
+  @GetMapping("statistical-year/add")
+  public String loadAddStatisticalYear(Model m) {
 
-		m.addAttribute("statisticalYear", new StatisticalYear());
-		m.addAttribute("players", players);
-		m.addAttribute("seasons", seasons);
+    List<Player> players = applicationService.findAllPlayers();
+    List<Season> seasons = applicationService.findAllSeasons();
 
-		return "admin/statistical-year-add";
-	}
+    m.addAttribute("statisticalYear", new StatisticalYear());
+    m.addAttribute("players", players);
+    m.addAttribute("seasons", seasons);
 
-	@PostMapping("player/edit/submit")
-	public String playerEditSubmit(@ModelAttribute Player player, RedirectAttributes redirectAttributes) {
+    return "admin/statistical-year-add";
+  }
 
-		player.setPhone(StringUtils.replaceAll(player.getPhone(), "[^0-9]", ""));
+  @PostMapping("player/edit/submit")
+  public String playerEditSubmit(@ModelAttribute Player player,
+      RedirectAttributes redirectAttributes) {
 
-		Player persistedPlayer = applicationService.findPlayer(player.getId());
+    player.setPhone(StringUtils.replaceAll(player.getPhone(), "[^0-9]", ""));
 
-		persistedPlayer.setFirstName(player.getFirstName());
-		persistedPlayer.setLastName(player.getLastName());
-		persistedPlayer.setEmail(player.getEmail());
-		persistedPlayer.setPhone(player.getPhone());
+    Player persistedPlayer = applicationService.findPlayer(player.getId());
 
-		applicationService.savePlayer(persistedPlayer);
+    persistedPlayer.setFirstName(player.getFirstName());
+    persistedPlayer.setLastName(player.getLastName());
+    persistedPlayer.setEmail(player.getEmail());
+    persistedPlayer.setPhone(player.getPhone());
 
-		redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
+    applicationService.savePlayer(persistedPlayer);
 
-		return "redirect:/admin/" + FunctionalAreaType.PLAYERS.value() + "/list";
-	}
+    redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
 
-	@PostMapping("team/add/submit")
-	public String teamAddSubmit(@ModelAttribute Team team, RedirectAttributes redirectAttributes) {
+    return "redirect:/admin/" + FunctionalAreaType.PLAYERS.value() + "/list";
+  }
 
-		applicationService.saveTeam(team);
+  @PostMapping("team/add/submit")
+  public String teamAddSubmit(@ModelAttribute Team team, RedirectAttributes redirectAttributes) {
 
-		redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
+    applicationService.saveTeam(team);
 
-		return "redirect:/admin/" + FunctionalAreaType.TEAMS.value() + "/list";
-	}
+    redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
 
-	@PostMapping("season/add/submit")
-	public String teamSeasonSubmit(@ModelAttribute Season season, RedirectAttributes redirectAttributes) {
+    return "redirect:/admin/" + FunctionalAreaType.TEAMS.value() + "/list";
+  }
 
-		applicationService.saveSeason(season);
+  @PostMapping("season/add/submit")
+  public String teamSeasonSubmit(@ModelAttribute Season season,
+      RedirectAttributes redirectAttributes) {
 
-		redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
+    applicationService.saveSeason(season);
 
-		return "redirect:/admin/" + FunctionalAreaType.SEASONS.value() + "/list";
-	}
+    redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
 
-	@PostMapping("game/add/submit")
-	public String gameAddSubmit(@ModelAttribute Game game, RedirectAttributes redirectAttributes) {
+    return "redirect:/admin/" + FunctionalAreaType.SEASONS.value() + "/list";
+  }
 
-		Integer hour = Game.PERIOD_PM.equals(game.getPeriod()) ? game.getHour() + 12 : game.getHour();
+  @PostMapping("game/add/submit")
+  public String gameAddSubmit(@ModelAttribute Game game, RedirectAttributes redirectAttributes) {
 
-		LocalDateTime localDateTime = LocalDateTime.of(game.getYear(), game.getMonth(), game.getDay(), hour,
-				Integer.valueOf(game.getMinuteInterval()));
+    Integer hour = Game.PERIOD_PM.equals(game.getPeriod()) ? game.getHour() + 12 : game.getHour();
 
-		game.setLocalDateTime(localDateTime);
+    LocalDateTime localDateTime = LocalDateTime.of(game.getYear(), game.getMonth(), game.getDay(),
+        hour, Integer.valueOf(game.getMinuteInterval()));
 
-		applicationService.saveGame(game);
+    game.setLocalDateTime(localDateTime);
 
-		redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
+    applicationService.saveGame(game);
 
-		return "redirect:/admin/" + FunctionalAreaType.GAMES.value() + "/list";
-	}
+    redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
 
-	@PostMapping("statistical-year/add/submit")
-	public String statisticalYearAddSubmit(@ModelAttribute StatisticalYear statisticalYear,
-			RedirectAttributes redirectAttributes) {
+    return "redirect:/admin/" + FunctionalAreaType.GAMES.value() + "/list";
+  }
 
-		applicationService.saveStatisticalYear(statisticalYear);
+  @PostMapping("statistical-year/add/submit")
+  public String statisticalYearAddSubmit(@ModelAttribute StatisticalYear statisticalYear,
+      RedirectAttributes redirectAttributes) {
 
-		redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
+    applicationService.saveStatisticalYear(statisticalYear);
 
-		return "redirect:/admin/" + FunctionalAreaType.STATISTICAL_YEARS.value() + "/list";
-	}
+    redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
 
-	@PostMapping("season/edit/submit")
-	public String seasonEditSubmit(@ModelAttribute Season season, RedirectAttributes redirectAttributes) {
+    return "redirect:/admin/" + FunctionalAreaType.STATISTICAL_YEARS.value() + "/list";
+  }
 
-		Season persistedSeason = applicationService.findSeason(season.getId());
+  @PostMapping("season/edit/submit")
+  public String seasonEditSubmit(@ModelAttribute Season season,
+      RedirectAttributes redirectAttributes) {
 
-		persistedSeason.setYear(season.getYear());
+    Season persistedSeason = applicationService.findSeason(season.getId());
 
-		applicationService.saveSeason(persistedSeason);
+    persistedSeason.setYear(season.getYear());
 
-		redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
+    applicationService.saveSeason(persistedSeason);
 
-		return "redirect:/admin/" + FunctionalAreaType.SEASONS.value() + "/list";
-	}
+    redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
 
-	@PostMapping("team/edit/submit")
-	public String teamEditSubmit(@ModelAttribute Team team, RedirectAttributes redirectAttributes) {
+    return "redirect:/admin/" + FunctionalAreaType.SEASONS.value() + "/list";
+  }
 
-		Team persistedTeam = applicationService.findTeam(team.getId());
+  @PostMapping("team/edit/submit")
+  public String teamEditSubmit(@ModelAttribute Team team, RedirectAttributes redirectAttributes) {
 
-		persistedTeam.setName(team.getName());
+    Team persistedTeam = applicationService.findTeam(team.getId());
 
-		applicationService.saveTeam(persistedTeam);
+    persistedTeam.setName(team.getName());
 
-		redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
+    applicationService.saveTeam(persistedTeam);
 
-		return "redirect:/admin/" + FunctionalAreaType.TEAMS.value() + "/list";
-	}
+    redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
 
-	@PostMapping("game/edit/submit")
-	public String gameEditSubmit(@ModelAttribute Game game, RedirectAttributes redirectAttributes) {
+    return "redirect:/admin/" + FunctionalAreaType.TEAMS.value() + "/list";
+  }
 
-		Game persistedGame = applicationService.findGame(game.getId());
+  @PostMapping("game/edit/submit")
+  public String gameEditSubmit(@ModelAttribute Game game, RedirectAttributes redirectAttributes) {
 
-		Team homeTeam = applicationService.findTeam(game.getHomeTeam().getId());
-		Team awayTeam = applicationService.findTeam(game.getAwayTeam().getId());
-		Season season = applicationService.findSeason(game.getSeason().getId());
+    Game persistedGame = applicationService.findGame(game.getId());
 
-		persistedGame.setHomeTeam(homeTeam);
-		persistedGame.setAwayTeam(awayTeam);
-		persistedGame.setHomeScore(game.getHomeScore());
-		persistedGame.setAwayScore(game.getAwayScore());
-		persistedGame.setSeason(season);
+    Team homeTeam = applicationService.findTeam(game.getHomeTeam().getId());
+    Team awayTeam = applicationService.findTeam(game.getAwayTeam().getId());
+    Season season = applicationService.findSeason(game.getSeason().getId());
 
-		Integer hour = Game.PERIOD_PM.equals(game.getPeriod()) ? game.getHour() + 12 : game.getHour();
+    persistedGame.setHomeTeam(homeTeam);
+    persistedGame.setAwayTeam(awayTeam);
+    persistedGame.setHomeScore(game.getHomeScore());
+    persistedGame.setAwayScore(game.getAwayScore());
+    persistedGame.setSeason(season);
 
-		LocalDateTime localDateTime = LocalDateTime.of(game.getYear(), game.getMonth(), game.getDay(), hour,
-				Integer.valueOf(game.getMinuteInterval()));
+    Integer hour = Game.PERIOD_PM.equals(game.getPeriod()) ? game.getHour() + 12 : game.getHour();
 
-		persistedGame.setLocalDateTime(localDateTime);
+    LocalDateTime localDateTime = LocalDateTime.of(game.getYear(), game.getMonth(), game.getDay(),
+        hour, Integer.valueOf(game.getMinuteInterval()));
 
-		applicationService.saveGame(persistedGame);
+    persistedGame.setLocalDateTime(localDateTime);
 
-		redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
+    applicationService.saveGame(persistedGame);
 
-		return "redirect:/admin/" + FunctionalAreaType.GAMES.value() + "/list";
-	}
+    redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
 
-	@PostMapping("statistical-year/edit/submit")
-	public String statisticalYearEditSubmit(@ModelAttribute StatisticalYear statisticalYear,
-			RedirectAttributes redirectAttributes) {
+    return "redirect:/admin/" + FunctionalAreaType.GAMES.value() + "/list";
+  }
 
-		StatisticalYear persistedStatisticalYear = applicationService.findStatisticalYear(statisticalYear.getId());
+  @PostMapping("statistical-year/edit/submit")
+  public String statisticalYearEditSubmit(@ModelAttribute StatisticalYear statisticalYear,
+      RedirectAttributes redirectAttributes) {
 
-		persistedStatisticalYear.setPlayer(statisticalYear.getPlayer());
-		persistedStatisticalYear.setSeason(statisticalYear.getSeason());
-		persistedStatisticalYear.setAtBats(statisticalYear.getAtBats());
-		persistedStatisticalYear.setRuns(statisticalYear.getRuns());
-		persistedStatisticalYear.setHits(statisticalYear.getHits());
-		persistedStatisticalYear.setDoubles(statisticalYear.getDoubles());
-		persistedStatisticalYear.setTriples(statisticalYear.getTriples());
-		persistedStatisticalYear.setHomeRuns(statisticalYear.getHomeRuns());
-		persistedStatisticalYear.setRbi(statisticalYear.getRbi());
-		persistedStatisticalYear.setWalks(statisticalYear.getWalks());
-		persistedStatisticalYear.setStrikeOuts(statisticalYear.getStrikeOuts());
+    StatisticalYear persistedStatisticalYear =
+        applicationService.findStatisticalYear(statisticalYear.getId());
 
-		applicationService.saveStatisticalYear(persistedStatisticalYear);
+    persistedStatisticalYear.setPlayer(statisticalYear.getPlayer());
+    persistedStatisticalYear.setSeason(statisticalYear.getSeason());
+    persistedStatisticalYear.setAtBats(statisticalYear.getAtBats());
+    persistedStatisticalYear.setRuns(statisticalYear.getRuns());
+    persistedStatisticalYear.setHits(statisticalYear.getHits());
+    persistedStatisticalYear.setDoubles(statisticalYear.getDoubles());
+    persistedStatisticalYear.setTriples(statisticalYear.getTriples());
+    persistedStatisticalYear.setHomeRuns(statisticalYear.getHomeRuns());
+    persistedStatisticalYear.setRbi(statisticalYear.getRbi());
+    persistedStatisticalYear.setWalks(statisticalYear.getWalks());
+    persistedStatisticalYear.setStrikeOuts(statisticalYear.getStrikeOuts());
 
-		redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
+    applicationService.saveStatisticalYear(persistedStatisticalYear);
 
-		return "redirect:/admin/" + FunctionalAreaType.STATISTICAL_YEARS.value() + "/list";
-	}
+    redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
 
-	@RequestMapping("season/delete/{seasonId}")
-	public String seasonDeleteSubmit(@PathVariable Integer seasonId, RedirectAttributes redirectAttributes) {
+    return "redirect:/admin/" + FunctionalAreaType.STATISTICAL_YEARS.value() + "/list";
+  }
 
-		applicationService.removeSeason(seasonId);
+  @RequestMapping("season/delete/{seasonId}")
+  public String seasonDeleteSubmit(@PathVariable Integer seasonId,
+      RedirectAttributes redirectAttributes) {
 
-		redirectAttributes.addFlashAttribute("deleted", Boolean.TRUE);
+    applicationService.removeSeason(seasonId);
 
-		return "redirect:/admin/" + FunctionalAreaType.SEASONS.value() + "/list";
-	}
+    redirectAttributes.addFlashAttribute("deleted", Boolean.TRUE);
 
-	@RequestMapping("game/delete/{gameId}")
-	public String gameDeleteSubmit(@PathVariable Integer gameId, RedirectAttributes redirectAttributes) {
+    return "redirect:/admin/" + FunctionalAreaType.SEASONS.value() + "/list";
+  }
 
-		applicationService.removeGame(gameId);
+  @RequestMapping("game/delete/{gameId}")
+  public String gameDeleteSubmit(@PathVariable Integer gameId,
+      RedirectAttributes redirectAttributes) {
 
-		redirectAttributes.addFlashAttribute("deleted", Boolean.TRUE);
+    applicationService.removeGame(gameId);
 
-		return "redirect:/admin/" + FunctionalAreaType.GAMES.value() + "/list";
-	}
+    redirectAttributes.addFlashAttribute("deleted", Boolean.TRUE);
 
-	@RequestMapping("statistical-year/delete/{statisticalYearId}")
-	public String statisticalYearDeleteSubmit(@PathVariable Integer statisticalYearId,
-			RedirectAttributes redirectAttributes) {
+    return "redirect:/admin/" + FunctionalAreaType.GAMES.value() + "/list";
+  }
 
-		applicationService.removeStatisticalYear(statisticalYearId);
+  @RequestMapping("statistical-year/delete/{statisticalYearId}")
+  public String statisticalYearDeleteSubmit(@PathVariable Integer statisticalYearId,
+      RedirectAttributes redirectAttributes) {
 
-		redirectAttributes.addFlashAttribute("deleted", Boolean.TRUE);
+    applicationService.removeStatisticalYear(statisticalYearId);
 
-		return "redirect:/admin/" + FunctionalAreaType.STATISTICAL_YEARS.value() + "/list";
-	}
+    redirectAttributes.addFlashAttribute("deleted", Boolean.TRUE);
 
-	@PostMapping("player/add/submit")
-	public String playerAddSubmit(@ModelAttribute Player player, @RequestParam("ng") boolean angular,
-			RedirectAttributes redirectAttributes) {
+    return "redirect:/admin/" + FunctionalAreaType.STATISTICAL_YEARS.value() + "/list";
+  }
 
-		player.setPhone(StringUtils.replaceAll(player.getPhone(), "[^0-9]", ""));
+  @PostMapping("player/add/submit")
+  public String playerAddSubmit(@ModelAttribute Player player, @RequestParam("ng") boolean angular,
+      RedirectAttributes redirectAttributes) {
 
-		applicationService.savePlayer(player);
+    player.setPhone(StringUtils.replaceAll(player.getPhone(), "[^0-9]", ""));
 
-		redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
+    applicationService.savePlayer(player);
 
-		if (angular) {
-			redirectAttributes.addFlashAttribute("ng", angular);
-		}
+    redirectAttributes.addFlashAttribute("saved", Boolean.TRUE);
 
-		return "redirect:/admin/" + FunctionalAreaType.PLAYERS.value() + "/list";
-	}
+    if (angular) {
+      redirectAttributes.addFlashAttribute("ng", angular);
+    }
 
-	@RequestMapping("player/delete/{playerId}")
-	public String playerDeleteSubmit(@PathVariable Integer playerId, RedirectAttributes redirectAttributes) {
+    return "redirect:/admin/" + FunctionalAreaType.PLAYERS.value() + "/list";
+  }
 
-		applicationService.removePlayer(playerId);
+  @RequestMapping("player/delete/{playerId}")
+  public String playerDeleteSubmit(@PathVariable Integer playerId,
+      RedirectAttributes redirectAttributes) {
 
-		redirectAttributes.addFlashAttribute("deleted", Boolean.TRUE);
+    applicationService.removePlayer(playerId);
 
-		return "redirect:/admin/" + FunctionalAreaType.PLAYERS.value() + "/list";
-	}
+    redirectAttributes.addFlashAttribute("deleted", Boolean.TRUE);
 
-	@RequestMapping("team/delete/{teamId}")
-	public String teamDeleteSubmit(@PathVariable Integer teamId, RedirectAttributes redirectAttributes) {
+    return "redirect:/admin/" + FunctionalAreaType.PLAYERS.value() + "/list";
+  }
 
-		applicationService.removeTeam(teamId);
+  @RequestMapping("team/delete/{teamId}")
+  public String teamDeleteSubmit(@PathVariable Integer teamId,
+      RedirectAttributes redirectAttributes) {
 
-		redirectAttributes.addFlashAttribute("deleted", Boolean.TRUE);
+    applicationService.removeTeam(teamId);
 
-		return "redirect:/admin/" + FunctionalAreaType.TEAMS.value() + "/list";
-	}
+    redirectAttributes.addFlashAttribute("deleted", Boolean.TRUE);
 
-	@RequestMapping("login")
-	public String login() {
-		return "admin/login";
-	}
+    return "redirect:/admin/" + FunctionalAreaType.TEAMS.value() + "/list";
+  }
 
-	private void loadPlayers(List<String> headers, List<List<ReportingField>> records, StringBuilder title,
-			StringBuilder itemFunctionalArea) {
-		List<Player> players = applicationService.findAllPlayers();
+  @RequestMapping("login")
+  public String login() {
+    return "admin/login";
+  }
 
-		title(title, FunctionalAreaType.PLAYERS.title());
-		itemFunctionalArea(itemFunctionalArea, FunctionalAreaType.PLAYER.value());
-		headers(headers, "First Name", "Last Name", "Phone", "Email", "");
+  private void loadPlayers(List<String> headers, List<List<ReportingField>> records,
+      StringBuilder title, StringBuilder itemFunctionalArea) {
+    List<Player> players = applicationService.findAllPlayers();
 
-		records(records,
-				players.stream().map(p -> Arrays.asList(text("firstName", p.getFirstName()),
-						text("lastName", p.getLastName()), link("phone", p.getPhone(), "tel:" + p.getPhone()),
-						link("email", p.getEmail(), "mailto:" + p.getEmail()),
-						reverseGroup(view("/" + itemFunctionalArea + "/" + p.getId()),
-								edit("/admin/" + itemFunctionalArea + "/edit/" + p.getId()), delete(p.getId()))))
-						.collect(Collectors.toList()));
-	}
+    title(title, FunctionalAreaType.PLAYERS.title());
+    itemFunctionalArea(itemFunctionalArea, FunctionalAreaType.PLAYER.value());
+    headers(headers, "First Name", "Last Name", "Phone", "Email", "");
 
-	private void loadTeams(List<String> headers, List<List<ReportingField>> records, StringBuilder title,
-			StringBuilder itemFunctionalArea) {
-		List<Team> teams = applicationService.findAllTeams();
+    records(records,
+        players.stream().map(p -> Arrays.asList(text("firstName", p.getFirstName()),
+            text("lastName", p.getLastName()), link("phone", p.getPhone(), "tel:" + p.getPhone()),
+            link("email", p.getEmail(), "mailto:" + p.getEmail()),
+            reverseGroup(view("/" + itemFunctionalArea + "/" + p.getId()),
+                edit("/admin/" + itemFunctionalArea + "/edit/" + p.getId()), delete(p.getId()))))
+            .collect(Collectors.toList()));
+  }
 
-		title(title, FunctionalAreaType.TEAMS.title());
-		itemFunctionalArea(itemFunctionalArea, FunctionalAreaType.TEAM.value());
-		headers(headers, "Name", "", "");
+  private void loadTeams(List<String> headers, List<List<ReportingField>> records,
+      StringBuilder title, StringBuilder itemFunctionalArea) {
+    List<Team> teams = applicationService.findAllTeams();
 
-		records(records,
-				teams.stream().map(t -> Arrays.asList(text("Name", t.getName()), spacer(),
-						reverseGroup(view("/" + itemFunctionalArea + "/" + t.getId()),
-								edit("/admin/" + itemFunctionalArea + "/edit/" + t.getId()), delete(t.getId()))))
-						.collect(Collectors.toList()));
-	}
+    title(title, FunctionalAreaType.TEAMS.title());
+    itemFunctionalArea(itemFunctionalArea, FunctionalAreaType.TEAM.value());
+    headers(headers, "Name", "", "");
 
-	private void loadSeasons(List<String> headers, List<List<ReportingField>> records, StringBuilder title,
-			StringBuilder itemFunctionalArea) {
-		List<Season> seasons = applicationService.findAllSeasons();
+    records(records,
+        teams.stream().map(t -> Arrays.asList(text("Name", t.getName()), spacer(),
+            reverseGroup(view("/" + itemFunctionalArea + "/" + t.getId()),
+                edit("/admin/" + itemFunctionalArea + "/edit/" + t.getId()), delete(t.getId()))))
+            .collect(Collectors.toList()));
+  }
 
-		title(title, FunctionalAreaType.SEASONS.title());
-		itemFunctionalArea(itemFunctionalArea, FunctionalAreaType.SEASON.value());
-		headers(headers, "Year", "", "");
+  private void loadSeasons(List<String> headers, List<List<ReportingField>> records,
+      StringBuilder title, StringBuilder itemFunctionalArea) {
+    List<Season> seasons = applicationService.findAllSeasons();
 
-		records(records,
-				seasons.stream().map(t -> Arrays.asList(text("Year", t.getYear()), spacer(),
-						reverseGroup(view("/" + itemFunctionalArea + "/" + t.getId()),
-								edit("/admin/" + itemFunctionalArea + "/edit/" + t.getId()), delete(t.getId()))))
-						.collect(Collectors.toList()));
-	}
+    title(title, FunctionalAreaType.SEASONS.title());
+    itemFunctionalArea(itemFunctionalArea, FunctionalAreaType.SEASON.value());
+    headers(headers, "Year", "", "");
 
-	private void loadGames(List<String> headers, List<List<ReportingField>> records, StringBuilder title,
-			StringBuilder itemFunctionalArea) {
-		List<Game> games = applicationService.findAllGames();
+    records(records,
+        seasons.stream().map(t -> Arrays.asList(text("Year", t.getYear()), spacer(),
+            reverseGroup(view("/" + itemFunctionalArea + "/" + t.getId()),
+                edit("/admin/" + itemFunctionalArea + "/edit/" + t.getId()), delete(t.getId()))))
+            .collect(Collectors.toList()));
+  }
 
-		title(title, FunctionalAreaType.GAMES.title());
-		itemFunctionalArea(itemFunctionalArea, FunctionalAreaType.GAME.value());
-		headers(headers, "Season", "Home Team", "Away Team", "Home Score", "Away Score", "Date", "Time");
+  private void loadGames(List<String> headers, List<List<ReportingField>> records,
+      StringBuilder title, StringBuilder itemFunctionalArea) {
+    List<Game> games = applicationService.findAllGames();
 
-		records(records,
-				games.stream().map(g -> Arrays.asList(text("season", g.getSeason().getYear()),
-						text("homeTeam", g.getHomeTeam().getName()), text("awayTeam", g.getAwayTeam().getName()),
-						text("homeScore", g.getHomeScore()), text("awayScore", g.getAwayScore()),
-						text("date", g.getMonth() + "/" + g.getDay() + "/" + g.getYear()),
-						text("time", g.getHour() + ":" + g.getMinuteInterval() + " " + g.getPeriod()),
-						reverseGroup(view("/" + itemFunctionalArea + "/" + g.getId()),
-								edit("/admin/" + itemFunctionalArea + "/edit/" + g.getId()), delete(g.getId()))))
-						.collect(Collectors.toList()));
-	}
+    title(title, FunctionalAreaType.GAMES.title());
+    itemFunctionalArea(itemFunctionalArea, FunctionalAreaType.GAME.value());
+    headers(headers, "Season", "Home Team", "Away Team", "Home Score", "Away Score", "Date",
+        "Time");
 
-	private void loadStatisticalYears(List<String> headers, List<List<ReportingField>> records, StringBuilder title,
-			StringBuilder itemFunctionalArea) {
-		List<StatisticalYear> statisticalYears = applicationService.findAllStatisticalYears();
+    records(records, games.stream().map(g -> Arrays.asList(text("season", g.getSeason().getYear()),
+        text("homeTeam", g.getHomeTeam().getName()), text("awayTeam", g.getAwayTeam().getName()),
+        text("homeScore", g.getHomeScore()), text("awayScore", g.getAwayScore()),
+        text("date", g.getMonth() + "/" + g.getDay() + "/" + g.getYear()),
+        text("time", g.getHour() + ":" + g.getMinuteInterval() + " " + g.getPeriod()),
+        reverseGroup(view("/" + itemFunctionalArea + "/" + g.getId()),
+            edit("/admin/" + itemFunctionalArea + "/edit/" + g.getId()), delete(g.getId()))))
+        .collect(Collectors.toList()));
+  }
 
-		title(title, FunctionalAreaType.STATISTICAL_YEARS.title());
-		itemFunctionalArea(itemFunctionalArea, FunctionalAreaType.STATISTICAL_YEAR.value());
-		headers(headers, "#", "Player", "Season", "AB", "R", "H", "2B", "3B", "HR", "RBI", "BB", "K", "AVG", "OBP",
-				"SLG", "OPS", "");
+  private void loadStatisticalYears(List<String> headers, List<List<ReportingField>> records,
+      StringBuilder title, StringBuilder itemFunctionalArea) {
+    List<StatisticalYear> statisticalYears = applicationService.findAllStatisticalYears();
 
-		records(records, statisticalYears.stream()
-				.map(sy -> Arrays.asList(text("id", sy.getId()), text("player", sy.getPlayer().getFullName()),
-						text("season", sy.getSeason().getYear()), text("atBats", sy.getAtBats()),
-						text("runs", sy.getRuns()), text("hits", sy.getHits()), text("doubles", sy.getDoubles()),
-						text("triples", sy.getTriples()), text("homeRuns", sy.getHomeRuns()), text("rbi", sy.getRbi()),
-						text("bb", sy.getWalks()), text("k", sy.getStrikeOuts()),
-						text("avg", sy.getBattingAverage().toPlainString()), text("obp", sy.getOnBasePercentage()),
-						text("slg", sy.getSlugging()), text("ops", sy.getOnBasePlusSlugging().toPlainString()),
-						reverseGroup(view("/" + itemFunctionalArea + "/" + sy.getId()),
-								edit("/admin/" + itemFunctionalArea + "/edit/" + sy.getId()), delete(sy.getId()))))
-				.collect(Collectors.toList()));
+    title(title, FunctionalAreaType.STATISTICAL_YEARS.title());
+    itemFunctionalArea(itemFunctionalArea, FunctionalAreaType.STATISTICAL_YEAR.value());
+    headers(headers, "#", "Player", "Season", "AB", "R", "H", "2B", "3B", "HR", "RBI", "BB", "K",
+        "AVG", "OBP", "SLG", "OPS", "");
 
-	}
+    records(records,
+        statisticalYears.stream().map(sy -> Arrays.asList(text("id", sy.getId()),
+            text("player", sy.getPlayer().getFullName()), text("season", sy.getSeason().getYear()),
+            text("atBats", sy.getAtBats()), text("runs", sy.getRuns()), text("hits", sy.getHits()),
+            text("doubles", sy.getDoubles()), text("triples", sy.getTriples()),
+            text("homeRuns", sy.getHomeRuns()), text("rbi", sy.getRbi()), text("bb", sy.getWalks()),
+            text("k", sy.getStrikeOuts()), text("avg", sy.getBattingAverage().toPlainString()),
+            text("obp", sy.getOnBasePercentage()), text("slg", sy.getSlugging()),
+            text("ops", sy.getOnBasePlusSlugging().toPlainString()),
+            reverseGroup(view("/" + itemFunctionalArea + "/" + sy.getId()),
+                edit("/admin/" + itemFunctionalArea + "/edit/" + sy.getId()), delete(sy.getId()))))
+            .collect(Collectors.toList()));
 
-	protected void title(StringBuilder title, String s) {
-		title.setLength(0);
-		title.append(s);
-	}
+  }
 
-	protected void itemFunctionalArea(StringBuilder itemFunctionalArea, String s) {
-		itemFunctionalArea.setLength(0);
-		itemFunctionalArea.append(s);
-	}
+  protected void title(StringBuilder title, String s) {
+    title.setLength(0);
+    title.append(s);
+  }
 
-	protected void headers(List<String> headers, String... s) {
-		headers.addAll(Arrays.asList(s));
-	}
+  protected void itemFunctionalArea(StringBuilder itemFunctionalArea, String s) {
+    itemFunctionalArea.setLength(0);
+    itemFunctionalArea.append(s);
+  }
 
-	protected void records(List<List<ReportingField>> records, Collection<List<ReportingField>> collection) {
-		records.addAll(collection);
-	}
+  protected void headers(List<String> headers, String... s) {
+    headers.addAll(Arrays.asList(s));
+  }
+
+  protected void records(List<List<ReportingField>> records,
+      Collection<List<ReportingField>> collection) {
+    records.addAll(collection);
+  }
 }

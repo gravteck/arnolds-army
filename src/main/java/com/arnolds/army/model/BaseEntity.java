@@ -18,60 +18,60 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @MappedSuperclass
 @EntityListeners(BaseEntityListener.class)
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
-@JsonIgnoreProperties(value = { "insertDate", "updateDate", "insertUser", "updateUser" })
+@JsonIgnoreProperties(value = {"insertDate", "updateDate", "insertUser", "updateUser"})
 @XmlType
 @XmlAccessorType(XmlAccessType.FIELD)
 public class BaseEntity {
 
-	@XmlTransient
-	@Column(name = "insert_date")
-	private LocalDateTime insertDate;
+  @XmlTransient
+  @Column(name = "insert_date")
+  private LocalDateTime insertDate;
 
-	@XmlTransient
-	@Column(name = "update_date")
-	private LocalDateTime updateDate;
+  @XmlTransient
+  @Column(name = "update_date")
+  private LocalDateTime updateDate;
 
-	@XmlTransient
-	@Column(name = "insert_user")
-	private String insertUser;
+  @XmlTransient
+  @Column(name = "insert_user")
+  private String insertUser;
 
-	@XmlTransient
-	@Column(name = "update_user")
-	private String updateUser;
+  @XmlTransient
+  @Column(name = "update_user")
+  private String updateUser;
 
-	public LocalDateTime getInsertDate() {
-		return this.getInsertDate();
-	}
+  public LocalDateTime getInsertDate() {
+    return this.getInsertDate();
+  }
 
-	public void setInsertDate(LocalDateTime insertDate) {
-		this.insertDate = insertDate;
-	}
+  public void setInsertDate(LocalDateTime insertDate) {
+    this.insertDate = insertDate;
+  }
 
-	public LocalDateTime getUpdateDate() {
-		return updateDate;
-	}
+  public LocalDateTime getUpdateDate() {
+    return updateDate;
+  }
 
-	public void setUpdateDate(LocalDateTime updateDate) {
-		this.updateDate = updateDate;
-	}
+  public void setUpdateDate(LocalDateTime updateDate) {
+    this.updateDate = updateDate;
+  }
 
-	public String getInsertUser() {
-		return insertUser;
-	}
+  public String getInsertUser() {
+    return insertUser;
+  }
 
-	public void setInsertUser(String insertUser) {
-		this.insertUser = insertUser;
-	}
+  public void setInsertUser(String insertUser) {
+    this.insertUser = insertUser;
+  }
 
-	public String getUpdateUser() {
-		return updateUser;
-	}
+  public String getUpdateUser() {
+    return updateUser;
+  }
 
-	public void setUpdateUser(String updateUser) {
-		this.updateUser = updateUser;
-	}
+  public void setUpdateUser(String updateUser) {
+    this.updateUser = updateUser;
+  }
 
-	boolean hasDependents() {
-		return false;
-	}
+  boolean hasDependents() {
+    return false;
+  }
 }

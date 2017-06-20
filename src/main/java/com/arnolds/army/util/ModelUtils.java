@@ -6,11 +6,11 @@ import com.arnolds.army.model.BaseEntity;
 
 public class ModelUtils {
 
-	protected static String[] ignoreProperties() {
-		return new String[] { "updateUser", "updateDate", "insertUser", "insertDate" };
-	}
+  protected static String[] ignoreProperties() {
+    return new String[] {"updateUser", "updateDate", "insertUser", "insertDate"};
+  }
 
-	public static void merge(BaseEntity source, BaseEntity target) {
-		BeanUtils.copyProperties(source, target, ignoreProperties());
-	}
+  public static void merge(BaseEntity source, BaseEntity target) {
+    BeanUtils.copyProperties(source, target, ignoreProperties());
+  }
 }

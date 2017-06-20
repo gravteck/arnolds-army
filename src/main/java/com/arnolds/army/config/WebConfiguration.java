@@ -21,51 +21,51 @@ import com.trg.search.jpa.JPASearchProcessor;
 @EnableWebMvc
 @Configuration
 @EnableWebSecurity
-@ComponentScan(basePackages = { "com.arnolds.army" })
+@ComponentScan(basePackages = {"com.arnolds.army"})
 public class WebConfiguration extends WebMvcConfigurerAdapter {
 
-	@Autowired
-	ApplicationContext applicationContext;
+  @Autowired
+  ApplicationContext applicationContext;
 
-	@Bean
-	public JPASearchProcessor getSearchProcessor() {
-		JPASearchProcessor searchProcessor = new JPASearchProcessor(getMetaDataUtil());
+  @Bean
+  public JPASearchProcessor getSearchProcessor() {
+    JPASearchProcessor searchProcessor = new JPASearchProcessor(getMetaDataUtil());
 
-		return searchProcessor;
-	}
+    return searchProcessor;
+  }
 
-	@Bean
-	public JPAAnnotationMetadataUtil getMetaDataUtil() {
-		return new JPAAnnotationMetadataUtil();
-	}
+  @Bean
+  public JPAAnnotationMetadataUtil getMetaDataUtil() {
+    return new JPAAnnotationMetadataUtil();
+  }
 
-	@Bean("viewResolver")
-	public UrlBasedViewResolver getAngularViewResolver() {
-		UrlBasedViewResolver resolver = new UrlBasedViewResolver();
+  @Bean("viewResolver")
+  public UrlBasedViewResolver getAngularViewResolver() {
+    UrlBasedViewResolver resolver = new UrlBasedViewResolver();
 
-		resolver.setPrefix("/static/");
-		resolver.setSuffix(".html");
-		resolver.setViewNames("html/*", "html/**/*");
-		resolver.setCache(false);
-		resolver.setViewClass(InternalResourceView.class);
-		resolver.setApplicationContext(applicationContext);
-		resolver.setOrder(Ordered.HIGHEST_PRECEDENCE);
+    resolver.setPrefix("/static/");
+    resolver.setSuffix(".html");
+    resolver.setViewNames("html/*", "html/**/*");
+    resolver.setCache(false);
+    resolver.setViewClass(InternalResourceView.class);
+    resolver.setApplicationContext(applicationContext);
+    resolver.setOrder(Ordered.HIGHEST_PRECEDENCE);
 
-		return resolver;
-	}
+    return resolver;
+  }
 
-	@Override
-	public void configureViewResolvers(ViewResolverRegistry registry) {
-		registry.viewResolver(getAngularViewResolver());
-	}
+  @Override
+  public void configureViewResolvers(ViewResolverRegistry registry) {
+    registry.viewResolver(getAngularViewResolver());
+  }
 
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+  @Override
+  public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
-		registry.addResourceHandler("/static/html/**").addResourceLocations("classpath:/static/html/");
-		registry.addResourceHandler("/static/js/**").addResourceLocations("classpath:/static/js/");
-		registry.addResourceHandler("/static/css/**").addResourceLocations("classpath:/static/css/");
+    registry.addResourceHandler("/static/html/**").addResourceLocations("classpath:/static/html/");
+    registry.addResourceHandler("/static/js/**").addResourceLocations("classpath:/static/js/");
+    registry.addResourceHandler("/static/css/**").addResourceLocations("classpath:/static/css/");
 
-		super.addResourceHandlers(registry);
-	}
+    super.addResourceHandlers(registry);
+  }
 }

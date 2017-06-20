@@ -20,177 +20,179 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class StatisticalYear extends BaseEntity {
 
-	@Id()
-	@SequenceGenerator(name = "statistical_year_id_seq", sequenceName = "statistical_year_id_seq", allocationSize = 1, initialValue = 10)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "statistical_year_id_seq")
-	@Column(name = "id")
-	private Integer id;
+  @Id()
+  @SequenceGenerator(name = "statistical_year_id_seq", sequenceName = "statistical_year_id_seq",
+      allocationSize = 1, initialValue = 10)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "statistical_year_id_seq")
+  @Column(name = "id")
+  private Integer id;
 
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "player_id")
-	private Player player;
+  @ManyToOne(optional = false)
+  @JoinColumn(name = "player_id")
+  private Player player;
 
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "season_id")
-	private Season season;
+  @ManyToOne(optional = false)
+  @JoinColumn(name = "season_id")
+  private Season season;
 
-	@Column(name = "at_bats")
-	private Integer atBats;
+  @Column(name = "at_bats")
+  private Integer atBats;
 
-	@Column(name = "runs")
-	private Integer runs;
+  @Column(name = "runs")
+  private Integer runs;
 
-	@Column(name = "hits")
-	private Integer hits;
+  @Column(name = "hits")
+  private Integer hits;
 
-	@Column(name = "doubles")
-	private Integer doubles;
+  @Column(name = "doubles")
+  private Integer doubles;
 
-	@Column(name = "triples")
-	private Integer triples;
+  @Column(name = "triples")
+  private Integer triples;
 
-	@Column(name = "home_runs")
-	private Integer homeRuns;
+  @Column(name = "home_runs")
+  private Integer homeRuns;
 
-	@Column(name = "rbi")
-	private Integer rbi;
+  @Column(name = "rbi")
+  private Integer rbi;
 
-	@Column(name = "bb")
-	private Integer walks;
+  @Column(name = "bb")
+  private Integer walks;
 
-	@Column(name = "k")
-	private Integer strikeOuts;
+  @Column(name = "k")
+  private Integer strikeOuts;
 
-	public Integer getId() {
-		return id;
-	}
+  public Integer getId() {
+    return id;
+  }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-	public Player getPlayer() {
-		return player;
-	}
+  public Player getPlayer() {
+    return player;
+  }
 
-	public void setPlayer(Player player) {
-		this.player = player;
-	}
+  public void setPlayer(Player player) {
+    this.player = player;
+  }
 
-	public Season getSeason() {
-		return season;
-	}
+  public Season getSeason() {
+    return season;
+  }
 
-	public void setSeason(Season season) {
-		this.season = season;
-	}
+  public void setSeason(Season season) {
+    this.season = season;
+  }
 
-	public Integer getYear() {
-		return getSeason().getYear();
-	}
+  public Integer getYear() {
+    return getSeason().getYear();
+  }
 
-	public Integer getAtBats() {
-		return atBats;
-	}
+  public Integer getAtBats() {
+    return atBats;
+  }
 
-	public void setAtBats(Integer atBats) {
-		this.atBats = atBats;
-	}
+  public void setAtBats(Integer atBats) {
+    this.atBats = atBats;
+  }
 
-	public Integer getRuns() {
-		return runs;
-	}
+  public Integer getRuns() {
+    return runs;
+  }
 
-	public void setRuns(Integer runs) {
-		this.runs = runs;
-	}
+  public void setRuns(Integer runs) {
+    this.runs = runs;
+  }
 
-	public Integer getHits() {
-		return hits;
-	}
+  public Integer getHits() {
+    return hits;
+  }
 
-	public void setHits(Integer hits) {
-		this.hits = hits;
-	}
+  public void setHits(Integer hits) {
+    this.hits = hits;
+  }
 
-	public Integer getDoubles() {
-		return doubles;
-	}
+  public Integer getDoubles() {
+    return doubles;
+  }
 
-	public void setDoubles(Integer doubles) {
-		this.doubles = doubles;
-	}
+  public void setDoubles(Integer doubles) {
+    this.doubles = doubles;
+  }
 
-	public Integer getTriples() {
-		return triples;
-	}
+  public Integer getTriples() {
+    return triples;
+  }
 
-	public void setTriples(Integer triples) {
-		this.triples = triples;
-	}
+  public void setTriples(Integer triples) {
+    this.triples = triples;
+  }
 
-	public Integer getHomeRuns() {
-		return homeRuns;
-	}
+  public Integer getHomeRuns() {
+    return homeRuns;
+  }
 
-	public void setHomeRuns(Integer homeRuns) {
-		this.homeRuns = homeRuns;
-	}
+  public void setHomeRuns(Integer homeRuns) {
+    this.homeRuns = homeRuns;
+  }
 
-	public Integer getRbi() {
-		return rbi;
-	}
+  public Integer getRbi() {
+    return rbi;
+  }
 
-	public void setRbi(Integer rbi) {
-		this.rbi = rbi;
-	}
+  public void setRbi(Integer rbi) {
+    this.rbi = rbi;
+  }
 
-	public Integer getWalks() {
-		return walks;
-	}
+  public Integer getWalks() {
+    return walks;
+  }
 
-	public void setWalks(Integer walks) {
-		this.walks = walks;
-	}
+  public void setWalks(Integer walks) {
+    this.walks = walks;
+  }
 
-	public Integer getStrikeOuts() {
-		return strikeOuts;
-	}
+  public Integer getStrikeOuts() {
+    return strikeOuts;
+  }
 
-	public void setStrikeOuts(Integer strikeOuts) {
-		this.strikeOuts = strikeOuts;
-	}
+  public void setStrikeOuts(Integer strikeOuts) {
+    this.strikeOuts = strikeOuts;
+  }
 
-	public BigDecimal getBattingAverage() {
-		return BigDecimal.valueOf(getHits()).divide(BigDecimal.valueOf(getAtBats()), 3, BigDecimal.ROUND_DOWN);
-	}
+  public BigDecimal getBattingAverage() {
+    return BigDecimal.valueOf(getHits()).divide(BigDecimal.valueOf(getAtBats()), 3,
+        BigDecimal.ROUND_DOWN);
+  }
 
-	public String getOnBasePercentage() {
+  public String getOnBasePercentage() {
 
-		Integer timesOnBase = getWalks() + getHits();
+    Integer timesOnBase = getWalks() + getHits();
 
-		return BigDecimal.valueOf(timesOnBase).divide(BigDecimal.valueOf(getAtBats()), 3, BigDecimal.ROUND_DOWN)
-				.toPlainString();
-	}
+    return BigDecimal.valueOf(timesOnBase)
+        .divide(BigDecimal.valueOf(getAtBats()), 3, BigDecimal.ROUND_DOWN).toPlainString();
+  }
 
-	public String getSlugging() {
+  public String getSlugging() {
 
-		Integer singlePoints = getHits() - getDoubles() - getTriples() - getHomeRuns();
-		Integer doublePoints = getDoubles() * 2;
-		Integer triplePoints = getTriples() * 3;
-		Integer homeRunPoints = getHomeRuns() * 4;
+    Integer singlePoints = getHits() - getDoubles() - getTriples() - getHomeRuns();
+    Integer doublePoints = getDoubles() * 2;
+    Integer triplePoints = getTriples() * 3;
+    Integer homeRunPoints = getHomeRuns() * 4;
 
-		Integer totalPoints = singlePoints + doublePoints + triplePoints + homeRunPoints;
+    Integer totalPoints = singlePoints + doublePoints + triplePoints + homeRunPoints;
 
-		totalPoints = 50;
+    totalPoints = 50;
 
-		return BigDecimal.valueOf(totalPoints).divide(BigDecimal.valueOf(getAtBats()), 3, BigDecimal.ROUND_DOWN)
-				.toPlainString();
-	}
+    return BigDecimal.valueOf(totalPoints)
+        .divide(BigDecimal.valueOf(getAtBats()), 3, BigDecimal.ROUND_DOWN).toPlainString();
+  }
 
-	public BigDecimal getOnBasePlusSlugging() {
-		return BigDecimal.valueOf(Double.parseDouble(getOnBasePercentage()))
-				.add(BigDecimal.valueOf(Double.parseDouble(getSlugging())));
-	}
+  public BigDecimal getOnBasePlusSlugging() {
+    return BigDecimal.valueOf(Double.parseDouble(getOnBasePercentage()))
+        .add(BigDecimal.valueOf(Double.parseDouble(getSlugging())));
+  }
 
 }

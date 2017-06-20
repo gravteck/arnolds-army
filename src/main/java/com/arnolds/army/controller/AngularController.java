@@ -18,40 +18,40 @@ import com.arnolds.army.service.ApplicationService;
 @RequestMapping("s")
 public class AngularController {
 
-	@Autowired
-	private ApplicationService applicationService;
+  @Autowired
+  private ApplicationService applicationService;
 
-	@GetMapping("**/**")
-	public String loadHome() {
-		return "html/index";
-	}
+  @GetMapping("**/**")
+  public String loadHome() {
+    return "html/index";
+  }
 
-	// @GetMapping("top")
-	// public String loadHeader() {
-	// return "ng/topNav";
-	// }
-	//
-	// @GetMapping("players")
-	// public String loadPlayers() {
-	// return "html/players";
-	// }
-	//
-	// @GetMapping("player/{playerId}")
-	// public String navPlayer(Model m) {
-	//
-	// return "html/player";
-	// }
-	//
+  // @GetMapping("top")
+  // public String loadHeader() {
+  // return "ng/topNav";
+  // }
+  //
+  // @GetMapping("players")
+  // public String loadPlayers() {
+  // return "html/players";
+  // }
+  //
+  // @GetMapping("player/{playerId}")
+  // public String navPlayer(Model m) {
+  //
+  // return "html/player";
+  // }
+  //
 
-	@GetMapping("player/get/{playerId}")
-	@ResponseBody
-	public Player getPlayer(Model m, @PathVariable Integer playerId) {
-		return applicationService.findPlayer(playerId);
-	}
+  @GetMapping("player/get/{playerId}")
+  @ResponseBody
+  public Player getPlayer(Model m, @PathVariable Integer playerId) {
+    return applicationService.findPlayer(playerId);
+  }
 
-	@GetMapping("seasons")
-	@ResponseBody
-	public List<Season> findAllSeasons() {
-		return applicationService.findAllSeasons();
-	}
+  @GetMapping("seasons")
+  @ResponseBody
+  public List<Season> findAllSeasons() {
+    return applicationService.findAllSeasons();
+  }
 }

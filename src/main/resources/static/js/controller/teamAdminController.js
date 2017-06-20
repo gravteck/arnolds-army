@@ -1,11 +1,15 @@
 app.controller("teamAdminCtrl", function($scope, $rootScope, $http, $location,
 		teamService, urlService, EMIT_ADMIN_ENTITY_SAVED) {
 
-	$scope.resetTeam = function() {
-		$scope.editedTeam = new teamService.resource;
-	}
+	$scope.loader = {
+		loading : false
+	};
 
-	$scope.save = function(editedTeam) {
+	var loading = (value) => $scope.loader.loading = value;
+
+	$scope.resetTeam = () => $scope.editedTeam = new teamService.resource;
+
+	$scope.save = (editedTeam) => {
 		teamService.save(editedTeam, function(response) {
 			$location.path("admin/teams")
 			$scope.resetTeam();
@@ -14,12 +18,17 @@ app.controller("teamAdminCtrl", function($scope, $rootScope, $http, $location,
 		});
 	}
 
-	angular.element(document).ready(function() {
+	angular.element(document).ready(() => {
 
-		if (urlService.add()) {
-			$scope.resetTeam();
-		} else if (urlService.edit()) {
-			$scope.editedTeam = teamService.get(urlService.entityId());
+		if (urlService.edit()) {
+			teamService.get(urlService.entityId(), loading(true))
+				.$promise.then(team => {
+						$scope.editedTeam = team; 
+						loading(false)
+					}, 
+					() => loading(false));
+		} else {
+		  $scope.resetTeam();
 		}
 	});
 });

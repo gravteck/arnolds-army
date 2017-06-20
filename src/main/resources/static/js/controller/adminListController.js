@@ -3,7 +3,7 @@ app.controller('adminListCtrl',
 				BROADCAST_ADMIN_ENTITY_SAVED, EMIT_ADMIN_ENTITY_DELETED) {
 
 			$scope.loader = {
-				loading : false,
+				loading : false
 			};
 
 			$scope.$on(BROADCAST_ADMIN_ENTITY_SAVED, function() {
