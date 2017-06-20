@@ -1,5 +1,5 @@
 var app = angular.module("arnoldsArmyApplication", [ "ngRoute", "ui.bootstrap",
-		"ngResource" ], function($locationProvider) {
+		"ngResource" ], $locationProvider => {
 	$locationProvider.html5Mode({
 		enabled : true,
 		requireBase : true
@@ -22,8 +22,8 @@ app
 				"gameItem",
 				[
 						"arnoldsId",
-						function(arnoldsId) {
-							return function(game, format) {
+						arnoldsId => {
+							return (game, format) => {
 
 								if (format === "time") {
 									var hour = game.localDateTime.hour > 12 ? game.localDateTime.hour - 12
@@ -57,7 +57,7 @@ app
 							}
 						} ]);
 
-app.config(function($routeProvider) {
+app.config($routeProvider => {
 	$routeProvider.when("/", {
 		templateUrl : "/static/html/home.html"
 	}).when("/home", {
