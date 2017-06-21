@@ -1,0 +1,68 @@
+<div class="form-group">
+	<label class="control-label col-sm-2"> Date (MM DD YYYY):</label>
+	<div class="form-inline col-sm-5">
+		<select class="form-control" style="display: inline" id="month" field="month">
+			<option data-ng-repeat="month in dto.months" data-ng-value="month[1]" field="month">{{getMonthName(month)}}</option>
+		</select> <select class="form-control" style="display: inline" id="day" field="day">
+			<option data-ng-repeat="day in dto.days" data-ng-value="day" />{{day}}
+			</option>
+		</select> <select class="form-control" style="display: inline" id="year" field="year">
+			<option data-ng-repeat="year in dto.years" data-ng-value="year" />{{year}}
+			</option>
+		</select>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-sm-2">Time (HH mm):</label>
+	<div class="form-inline col-sm-5">
+		<select class="form-control" style="display: inline" id="hour" field="hour">
+			<option data-ng-repeat="hour in dto.hours" data-ng-value="hour" />{{hour}}
+			</option>
+		</select> <select class="form-control" style="display: inline" id="minuteInterval" field="minuteInterval">
+			<option data-ng-repeat="minuteInterval in dto.minuteIntervals" data-ng-value="minuteInterval">{{minuteInterval}}</option>
+		</select> <select class="form-control" style="display: inline" id="period" field="period">
+			<option data-ng-repeat="period in dto.periods" data-ng-value="period">{{period}}</option>
+		</select>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-sm-2" for="homeTeam"> Home Team:</label>
+	<div class="col-sm-5">
+		<select class="form-control" id="homeTeam" field="dto.homeTeam.id">
+			<option data-ng-repeat="team in dto.teams" data-ng-value="team.id">{{team.name}}</option>
+		</select>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-sm-2" for="awayTeam">Away Team:</label>
+	<div class="col-sm-5">
+		<select class="form-control" id="awayTeam" field="dto.awayTeam.id">
+			<option data-ng-repeat="team in dto.teams" data-ng-value="team.id">{{team.name}}</option>
+		</select>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-sm-2" for="homeScore">Home Score:</label>
+	<div class="col-sm-5">
+		<input class="form-control" field="dto.game.homeScore" placeholder="" data-ng-value="dto.game.homeScore"></input>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-sm-2" for="dto.game.awayScore">Away Score:</label>
+	<div class="col-sm-5">
+		<input class="form-control" field="awayScore" placeholder="" data-ng-value="dto.game.awayScore"></input>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-sm-2" for="season">Season:</label>
+	<div class="col-sm-5">
+		<select class="form-control" id="season">
+			<option data-ng-repeat="season in dto.seasons" data-ng-value="season.id">{{season.year}}</option>
+		</select>
+	</div>
+</div>
+<div class="form-group">
+	<div class="col-sm-offset-2 col-sm-10">
+		<button type="submit" class="btn btn-info">Save</button>
+	</div>
+</div>

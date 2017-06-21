@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.arnolds.army.model.Game;
 import com.arnolds.army.model.Player;
 import com.arnolds.army.model.Season;
 import com.arnolds.army.model.Team;
@@ -102,5 +103,25 @@ public class ApiController {
   @DeleteMapping("seasons/{id}")
   public void deleteSeasons(@PathVariable Integer id) {
     applicationService.removeSeason(id);
+  }
+
+  @GetMapping("games/{id}")
+  public Game getGame(@PathVariable Integer id) {
+    return applicationService.findGame(id);
+  }
+
+  @GetMapping("games")
+  public List<Game> findAllGames() {
+    return applicationService.findAllGames();
+  }
+
+  @PostMapping("games")
+  public void saveGame(@RequestBody Game game) {
+    applicationService.saveGame(game);
+  }
+
+  @DeleteMapping("games/{id}")
+  public void deleteGames(@PathVariable Integer id) {
+    applicationService.removeGame(id);
   }
 }

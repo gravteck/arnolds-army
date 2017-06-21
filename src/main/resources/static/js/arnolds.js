@@ -90,7 +90,11 @@ app.config($routeProvider => {
 		templateUrl : "/static/html/admin/team-add.html"
 	}).when("/admin/team/edit/:id", {
 		templateUrl : "/static/html/admin/team-edit.html"
-	}).when("/admin/games", {
+	}).when("/admin/game/add", {
+    templateUrl : "/static/html/admin/game-add.html"
+  }).when("/admin/game/edit/:id", {
+    templateUrl : "/static/html/admin/game-edit.html"
+  }).when("/admin/games", {
 		templateUrl : "/static/html/admin/admin.html"
 	}).when("/admin/seasons", {
 		templateUrl : "/static/html/admin/admin.html"
@@ -191,4 +195,30 @@ app.factory("seasonService", function($resource, baseApiUrl) {
 			}, success, error)
 		}
 	}
+});
+
+app.factory("gameService", function($resource, baseApiUrl) {
+  var Game = $resource(baseApiUrl + "games/:id", {
+    id : "@id"
+  });
+
+  return {
+    resource : Game,
+    get : function(gameId, success, error) {
+      return Game.get({
+        id : gameId
+      }, success, error)
+    },
+    save : function(game, success, error) {
+      return new Game(game).$save({}, success, error)
+    },
+    query : function(success, error) {
+      return Game.query({}, success, error)
+    },
+    remove : function(game, success, error) {
+      return game.$remove({
+        id : gameId
+      }, success, error)
+    }
+  }
 });

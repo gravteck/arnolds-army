@@ -1,0 +1,12 @@
+<div class="container-fluid" data-ng-controller="gameAdminCtrl">
+	<div class="panel panel-default>
+		<div class="panel-heading">
+		<h2>Add Game</h2>
+	</div>
+	<div class="panel-body" data-ng-hide="loader.loading">
+		<form class="form-horizontal" name="player" ng-submit="save(editedGame)" novalidate)>
+			<div data-ng-include="'/static/html/admin/game-form.html'"></div>
+		</form>
+	</div>
+</div>
+</div>

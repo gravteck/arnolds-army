@@ -35,6 +35,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.arnolds.army.FunctionalAreaType;
 import com.arnolds.army.dto.AdminDto;
+import com.arnolds.army.dto.GameDto;
 import com.arnolds.army.model.Game;
 import com.arnolds.army.model.Player;
 import com.arnolds.army.model.ReportingField;
@@ -239,26 +240,37 @@ public class AdminController {
   @GetMapping("game/add")
   public String loadAddGame(Model m) {
 
-    List<Team> teams = applicationService.findAllTeams();
-    List<Season> seasons = applicationService.findAllSeasons();
-    List<Integer> years = applicationService.findAllYears();
-    List<KeyValue> months = applicationService.findAllMonths();
-    List<Integer> days = applicationService.findAllDays();
-    List<Integer> hours = applicationService.findAllHours();
-    List<String> minuteIntervals = applicationService.findAllMinuteIntervals();
-    List<String> periods = applicationService.findAllPeriods();
+    GameDto dto = loadGameDto();
+    dto.setGame(new Game());
 
-    m.addAttribute("game", new Game());
-    m.addAttribute("teams", teams);
-    m.addAttribute("seasons", seasons);
-    m.addAttribute("years", years);
-    m.addAttribute("months", months);
-    m.addAttribute("days", days);
-    m.addAttribute("hours", hours);
-    m.addAttribute("minuteIntervals", minuteIntervals);
-    m.addAttribute("periods", periods);
+    m.addAttribute("game", dto.getGame());
+    m.addAttribute("teams", dto.getTeams());
+    m.addAttribute("seasons", dto.getSeasons());
+    m.addAttribute("years", dto.getYears());
+    m.addAttribute("months", dto.getMonths());
+    m.addAttribute("days", dto.getDays());
+    m.addAttribute("hours", dto.getHours());
+    m.addAttribute("minuteIntervals", dto.getMinuteIntervals());
+    m.addAttribute("periods", dto.getPeriods());
 
     return "admin/game-add";
+  }
+
+  @GetMapping("dto/game")
+  @ResponseBody
+  public GameDto loadGameDto() {
+    GameDto dto = new GameDto();
+
+    dto.setTeams(applicationService.findAllTeams());
+    dto.setSeasons(applicationService.findAllSeasons());
+    dto.setYears(applicationService.findAllYears());
+    dto.setMonths(applicationService.findAllMonths());
+    dto.setDays(applicationService.findAllDays());
+    dto.setHours(applicationService.findAllHours());
+    dto.setMinuteIntervals(applicationService.findAllMinuteIntervals());
+    dto.setPeriods(applicationService.findAllPeriods());
+
+    return dto;
   }
 
   @GetMapping("statistical-year/add")
@@ -564,8 +576,7 @@ public class AdminController {
         text("homeTeam", g.getHomeTeam().getName()), text("awayTeam", g.getAwayTeam().getName()),
         text("homeScore", g.getHomeScore()), text("awayScore", g.getAwayScore()),
         text("date", g.getMonth() + "/" + g.getDay() + "/" + g.getYear()),
-        text("time", g.getHour() + ":" + g.getMinuteInterval() + " " + g.getPeriod()),
-        reverseGroup(view("/" + itemFunctionalArea + "/" + g.getId()),
+        text("time", g.getHour() + ":" + g.getMinuteInterval() + " " + g.getPeriod()), reverseGroup(
             edit("/admin/" + itemFunctionalArea + "/edit/" + g.getId()), delete(g.getId()))))
         .collect(Collectors.toList()));
   }
